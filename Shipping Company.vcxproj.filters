@@ -26,5 +26,8 @@
     <ClInclude Include="Node.h">
       <Filter>ADTs</Filter>
     </ClInclude>
+    <ClInclude Include="Queue.h">
+      <Filter>ADTs</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
