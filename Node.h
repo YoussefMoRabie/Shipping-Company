@@ -17,14 +17,14 @@ public:
 		next = nullptr;
 		Priority = 0;
 	}
-	Node(const Type anitem, Node* nextptr)
+	Node(const Type anitem, Node<Type>* nextptr)
 	{
 		item = anitem;
 		next = nextptr;
 		Priority = 0;
 	}
 	void set_item(const Type anitem) { item = anitem; }
-	void set_next(Node* nextptr) { next = nextptr; }
+	void set_next(Node<Type>* nextptr) { next = nextptr; }
 	void set_priority (int p)
 	{
 		Priority = p;
