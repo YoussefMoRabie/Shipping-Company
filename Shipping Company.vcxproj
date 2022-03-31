@@ -141,27 +141,21 @@
   <ItemGroup>
     <ClCompile Include="Company.cpp" />
     <ClCompile Include="Main.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Truck.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cargo.h" />
-=======
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Company.h" />
     <ClInclude Include="Def.h" />
->>>>>>> 6b38586d874cf918e0b2c30997543b7e56165f74
     <ClInclude Include="Node.h" />
     <ClInclude Include="Queue.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="Tree_Node.h" />
-<<<<<<< HEAD
     <ClInclude Include="Truck.h" />
-=======
     <ClInclude Include="UI.h" />
->>>>>>> 6b38586d874cf918e0b2c30997543b7e56165f74
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

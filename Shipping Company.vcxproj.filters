@@ -21,14 +21,15 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< HEAD
+
     <ClCompile Include="Truck.cpp">
-=======
+		<Filter>Source Files</Filter>
+	</ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Company.cpp">
->>>>>>> 6b38586d874cf918e0b2c30997543b7e56165f74
+
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -42,7 +43,7 @@
     <ClInclude Include="Tree_Node.h">
       <Filter>ADTs</Filter>
     </ClInclude>
-<<<<<<< HEAD
+
     <ClInclude Include="Cargo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -51,7 +52,7 @@
     </ClInclude>
     <ClInclude Include="Stack.h">
       <Filter>ADTs</Filter>
-=======
+	</ClInclude>
     <ClInclude Include="UI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -60,7 +61,7 @@
     </ClInclude>
     <ClInclude Include="Def.h">
       <Filter>Header Files</Filter>
->>>>>>> 6b38586d874cf918e0b2c30997543b7e56165f74
+
     </ClInclude>
   </ItemGroup>
 </Project>
