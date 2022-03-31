@@ -141,7 +141,6 @@
   <ItemGroup>
     <ClCompile Include="Company.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Truck.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cargo.h" />
