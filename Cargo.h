@@ -2,12 +2,13 @@
 #include <iostream>
 #include"Def.h"
 #include<string>
+#include "Time.h"
 using namespace std;
 
 class Cargo
 {
 private:
-	string Preparation_Time; //Time(day:hour) at which the cargo is ready to be loaded
+	Time Preparation_Time; //Time(day:hour) at which the cargo is ready to be loaded
 	float Load_Unload_Time;
 	CARGO_TYPE Type;
 	double Delivery_Distance; //Km
@@ -15,7 +16,7 @@ private:
 
 	public:
 
-		Cargo(string PT, float LT, CARGO_TYPE T, double DD, double C) {
+		Cargo(const Time& PT, float LT, CARGO_TYPE T, double DD, double C) {
 			Preparation_Time = PT;
 			Load_Unload_Time = LT;
 			Delivery_Distance = DD;
@@ -35,7 +36,7 @@ private:
 			return Type;
 
 		}
-		string GetPrepTime() {
+		Time& GetPrepTime() {
 			return Preparation_Time;
 		}
 		void PromoteToVip(double ExtraMoney) {
