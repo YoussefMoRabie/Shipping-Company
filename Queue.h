@@ -17,7 +17,7 @@ public:
 		rear = nullptr;
 		count = 0;
 	}
-	bool EnQueue(Type item,int priority = 0)
+	bool EnQueue(Type item,float priority = 0)
 	{
 		Node<Type>* temp;
 		Node<Type>* cur=front;
