@@ -22,10 +22,8 @@ Time::Time(string s)
 		h += s[i];
 		j++;
 	}
-	stringstream da(d);
-	da >> day;
-	stringstream ho(h);
-	ho >> hour;
+	day = stoi(d);
+	hour = stoi(h);
 }
 
 int Time::getDay()
