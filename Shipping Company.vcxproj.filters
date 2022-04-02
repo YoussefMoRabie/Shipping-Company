@@ -33,7 +33,7 @@
     <ClCompile Include="PreparationEvent.cpp">
       <Filter>Events</Filter>
     </ClCompile>
-    <ClCompile Include="PrompteEvent.cpp">
+    <ClCompile Include="PromoteEvent.cpp">
       <Filter>Events</Filter>
     </ClCompile>
     <ClCompile Include="CancelEvent.cpp">
@@ -77,7 +77,7 @@
     <ClInclude Include="PreparationEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
-    <ClInclude Include="PrompteEvent.h">
+    <ClInclude Include="PromoteEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
     <ClInclude Include="CancelEvent.h">

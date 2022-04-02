@@ -1,17 +1,19 @@
 #pragma once
-#ifndef Company_H
-#define Company_H
 #include "Def.h"
 #include "Cargo.h"
-#include"Truck.h"
-#include"Ui.h"
-#include"Queue.h"
-//#include"Event.h"
-//class Event;
-class UI;
+#include "Truck.h"
+#include "UI.h"
+#include "Queue.h"
+#include <fstream>
+
+class Event;
 
 class Company
 {
+	UI* ui_p;
+	ifstream Loaded;
+	//------------------------------------------------------
+
 	//Cargos
 	Queue<Cargo*> VIP_cargo;
 	Queue<Cargo*> Special_cargo;
@@ -29,16 +31,18 @@ class Company
 	Queue<Truck*> InExecution_truck;
 
 	//-------------------------------------------------------
+
 	
-	//UI
-	UI* ui_p;
 	
 	//-------------------------------------------------------
 
-	//Event
-	///Queue<Event*> Events;
+	Queue<Event*> Events;
 
 	//-------------------------------------------------------
+
+	int MaxWait;
+	int AutoPro;
+	int Num_of_events;
 
 	//Numbers of Trucks in each list
 
@@ -62,12 +66,9 @@ class Company
 
 	//--------------------------------------------------------
 	int auto_promoted_count;
-	int cur_day;
-	int cur_hour;
 	int cancelled;
 	
 	//--------------------------------------------------------
-
 
 	// Utility functions
 	void check_auto_promotion();
@@ -79,7 +80,7 @@ class Company
 
 public:
 
-	Company();
+	Company(UI* p);
 
 	// Reading data function
 	SIM_MODE get_input_mode() const;
@@ -106,16 +107,21 @@ public:
 	Queue<Truck*>& get_available_trucks_vip_();
 	Queue<Truck*>& get_available_trucks_normal_();
 	Queue<Truck*>& get_available_trucks_polar_();
+	//--------------------------------------
+	bool Events_empty();
+	void readFile(string);
+	void AddCargo(Cargo*);
+	bool Find_Normal_Cargo(int id, Cargo*&);
 
-	
+
 	bool check_special_t_c();
 	void increment_cancelled_c();
 	void increment_formulated_c();
 
 
 	//Destructor
-	~Company();
+	~Company(){}
 
 };
 
-#endif // Company_H
+

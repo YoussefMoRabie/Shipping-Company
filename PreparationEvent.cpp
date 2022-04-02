@@ -1,6 +1,7 @@
 #include "PreparationEvent.h"
 #include "Cargo.h"
-PreparationEvent::PreparationEvent(CARGO_TYPE ty, const Time& t, int id, float d, float l, float c) :Event(t, id)
+#include "Def.h"
+PreparationEvent::PreparationEvent(Company* p, CARGO_TYPE ty, const Time& t, int id, float d, float l, float c) :Event(p, t, id)
 {
 	type = ty;
 	dist = (d > 0) ? d : 10;
@@ -10,6 +11,6 @@ PreparationEvent::PreparationEvent(CARGO_TYPE ty, const Time& t, int id, float d
 }
 void PreparationEvent::Execute()
 {
-	Cargo c(ET, loadTime, type, dist, cost);
-	//add to the list after company is made
+	Cargo *c=new Cargo(type, ET, ID, dist, loadTime, cost);
+	cPtr->AddCargo(c);
 }

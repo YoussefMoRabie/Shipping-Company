@@ -147,7 +147,7 @@
     <ClInclude Include="CancelEvent.h" />
     <ClInclude Include="Cargo.h" />
     <ClCompile Include="PreparationEvent.cpp" />
-    <ClCompile Include="PrompteEvent.cpp" />
+    <ClCompile Include="PromoteEvent.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
@@ -157,7 +157,7 @@
     <ClInclude Include="Event.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="PreparationEvent.h" />
-    <ClInclude Include="PrompteEvent.h" />
+    <ClInclude Include="PromoteEvent.h" />
     <ClInclude Include="Queue.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="Time.h" />

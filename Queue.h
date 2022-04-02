@@ -97,6 +97,7 @@ public:
 		if(!QueueEmpty)
 		return front->get_item();
 	}
+	
 	~Queue()
 	{
 		DistroyQueue();
@@ -111,3 +112,29 @@ public:
 		}
 	}
 };
+
+//TO BE MOVED TO A NEW DATA STRUCTURE
+/*bool remove_cargo(Queue<Cargo*> q, int id, Cargo*& ptr)
+{
+	Node<Cargo*>* NodePtr = q.GetFront();
+	while (NodePtr)
+	{
+		if (*(NodePtr->get_item()) == id)
+		{
+			if (NodePtr->get_next())
+			{
+				NodePtr->set_item(NodePtr->get_next()->get_item());
+				NodePtr->set_next(NodePtr->get_next()->get_next());
+			}
+			else
+			{
+				NodePtr
+			}
+			return true;
+		}
+		NodePtr = NodePtr->get_next();
+	}
+	return false;
+}*/
+
+

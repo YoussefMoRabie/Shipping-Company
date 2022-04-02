@@ -3,9 +3,9 @@
 #include <fstream>
 #include<Windows.h>  //for the delay
 using namespace std;
-UI::UI(Company* ptr)
+UI::UI()//Company* ptr)
 {
-	company_ptr = ptr;
+	//company_ptr = ptr;
 }
 
 SIM_MODE UI::get_sim_mode()
@@ -28,11 +28,9 @@ SIM_MODE UI::get_sim_mode()
 		return  SIM_MODE::STEP_BY_STEP;
 	else
 		return SIM_MODE::SILENT;
-
-
 }
 
-void UI::InteractivePrinting() const
+/*void UI::InteractivePrinting() const
 {
 }
 
@@ -49,4 +47,11 @@ void UI::SilentPrinting() const
 
 void UI::Output_Console() const
 {
+}*/
+
+void UI::print(string s)
+{
+	cout << s << endl;
 }
+
+

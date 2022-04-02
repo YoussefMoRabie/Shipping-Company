@@ -1,23 +1,33 @@
 #pragma once
-#ifndef UI_H
-#define UI_H
 #include "Def.h"
-#include "Company.h"
-
-class Company;
+#include <iostream>
+#include <string>
+using namespace std;
 
 class UI
 {
-private:
-	Company* company_ptr;
+//private:
+	//Company* company_ptr;
 public:
-	UI(Company* ptr);
+	UI();//Company* ptr);
 	SIM_MODE get_sim_mode();
-	void InteractivePrinting() const;
+/*	void InteractivePrinting() const;
 	void StepByStepPrinting() const;
 	void SilentPrinting() const;
-	void Output_Console()const;
+	void Output_Console()const;*/
+	void print(string);
 
+	int getIntger()
+	{
+		int input;
+		cin >> input;
+		return input;
+	}
+	string getString()
+	{
+		string str;
+		cin >> str;
+		return str;
+	}
 };
-#endif // UI_H
 

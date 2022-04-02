@@ -1,6 +1,4 @@
 #pragma once
-#ifndef Def_H
-#define Def_H
 enum class SIM_MODE
 {
 	INTERACTIVE,
@@ -33,5 +31,4 @@ enum class CARGO_STATUS {
 	COMPLETED,
 	CANCELLED
 };
-#endif // !Def_h
 

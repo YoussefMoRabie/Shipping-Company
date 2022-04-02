@@ -1,9 +1,6 @@
 #pragma once
-#include <iostream>
 #include"Def.h"
-#include<string>
 #include "Time.h"
-using namespace std;
 
 class Cargo
 {
@@ -13,15 +10,17 @@ private:
 	CARGO_TYPE Type;
 	double Delivery_Distance; //Km
 	double Cost;  
+	int ID;
 
 	public:
 
-		Cargo(const Time& PT, float LT, CARGO_TYPE T, double DD, double C) {
+		Cargo(CARGO_TYPE T, const Time& PT,int id, double DD, float LT, double C) {
 			Preparation_Time = PT;
 			Load_Unload_Time = LT;
 			Delivery_Distance = DD;
 			Type = T;
 			Cost = C;
+			ID = id;
 		}
 		double GetDistance() {
 			return Delivery_Distance;
@@ -40,10 +39,16 @@ private:
 			return Preparation_Time;
 		}
 		void PromoteToVip(double ExtraMoney) {
-			Type = CARGO_TYPE:: VIP;
+			Type = CARGO_TYPE::VIP;
 			Cost += ExtraMoney;
 		}
-	
+		
+		bool operator==(int id)
+		{
+			if (this->ID == id)
+				return true;
+			return false;
+		}
 
 
 

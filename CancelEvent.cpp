@@ -1,9 +1,9 @@
 #include "CancelEvent.h"
 
-CancelEvent::CancelEvent(const Time& t, int id) :Event(t, id)
+CancelEvent::CancelEvent(Company* p, const Time& t, int id) :Event(p, t, id)
 {
 }
 void CancelEvent::Execute()
 {
-	//remove from the list in company
+	//REMOVE FROM NORMAL LIST
 }

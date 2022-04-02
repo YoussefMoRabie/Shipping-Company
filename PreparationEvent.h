@@ -10,7 +10,7 @@ class PreparationEvent :
     int ID;
     float dist, loadTime, cost;
 public:
-    PreparationEvent(CARGO_TYPE, const Time&, int, float, float, float);
+    PreparationEvent(Company* p, CARGO_TYPE, const Time&, int, float, float, float);
     void Execute();
 };
 
