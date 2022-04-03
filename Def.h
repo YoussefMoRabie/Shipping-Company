@@ -15,7 +15,9 @@ enum class TRUCK_TYPE {
 
 enum class TRUCK_STATUS {
 	WAITING,
-	IN_EXECUTION,
+	LOADING,
+	MOVING,
+	GOING_BACK,
 	CHECKUP
 };
 
@@ -26,8 +28,9 @@ enum class CARGO_TYPE {
 };
 
 enum class CARGO_STATUS {
-	WAITING,
-	IN_EXECUTION,
+	READY,
+	LOADED,
+	MOVING,
 	COMPLETED,
 	CANCELLED
 };

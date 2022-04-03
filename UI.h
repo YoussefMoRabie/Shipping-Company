@@ -9,7 +9,7 @@ class UI
 //private:
 	//Company* company_ptr;
 public:
-	UI();//Company* ptr);
+	UI();
 	SIM_MODE get_sim_mode();
 /*	void InteractivePrinting() const;
 	void StepByStepPrinting() const;

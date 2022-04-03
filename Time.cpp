@@ -1,7 +1,7 @@
 #include "Time.h"
 Time::Time(int d, int h)
 {
-	if (hour >= 24 || h < 0)
+	if (h >= 24 || h < 0)
 		h = 0;
 	if (d < 0)
 		d = 0;
@@ -10,6 +10,11 @@ Time::Time(int d, int h)
 }
 
 Time::Time(string s)
+{
+	setTime(s);
+}
+
+void Time::setTime(string s)
 {
 	string d;
 	string h;
@@ -36,6 +41,11 @@ int Time::getHour()
 	return hour;
 }
 
+int Time::Time_In_Hours()
+{
+	return 24 * day + hour;
+}
+
 void Time::AdvanceTime(int value)
 {
 	if (value > 0)
@@ -46,11 +56,24 @@ void Time::AdvanceTime(int value)
 			day++;
 			hour = 0;
 		}
-		hour = value;
+		hour += value;
 	}
 }
 
 void Time::printTime()
 {
-	//TO BE CHANGED AFTER UI IMPLEMENTATION
+	UI_P.print(to_string(day) + ":" + to_string(hour));
+}
+
+bool Time::operator==(const Time& t)
+{
+	if (day == t.day)
+		if (hour == t.hour)
+			return true;
+	return false;
+}
+
+Time::~Time()
+{
+
 }

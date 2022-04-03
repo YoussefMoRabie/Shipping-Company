@@ -94,8 +94,10 @@ public:
 	}
 	Type Peek()
 	{
-		if(!QueueEmpty)
-		return front->get_item();
+		if (!QueueEmpty())
+			return front->get_item();
+		else
+			return NULL;
 	}
 	
 	~Queue()
@@ -107,9 +109,10 @@ public:
 		Node<Type>* temp = front;
 		while (temp)
 		{
-			cout << "-----------------------------" << endl<<temp->get_item()<<endl;
+			cout << temp->get_item() << "  ";
 			temp = temp->get_next();
 		}
+		cout << endl;
 	}
 };
 

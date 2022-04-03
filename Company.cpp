@@ -17,7 +17,7 @@ void Company::move_to_checkup(Truck*)
 
 bool Company::Events_empty()
 {
-	return Events.QueueEmpty();
+	return Event_List.QueueEmpty();
 }
 
 //searches the normal cargo list with the id, if found it is removed from the normal queue and added to the vip one.
@@ -31,6 +31,7 @@ bool Company::Events_empty()
 
 void Company::AddCargo(Cargo* c)
 {
+	Waiting_cargo.EnQueue(c);
 	switch (c->GetType())
 	{
 	case CARGO_TYPE::NORMAL:
@@ -57,7 +58,7 @@ void Company::readFile(string filename)
 
 	if (!Loaded.is_open())
 	{
-		ui_p->print("Error: Can't open file ! Click to continue ...");
+		ui_p->print("Error: Can't open file! Click to continue ...");
 		return;
 	}
 	int N, S, V, nCap, sCap, vCap;
@@ -87,16 +88,18 @@ void Company::readFile(string filename)
 	char event_type;
 	for (int i = 0; i < Num_of_events; i++)
 	{
+		string t;
+		int id;
+		Time T;
+
 		Loaded >> event_type;
 		if (event_type == 'R')
 		{
 			char cargo_type;
-			string t;
-			int id;
 			float dist, LT, cost;
 			Loaded >> cargo_type >> t >> id >> dist >> LT >> cost;
 
-			Time T(t);
+			T.setTime(t);
 			switch (cargo_type)
 			{
 			case 'N':
@@ -118,25 +121,71 @@ void Company::readFile(string filename)
 		}
 		else if (event_type == 'X')
 		{
-			string t;
-			int id;
 			Loaded >> t >> id;
-			Time T(t);
+			T.setTime(t);
 			Eptr = new CancelEvent(this, T, id);
 		}
 		else if (event_type == 'P')
 		{
-			string t;
-			int id;
 			float extra;
 			Loaded >> t >> id >> extra;
-			Time T(t);
+			T.setTime(t);
 			Eptr = new PromoteEvent(this, T, id, extra);
 		}
 		if (Eptr)
 		{
-			Eptr->Execute();
-			delete Eptr;
+			Event_List.EnQueue(Eptr);
+			Eptr = nullptr;
 		}
 	}
+}
+
+//Printing Functions
+void Company::Print_Waiting_Cargos()
+{
+	Waiting_cargo.print();
+}
+void Company::Print_Moving_Cargos()
+{
+	Moving_cargo.print();
+}
+void Company::Print_Delivered_Cargos()
+{
+	Delivered_cargo.print();
+}
+void Company::Print_Sim_Time()
+{
+	Sim_Time.printTime();
+}
+//--------------------------------------------------------
+
+Time& Company::get_Sim_Time()
+{
+	return Sim_Time;
+}
+
+Time& Company::get_Nearest_Event_Time()
+{
+	return Event_List.Peek()->getTime();
+}
+
+Event* Company::get_Nearest_Event()
+{
+	Event* Eptr = Event_List.Peek();
+	Event_List.DeQueue();
+	return Eptr;
+}
+
+void Company::Advance_Sim_Time(int value)
+{
+	Sim_Time.AdvanceTime(value);
+}
+
+void Company::Waiting_To_Delivered()
+{
+	Cargo* c;
+	c = Waiting_cargo.Peek();
+	Waiting_cargo.DeQueue();
+	if(c)
+		Delivered_cargo.EnQueue(c);
 }

@@ -11,15 +11,17 @@ class Event;
 class Company
 {
 	UI* ui_p;
+	Time Sim_Time;
 	ifstream Loaded;
 	//------------------------------------------------------
 
 	//Cargos
-	Queue<Cargo*> VIP_cargo;
-	Queue<Cargo*> Special_cargo;
-	Queue<Cargo*> Normal_cargo;
-	Queue<Cargo*> InExecution_cargo;
-	Queue<Cargo*> Completed_cargo;
+	Queue<Cargo*> VIP_cargo; //pri
+	Queue<Cargo*> Special_cargo; 
+	Queue<Cargo*> Normal_cargo; //list
+	Queue<Cargo*> Waiting_cargo; //pri
+	Queue<Cargo*> Moving_cargo;	//pri
+	Queue<Cargo*> Delivered_cargo;	
 
 	//------------------------------------------------------
 
@@ -27,8 +29,10 @@ class Company
 	Queue<Truck*> VIP_truck;
 	Queue<Truck*> Special_truck;
 	Queue<Truck*> Normal_truck;
-	Queue<Truck*> Check_up_truck;
-	Queue<Truck*> InExecution_truck;
+	Queue<Truck*> Check_up_Normal;
+	Queue<Truck*> Check_up_Special;
+	Queue<Truck*> Check_up_VIP;
+	Queue<Truck*> Moving_truck; //bag
 
 	//-------------------------------------------------------
 
@@ -36,7 +40,7 @@ class Company
 	
 	//-------------------------------------------------------
 
-	Queue<Event*> Events;
+	Queue<Event*> Event_List; //pri
 
 	//-------------------------------------------------------
 
@@ -77,7 +81,6 @@ class Company
 	void move_to_available(int);
 	void move_to_checkup(Truck*);
 
-
 public:
 
 	Company(UI* p);
@@ -86,17 +89,26 @@ public:
 	SIM_MODE get_input_mode() const;
 	void execute_mode(SIM_MODE);
 	bool read_input_file();
-	int get_current_day();
-	int get_current_hour();
 	bool write_output_file();
 
+	Time& get_Sim_Time();
+	Time& get_Nearest_Event_Time();
+	Event* get_Nearest_Event();
+	void Advance_Sim_Time(int = 1);
 
 	// Simulation Functions
 	void assign_cargo();
 	void check_completed_cargo();
 	void increment_cancelled();
 
+	//Printing Functions
+	void Print_Waiting_Cargos();
+	void Print_Moving_Cargos();
+	void Print_Delivered_Cargos();
+	void Print_Sim_Time();
 
+
+	//--------------------------------------
 	Queue<Cargo*>& get_vip_c();
 	Queue<Cargo*>& get_sp_c();
 	Queue<Cargo*>& get_norm_c();
@@ -111,6 +123,8 @@ public:
 	bool Events_empty();
 	void readFile(string);
 	void AddCargo(Cargo*);
+	void Waiting_To_Delivered();
+
 	bool Find_Normal_Cargo(int id, Cargo*&);
 
 

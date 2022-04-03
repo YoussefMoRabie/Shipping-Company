@@ -1,12 +1,8 @@
 #include "Ui.h"
 #include <iostream>
 #include <fstream>
-#include<Windows.h>  //for the delay
 using namespace std;
-UI::UI()//Company* ptr)
-{
-	//company_ptr = ptr;
-}
+UI::UI(){}
 
 SIM_MODE UI::get_sim_mode()
 {
@@ -51,7 +47,7 @@ void UI::Output_Console() const
 
 void UI::print(string s)
 {
-	cout << s << endl;
+	cout << s;
 }
 
 

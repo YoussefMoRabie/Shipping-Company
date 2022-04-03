@@ -77,14 +77,14 @@
     <ClInclude Include="PreparationEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
-    <ClInclude Include="PromoteEvent.h">
-      <Filter>Events</Filter>
-    </ClInclude>
     <ClInclude Include="CancelEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PromoteEvent.h">
+      <Filter>Events</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
