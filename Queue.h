@@ -94,8 +94,9 @@ public:
 		{
 			cout << temp->get_item() << "  ";
 			temp = temp->get_next();
+			if (temp)
+				cout << ',';
 		}
-		cout << endl;
 	}
 };
 

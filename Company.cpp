@@ -6,9 +6,9 @@
 #include <string>
 using namespace std;
 
-Company::Company(UI* u)
+Company::Company(UI* p)
 {
-	ui_p = u;
+	ui_p = p;
 }
 
 void Company::move_to_checkup(Truck*)
@@ -27,6 +27,7 @@ bool Company::Events_empty()
 		return true;
 	return false;
 }*/
+
 
 
 void Company::AddCargo(Cargo* c)
@@ -138,6 +139,7 @@ void Company::readFile(string filename)
 			Eptr = nullptr;
 		}
 	}
+	Loaded.close();
 }
 
 //Printing Functions
@@ -188,4 +190,48 @@ void Company::Waiting_To_Delivered()
 	Waiting_cargo.DeQueue();
 	if(c)
 		Delivered_cargo.EnQueue(c);
+}
+
+
+SIM_MODE Company::get_input_mode() const
+{
+	return ui_p->get_sim_mode();
+}
+
+
+
+void Company::execute_mode(SIM_MODE Mode)
+{
+	if (Mode == SIM_MODE::INTERACTIVE)
+		ui_p->InteractivePrinting();
+	else if (Mode == SIM_MODE::SILENT)
+		ui_p->SilentPrinting();
+	else
+		ui_p->StepByStepPrinting();
+
+}
+
+bool Company::write_output_file()
+{
+	return 0;
+}
+
+PriQueue<Cargo*>& Company::get_W_V_C()
+{
+	return W_V_C;
+}
+
+Queue<Cargo*>& Company::get_W_S_C()
+{
+	return W_S_C;
+}
+
+Queue<Cargo*>& Company::get_W_N_C()
+{
+	return W_N_C;
+}
+
+Queue<Truck*>& Company::get_Loading()
+{
+	return Loading;
 }

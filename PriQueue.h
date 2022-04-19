@@ -110,10 +110,11 @@ public:
 		PriNode<Type>* temp = front;
 		while (temp)
 		{
-			cout << temp->get_item() << "  ";
+			cout << temp->get_item();
 			temp = temp->get_next();
+			if (temp)
+				cout << ',';
 		}
-		cout << endl;
 	}
 };
 

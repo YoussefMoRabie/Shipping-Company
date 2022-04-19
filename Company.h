@@ -20,7 +20,10 @@ class Company
 	PriQueue<Cargo*> VIP_cargo; //pri
 	Queue<Cargo*> Special_cargo; 
 	Queue<Cargo*> Normal_cargo; //list
-	PriQueue<Cargo*> Waiting_cargo; //pri
+	PriQueue<Cargo*> Waiting_cargo;
+	PriQueue<Cargo*> W_V_C; //pri
+	Queue<Cargo*> W_S_C; //pri
+	Queue<Cargo*> W_N_C; //pri
 	PriQueue<Cargo*> Moving_cargo;	//pri
 	Queue<Cargo*> Delivered_cargo;	
 
@@ -33,6 +36,7 @@ class Company
 	Queue<Truck*> Check_up_Normal;
 	Queue<Truck*> Check_up_Special;
 	Queue<Truck*> Check_up_VIP;
+	Queue<Truck*> Loading;
 	Queue<Truck*> Moving_truck; //bag
 
 	//-------------------------------------------------------
@@ -89,8 +93,8 @@ public:
 	// Reading data function
 	SIM_MODE get_input_mode() const;
 	void execute_mode(SIM_MODE);
-	bool read_input_file();
-	bool write_output_file();
+	void readFile(string);
+	bool write_output_file(); // need to implementation
 
 	Time& get_Sim_Time();
 	Time& get_Nearest_Event_Time();
@@ -115,14 +119,18 @@ public:
 	Queue<Cargo*>& get_norm_c();
 	Queue<Cargo*>& get_in_execution_cargos();
 	Queue<Cargo*>& get_completed_cargos();
+	PriQueue<Cargo*>& get_W_V_C();
+	Queue<Cargo*>& get_W_S_C();
+	Queue<Cargo*>& get_W_N_C();
 	//---------------------------------------
-	Queue<Truck*>& get_check_up_trucks();
+	PriQueue<Truck*>& get_check_up_trucks();
+	Queue<Truck*>& get_Loading();
 	Queue<Truck*>& get_available_trucks_vip_();
 	Queue<Truck*>& get_available_trucks_normal_();
-	Queue<Truck*>& get_available_trucks_polar_();
+	Queue<Truck*>& get_available_trucks_special_();
 	//--------------------------------------
 	bool Events_empty();
-	void readFile(string);
+	
 	void AddCargo(Cargo*);
 	void Waiting_To_Delivered();
 
