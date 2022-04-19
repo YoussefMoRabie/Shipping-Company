@@ -4,6 +4,7 @@
 #include "Truck.h"
 #include "UI.h"
 #include "Queue.h"
+#include "PriQueue.h"
 #include <fstream>
 
 class Event;
@@ -16,11 +17,11 @@ class Company
 	//------------------------------------------------------
 
 	//Cargos
-	Queue<Cargo*> VIP_cargo; //pri
+	PriQueue<Cargo*> VIP_cargo; //pri
 	Queue<Cargo*> Special_cargo; 
 	Queue<Cargo*> Normal_cargo; //list
-	Queue<Cargo*> Waiting_cargo; //pri
-	Queue<Cargo*> Moving_cargo;	//pri
+	PriQueue<Cargo*> Waiting_cargo; //pri
+	PriQueue<Cargo*> Moving_cargo;	//pri
 	Queue<Cargo*> Delivered_cargo;	
 
 	//------------------------------------------------------
@@ -40,7 +41,7 @@ class Company
 	
 	//-------------------------------------------------------
 
-	Queue<Event*> Event_List; //pri
+	PriQueue<Event*> Event_List; //pri
 
 	//-------------------------------------------------------
 

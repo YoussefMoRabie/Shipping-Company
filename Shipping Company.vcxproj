@@ -157,6 +157,8 @@
     <ClInclude Include="Event.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="PreparationEvent.h" />
+    <ClInclude Include="PriNode.h" />
+    <ClInclude Include="PriQueue.h" />
     <ClInclude Include="PromoteEvent.h" />
     <ClInclude Include="Queue.h" />
     <ClInclude Include="Stack.h" />
