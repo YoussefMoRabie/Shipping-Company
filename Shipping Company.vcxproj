@@ -155,6 +155,7 @@
     <ClInclude Include="Company.h" />
     <ClInclude Include="Def.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="PreparationEvent.h" />
     <ClInclude Include="PriNode.h" />
@@ -163,7 +164,6 @@
     <ClInclude Include="Queue.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="Time.h" />
-    <ClInclude Include="Tree_Node.h" />
     <ClInclude Include="Truck.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>

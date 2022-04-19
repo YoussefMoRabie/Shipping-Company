@@ -2,19 +2,20 @@
 #include "Def.h"
 #include <iostream>
 #include <string>
+//#include"Company.h"
 using namespace std;
 
 class UI
 {
 //private:
-	//Company* company_ptr;
+//	Company* company_ptr;
 public:
 	UI();
 	SIM_MODE get_sim_mode();
-/*	void InteractivePrinting() const;
+	void InteractivePrinting() const;
 	void StepByStepPrinting() const;
 	void SilentPrinting() const;
-	void Output_Console()const;*/
+	void Output_Console()const;
 	void print(string);
 
 	int getIntger()

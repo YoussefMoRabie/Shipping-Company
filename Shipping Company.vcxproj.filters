@@ -50,9 +50,6 @@
     <ClInclude Include="Queue.h">
       <Filter>ADTs</Filter>
     </ClInclude>
-    <ClInclude Include="Tree_Node.h">
-      <Filter>ADTs</Filter>
-    </ClInclude>
     <ClInclude Include="Cargo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -90,6 +87,9 @@
       <Filter>ADTs</Filter>
     </ClInclude>
     <ClInclude Include="PriNode.h">
+      <Filter>ADTs</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedList.h">
       <Filter>ADTs</Filter>
     </ClInclude>
   </ItemGroup>
