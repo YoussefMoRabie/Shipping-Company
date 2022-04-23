@@ -1,5 +1,9 @@
 #pragma once
 #include"Node.h"
+#include <iostream>
+using namespace std;
+#include "Cargo.h"
+#include "Truck.h"
 template<class Type>
 class LinkedList
 {
@@ -67,16 +71,35 @@ public:
 	{
 		return !count;
 	}
-	void print()
-	{
-		Node<Type>* temp=First;
-			while (temp)
-		{
-			cout << temp->get_item() << "  ";
-			temp = temp->get_next();
-		}
-		cout << endl;
-		
-	}
+	void Print();
 
 };
+
+template<class Type>
+inline void LinkedList<Type>::Print()
+{
+}
+template<>
+inline void LinkedList<Cargo*>::Print()
+{
+	Node<Cargo*>* temp = First;
+	while (temp)
+	{
+		cout << temp->get_item()->GetID() << "  ";
+		temp = temp->get_next();
+		if (temp)
+			cout << ',';
+	}
+}
+template<>
+inline void LinkedList<Truck*>::Print()
+{
+	Node<Truck*>* temp = First;
+	while (temp)
+	{
+		cout << temp->get_item()->GetID() << "  ";
+		temp = temp->get_next();
+		if (temp)
+			cout << ',';
+	}
+}
