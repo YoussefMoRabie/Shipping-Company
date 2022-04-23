@@ -20,11 +20,14 @@ class Company
 	PriQueue<Cargo*> VIP_cargo; //pri
 	Queue<Cargo*> Special_cargo; 
 	Queue<Cargo*> Normal_cargo; //list
-	PriQueue<Cargo*> Waiting_cargo;
+	PriQueue<Cargo*> Waiting_cargo;//                  delete
 	PriQueue<Cargo*> W_V_C; //pri
 	Queue<Cargo*> W_S_C; //pri
 	Queue<Cargo*> W_N_C; //pri
-	PriQueue<Cargo*> Moving_cargo;	//pri
+	PriQueue<Cargo*> Moving_cargo;	//pri              delete
+	PriQueue<Cargo*> M_S_C;	//pri
+	PriQueue<Cargo*> M_V_C;	//pri
+	PriQueue<Cargo*> M_N_C;	//pri
 	Queue<Cargo*> Delivered_cargo;	
 
 	//------------------------------------------------------
@@ -37,6 +40,7 @@ class Company
 	Queue<Truck*> Check_up_Special;
 	Queue<Truck*> Check_up_VIP;
 	Queue<Truck*> Loading;
+	Queue<Truck*> Empty;
 	Queue<Truck*> Moving_truck; //bag
 
 	//-------------------------------------------------------
@@ -91,12 +95,12 @@ public:
 	Company(UI* p);
 
 	// Reading data function
-	SIM_MODE get_input_mode() const;
+	SIM_MODE get_input_mode() ;
 	void execute_mode(SIM_MODE);
 	void readFile(string);
 	bool write_output_file(); // need to implementation
 
-	Time& get_Sim_Time();
+	Time& get_Sim_Time() ;
 	Time& get_Nearest_Event_Time();
 	Event* get_Nearest_Event();
 	void Advance_Sim_Time(int = 1);
@@ -111,6 +115,9 @@ public:
 	void Print_Moving_Cargos();
 	void Print_Delivered_Cargos();
 	void Print_Sim_Time();
+	void InteractivePrinting();
+	void StepByStepPrinting();
+	void SilentPrinting();
 
 
 	//--------------------------------------
@@ -122,9 +129,16 @@ public:
 	PriQueue<Cargo*>& get_W_V_C();
 	Queue<Cargo*>& get_W_S_C();
 	Queue<Cargo*>& get_W_N_C();
+	PriQueue<Cargo*>& get_M_V_C();
+	PriQueue<Cargo*>& get_M_S_C();
+	PriQueue<Cargo*>& get_M_N_C();
+
 	//---------------------------------------
-	PriQueue<Truck*>& get_check_up_trucks();
+	Queue<Truck*>& get_check_up_v_trucks();
+	Queue<Truck*>& get_check_up_s_trucks();
+	Queue<Truck*>& get_check_up_n_trucks();
 	Queue<Truck*>& get_Loading();
+	Queue<Truck*>& get_Empty();
 	Queue<Truck*>& get_available_trucks_vip_();
 	Queue<Truck*>& get_available_trucks_normal_();
 	Queue<Truck*>& get_available_trucks_special_();
@@ -140,6 +154,9 @@ public:
 	bool check_special_t_c();
 	void increment_cancelled_c();
 	void increment_formulated_c();
+
+	//------------------------------------------------------------
+	void Output_Console();
 
 
 	//Destructor
