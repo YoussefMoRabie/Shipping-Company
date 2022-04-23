@@ -11,14 +11,15 @@ private:
 	int Truck_Capacity; //# of cargos
 	float Maintenance_Time; //hours
 	float Speed; //Km/h
+	int J;
 	float Delivery_Interval; //Time to deliver all cargos & comeback, Calculated
 	int ID;
 public:
-	Truck(TRUCK_TYPE T, int TC, float MT, float S) {
+	Truck(TRUCK_TYPE T, int TC, float MT,int j, float S) {
 		Type = T;
 		Truck_Capacity = TC;
 		Maintenance_Time = MT;
-		
+		J = j;
 		Speed = S;
 	}
 	TRUCK_TYPE GetType() {

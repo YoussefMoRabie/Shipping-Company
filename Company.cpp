@@ -3,6 +3,7 @@
 #include "PreparationEvent.h"
 #include "CancelEvent.h"
 #include "PromoteEvent.h"
+#include<Windows.h>
 #include <string>
 using namespace std;
 
@@ -326,7 +327,53 @@ void Company::SilentPrinting()
 	}
 void Company::StepByStepPrinting()
 {
+	ui_p->print("StepByStep Mode\n");
+	int Five_Counter = 0;
+	while (!Events_empty())
+	{
 
+		//UI_P->print("Current Time (Day:Hour): ");
+		//company.Print_Sim_Time();
+		//UI_P->print("\n");
+		//company.Print_Waiting_Cargos();
+		//UI_P->print("-----------------------------------------------------------------------------------------\n");
+		//company.Print_Moving_Cargos();
+		//UI_P->print("-----------------------------------------------------------------------------------------\n");
+		//company.Print_Delivered_Cargos();
+		//UI_P->print("-----------------------------------------------------------------------------------------\n");
+
+
+		if (get_Sim_Time() == get_Nearest_Event_Time())
+		{
+			Event* Eptr = get_Nearest_Event();
+			Eptr->Execute();
+		}
+
+		while (true)
+		{
+			Sleep(1000);
+			
+				Output_Console();
+
+				Advance_Sim_Time();
+				Five_Counter++;
+				if (Five_Counter == 5)
+				{
+					Five_Counter = 0;
+					Waiting_To_Delivered();
+				}
+				break;
+			
+
+		}
+
+
+		
+
+		
+
+	}
+	ui_p->print("All Events are done, Simulation over.");
 }
 
 SIM_MODE Company::get_input_mode() 
