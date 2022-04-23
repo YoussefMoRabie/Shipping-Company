@@ -105,18 +105,45 @@ public:
 		DistroyQueue();
 	}
 
-	void print()
-	{
-		PriNode<Type>* temp = front;
-		while (temp)
-		{
-			cout << temp->get_item();
-			temp = temp->get_next();
-			if (temp)
-				cout << ',';
-		}
-	}
+	void print();
 };
 
+template<class Type>
+inline void PriQueue<Type>::print()
+{
+	PriNode<Type>* temp = front;
+	while (temp)
+	{
+		cout << temp->get_item() << "  ";
+		temp = temp->get_next();
+		if (temp)
+			cout << ',';
+	}
 
+}
+template<>
+inline void PriQueue<Cargo*>::print()
+{
+	PriNode <Cargo*>* temp = front;
+	while (temp)
+	{
+		cout << temp->get_item()->GetID() << "  ";
+		temp = temp->get_next();
+		if (temp)
+			cout << ',';
+	}
 
+}
+template<>
+inline void PriQueue<Truck*>::print()
+{
+	PriNode<Truck*>* temp = front;
+	while (temp)
+	{
+		cout << temp->get_item()->GetID() << "  ";
+		temp = temp->get_next();
+		if (temp)
+			cout << ',';
+	}
+
+}

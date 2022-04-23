@@ -87,17 +87,7 @@ public:
 		DistroyQueue();
 	}
 
-	void print()
-	{
-		Node<Type>* temp = front;
-		while (temp)
-		{
-			cout << temp->get_item() << "  ";
-			temp = temp->get_next();
-			if (temp)
-				cout << ',';
-		}
-	}
+	void print();
 };
 
 //TO BE MOVED TO A NEW DATA STRUCTURE
@@ -124,4 +114,42 @@ public:
 	return false;
 }*/
 
+template<class Type>
+inline void Queue<Type>::print()
+{
+		Node<Type>* temp = front;
+		while (temp)
+		{
+			cout << temp->get_item() << "  ";
+			temp = temp->get_next();
+			if (temp)
+				cout << ',';
+		}
 
+}
+template<>
+inline void Queue<Cargo*>::print()
+{
+	Node<Cargo*>* temp = front;
+	while (temp)
+	{
+		cout << temp->get_item()->GetID() << "  ";
+		temp = temp->get_next();
+		if (temp)
+			cout << ',';
+	}
+
+}
+template<>
+inline void Queue<Truck*>::print()
+{
+	Node<Truck*>* temp = front;
+	while (temp)
+	{
+		cout << temp->get_item()->GetID() << "  ";
+		temp = temp->get_next();
+		if (temp)
+			cout << ',';
+	}
+
+}
