@@ -27,7 +27,7 @@ class Company
 	PriQueue<Cargo*> M_S_C;	//pri
 	PriQueue<Cargo*> M_V_C;	//pri
 	PriQueue<Cargo*> M_N_C;	//pri
-	Queue<Cargo*> Delivered_cargo;	
+	Queue<Cargo*> Delivered_cargo;
 
 	//------------------------------------------------------
 
@@ -110,9 +110,7 @@ public:
 	void increment_cancelled();
 
 	//Printing Functions
-	void Print_Waiting_Cargos();
-	void Print_Moving_Cargos();
-	void Print_Delivered_Cargos();
+
 	void Print_Sim_Time();
 	void InteractivePrinting();
 	void StepByStepPrinting();
@@ -127,7 +125,7 @@ public:
 	Queue<Cargo*>& get_completed_cargos();
 	PriQueue<Cargo*>& get_W_V_C();
 	Queue<Cargo*>& get_W_S_C();
-	Queue<Cargo*>& get_W_N_C();
+	LinkedList<Cargo*>& get_W_N_C();
 	PriQueue<Cargo*>& get_M_V_C();
 	PriQueue<Cargo*>& get_M_S_C();
 	PriQueue<Cargo*>& get_M_N_C();

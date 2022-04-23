@@ -5,14 +5,14 @@
 class Event
 {
 	UI* UI_P;
+
+protected:
 	Time ET;
 	int ID;
-protected:
 	Company* cPtr;
 public:
 	Event(Company* p, const Time& T, int id)
 	{
-		UI_P = new UI;
 		cPtr = p;
 		ID = id;
 		ET = T;

@@ -18,7 +18,7 @@ public:
 		End = NULL;
 		count = 0;
 	}
-	void InsertBegin(Type anitem)
+	void InsertBegin(Type item)
 	{
 		Node<Type>* temp;
 		temp = new Node<Type>;
@@ -30,14 +30,14 @@ public:
 		First = temp;
 		count++;
 	}
-	bool InsertIndex(Type anitem, int index)
+	bool InsertIndex(Type item, int index)
 	{
 		if (index <= count && index >= 0)
 		{
 			if (index == 0)
-				InsertBegin(anitem);
+				InsertBegin(item);
 			else if (index == count)
-				InsertEnd(anitem);
+				InsertEnd(item);
 			else
 			{
 				Node<Type>* temp;
@@ -54,7 +54,7 @@ public:
 		else
 		return false;
 	}
-	void InsertEnd(Type anitem)
+	void InsertEnd(Type item)
 	{
 		Node<Type>* temp;
 		temp = new Node<Type>;
@@ -66,21 +66,54 @@ public:
 		End = temp;
 		count++;
 	}
+	Type getFirst()
+	{
+		return First->get_item();
+	}
+
+	Type getEnd()
+	{
+		return End->get_item();
+	}
 
 	bool IsEmpty()
 	{
 		return !count;
 	}
-	void Print();
+
+	int GetCount()
+	{
+		return count;
+	}
+	bool removeFirst()
+	{
+		if (count == 0)
+			return false;
+		Node<Type>* delptr;
+		delptr = First;
+		if (count == 1)
+		{
+			First = NULL;
+			End = NULL;
+		}
+		else
+		{
+			First= First->get_next();
+		}
+		delptr->set_next(nullptr);
+		count--;
+		return true;
+	}
+	void print();
 
 };
 
 template<class Type>
-inline void LinkedList<Type>::Print()
+inline void LinkedList<Type>::print()
 {
 }
 template<>
-inline void LinkedList<Cargo*>::Print()
+inline void LinkedList<Cargo*>::print()
 {
 	Node<Cargo*>* temp = First;
 	while (temp)
@@ -92,7 +125,7 @@ inline void LinkedList<Cargo*>::Print()
 	}
 }
 template<>
-inline void LinkedList<Truck*>::Print()
+inline void LinkedList<Truck*>::print()
 {
 	Node<Truck*>* temp = First;
 	while (temp)

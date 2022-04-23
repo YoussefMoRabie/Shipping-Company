@@ -66,7 +66,6 @@ public:
 			front = front->get_next();
 		}
 		delptr->set_next(nullptr);
-		delete delptr;
 		count--;
 		return true;
 	}

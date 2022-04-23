@@ -33,22 +33,21 @@ bool Company::Events_empty()
 
 void Company::AddCargo(Cargo* c)
 {
-	Waiting_cargo.EnQueue(c);
 	switch (c->GetType())
 	{
 	case CARGO_TYPE::NORMAL:
 	{
-		Normal_cargo.EnQueue(c);
+		W_N_C.InsertBegin(c);
 		break;
 	}
 	case CARGO_TYPE::SPECIAL:
 	{
-		Special_cargo.EnQueue(c);
+		W_S_C.EnQueue(c);
 		break;
 	}
 	case CARGO_TYPE::VIP:
 	{
-		VIP_cargo.EnQueue(c);
+		W_V_C.EnQueue(c);
 		break;
 	}
 	}
@@ -144,18 +143,7 @@ void Company::readFile(string filename)
 }
 
 //Printing Functions
-void Company::Print_Waiting_Cargos()
-{
-	Waiting_cargo.print();
-}
-void Company::Print_Moving_Cargos()
-{
-	Moving_cargo.print();
-}
-void Company::Print_Delivered_Cargos()
-{
-	Delivered_cargo.print();
-}
+
 void Company::Print_Sim_Time()
 {
 	Sim_Time.printTime();
@@ -197,10 +185,27 @@ void Company::Advance_Sim_Time(int value)
 void Company::Waiting_To_Delivered()
 {
 	Cargo* c;
-	c = Waiting_cargo.Peek();
-	Waiting_cargo.DeQueue();
-	if(c)
-		Delivered_cargo.EnQueue(c);
+	if (!W_V_C.QueueEmpty())
+	{
+		c = W_V_C.Peek();
+		W_V_C.DeQueue();
+		if (c)
+			Delivered_cargo.EnQueue(c);
+	}
+	if (!W_S_C.QueueEmpty())
+	{
+		c = W_S_C.Peek();
+		W_S_C.DeQueue();
+		if (c)
+			Delivered_cargo.EnQueue(c);
+	}
+	if(!W_N_C.IsEmpty())
+	{
+		c = W_N_C.getFirst();
+		W_N_C.removeFirst();
+		if (c)
+			Delivered_cargo.EnQueue(c);
+	}
 }
 
 void Company::Output_Console() 
@@ -409,7 +414,7 @@ Queue<Cargo*>& Company::get_W_S_C()
 	return W_S_C;
 }
 
-Queue<Cargo*>& Company::get_W_N_C()
+LinkedList<Cargo*>& Company::get_W_N_C()
 {
 	return W_N_C;
 }
