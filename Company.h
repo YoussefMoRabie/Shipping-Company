@@ -5,6 +5,7 @@
 #include "UI.h"
 #include "Queue.h"
 #include "PriQueue.h"
+#include "LinkedList.h"
 #include <fstream>
 
 class Event;
@@ -17,14 +18,12 @@ class Company
 	//------------------------------------------------------
 
 	//Cargos
-	PriQueue<Cargo*> VIP_cargo; //pri
-	Queue<Cargo*> Special_cargo; 
-	Queue<Cargo*> Normal_cargo; //list
-	PriQueue<Cargo*> Waiting_cargo;//                  delete
+	//PriQueue<Cargo*> VIP_cargo; //pri
+	//Queue<Cargo*> Special_cargo; 
+	//Queue<Cargo*> Normal_cargo; //list
 	PriQueue<Cargo*> W_V_C; //pri
 	Queue<Cargo*> W_S_C; //pri
-	Queue<Cargo*> W_N_C; //pri
-	PriQueue<Cargo*> Moving_cargo;	//pri              delete
+	LinkedList<Cargo*> W_N_C; //list
 	PriQueue<Cargo*> M_S_C;	//pri
 	PriQueue<Cargo*> M_V_C;	//pri
 	PriQueue<Cargo*> M_N_C;	//pri

@@ -67,7 +67,7 @@ public:
 	{
 		return !count;
 	}
-	void Print()
+	void print()
 	{
 		Node<Type>* temp=First;
 			while (temp)

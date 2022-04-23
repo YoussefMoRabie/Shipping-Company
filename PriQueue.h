@@ -119,7 +119,6 @@ inline void PriQueue<Type>::print()
 		if (temp)
 			cout << ',';
 	}
-
 }
 template<>
 inline void PriQueue<Cargo*>::print()
@@ -132,7 +131,6 @@ inline void PriQueue<Cargo*>::print()
 		if (temp)
 			cout << ',';
 	}
-
 }
 template<>
 inline void PriQueue<Truck*>::print()
