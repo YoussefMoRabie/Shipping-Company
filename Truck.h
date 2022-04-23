@@ -1,8 +1,9 @@
 #pragma once
 #include<string>
 #include"Def.h"
-using namespace std;
+#include <string>
 
+using namespace std;
 class Truck
 {
 private:
@@ -11,6 +12,7 @@ private:
 	float Maintenance_Time; //hours
 	float Speed; //Km/h
 	float Delivery_Interval; //Time to deliver all cargos & comeback, Calculated
+	int ID;
 public:
 	Truck(TRUCK_TYPE T, int TC, float MT, float S) {
 		Type = T;
@@ -35,5 +37,10 @@ public:
 	float GetDeliveryInterval() {
 		return Delivery_Interval;
 	}
+	int GetID()
+	{
+		return ID;
+	}
+	
 };
 

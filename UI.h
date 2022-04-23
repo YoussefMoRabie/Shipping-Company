@@ -12,10 +12,9 @@ class UI
 public:
 	UI();
 	SIM_MODE get_sim_mode();
-	void InteractivePrinting() const;
-	void StepByStepPrinting() const;
-	void SilentPrinting() const;
-	void Output_Console()const;
+	void InteractivePrinting() ;
+	void StepByStepPrinting() ;
+	void SilentPrinting() ;
 	void print(string);
 
 	int getIntger()

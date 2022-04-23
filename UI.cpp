@@ -27,22 +27,10 @@ SIM_MODE UI::get_sim_mode()
 		return SIM_MODE::SILENT;
 }
 
-void UI::InteractivePrinting() const
-{
-	cout << "Interactive Mode\n";
 
-}
 
-void UI::StepByStepPrinting() const
-{
-}
 
-void UI::SilentPrinting() const
-{
-	cout << "Silent Mode" << endl;
-	cout << "Simulation Starts..." << endl;
-	cout << "Simulation ends, Output file created" << endl;
-}
+
 //
 //void UI::Output_Console() const
 //{

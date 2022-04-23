@@ -1,6 +1,7 @@
 #pragma once
 #include"Def.h"
 #include "Time.h"
+#include <string>
 
 class Cargo
 {
@@ -49,5 +50,10 @@ private:
 				return true;
 			return false;
 		}
+		int GetID()
+		{
+			return ID;
+		}
+		
 };
 
