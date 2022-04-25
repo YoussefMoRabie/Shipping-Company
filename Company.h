@@ -22,7 +22,7 @@ class Company
 	//Queue<Cargo*> Special_cargo; 
 	//Queue<Cargo*> Normal_cargo; //list
 	PriQueue<Cargo*> W_V_C; //pri
-	Queue<Cargo*> W_S_C; //pri
+	Queue<Cargo*> W_S_C; 
 	LinkedList<Cargo*> W_N_C; //list
 	PriQueue<Cargo*> M_S_C;	//pri
 	PriQueue<Cargo*> M_V_C;	//pri
@@ -48,7 +48,7 @@ class Company
 	
 	//-------------------------------------------------------
 
-	PriQueue<Event*> Event_List; //pri
+	Queue<Event*> Event_List; //pri
 
 	//-------------------------------------------------------
 
