@@ -86,33 +86,20 @@ public:
 		DistroyQueue();
 	}
 
-	void print();
+	void print()
+	{
+		Node<Type>* temp = front;
+		while (temp)
+		{
+			cout << *(temp->get_item());
+			temp = temp->get_next();
+			if (temp)
+				cout << ',';
+		}
+	}
 };
 
-//TO BE MOVED TO A NEW DATA STRUCTURE
-/*bool remove_cargo(Queue<Cargo*> q, int id, Cargo*& ptr)
-{
-	Node<Cargo*>* NodePtr = q.GetFront();
-	while (NodePtr)
-	{
-		if (*(NodePtr->get_item()) == id)
-		{
-			if (NodePtr->get_next())
-			{
-				NodePtr->set_item(NodePtr->get_next()->get_item());
-				NodePtr->set_next(NodePtr->get_next()->get_next());
-			}
-			else
-			{
-				NodePtr
-			}
-			return true;
-		}
-		NodePtr = NodePtr->get_next();
-	}
-	return false;
-}*/
-
+/*
 template<class Type>
 inline void Queue<Type>::print()
 {
@@ -151,4 +138,4 @@ inline void Queue<Truck*>::print()
 			cout << ',';
 	}
 
-}
+}*/

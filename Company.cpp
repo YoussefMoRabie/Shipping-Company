@@ -7,9 +7,17 @@
 #include <string>
 using namespace std;
 
-Company::Company(UI* p)
+Company::Company()
 {
-	ui_p = p;
+}
+
+void Company::Start_Simuulation()
+{
+	string filename;
+	filename = ui_p->getString();
+	readFile(filename+".txt");
+	cin.get();
+	execute_mode(get_input_mode());
 }
 
 void Company::move_to_checkup(Truck*)
@@ -21,14 +29,27 @@ bool Company::Events_empty()
 	return Event_List.QueueEmpty();
 }
 
-//searches the normal cargo list with the id, if found it is removed from the normal queue and added to the vip one.
-/*bool Company::Find_Normal_Cargo(int id, Cargo*& ptr)
+//searches the normal cargo list with the id, if found it is removed from the normal list and added to the vip one.
+bool Company::Upgrade_Normal_Cargo(int id, int extra_money)
 {
-	if (Normal_cargo.find_cargo(id, ptr))
+	Cargo* ptr = new Cargo(id);
+	if (W_N_C.Find_Remove(ptr, ptr))
+	{
+		ptr->PromoteToVip(extra_money);
+		AddCargo(ptr);
+		return true;
+	}
+	return false;
+}
+
+//searches the normal cargo list with the id, if found it is removed from the normal list.
+bool Company::Cancel_Normal_Cargo(int id)
+{
+	Cargo* ptr = new Cargo(id);
+	if (W_N_C.Find_Remove(ptr, ptr))
 		return true;
 	return false;
-}*/
-
+}
 
 
 void Company::AddCargo(Cargo* c)
@@ -37,7 +58,7 @@ void Company::AddCargo(Cargo* c)
 	{
 	case CARGO_TYPE::NORMAL:
 	{
-		W_N_C.InsertBegin(c);
+		W_N_C.InsertEnd(c);
 		break;
 	}
 	case CARGO_TYPE::SPECIAL:
@@ -47,7 +68,9 @@ void Company::AddCargo(Cargo* c)
 	}
 	case CARGO_TYPE::VIP:
 	{
-		W_V_C.EnQueue(c);
+		int time = (c->GetPrepTime().getDay() * 24) + c->GetPrepTime().getHour();
+		float priority = 10 * c->GetCost() / (c->GetDistance() * time);
+		W_V_C.EnQueue(c, priority);
 		break;
 	}
 	}
@@ -150,7 +173,7 @@ void Company::Print_Sim_Time()
 }
 //--------------------------------------------------------
 
-Time& Company::get_Sim_Time() 
+Time& Company::get_Sim_Time()
 {
 	return Sim_Time;
 }
@@ -171,22 +194,13 @@ void Company::Advance_Sim_Time(int value)
 {
 	Sim_Time.AdvanceTime(value);
 }
-//
-//LinkedQueue<Mission*>& Company::get_w_p_m()
-//{
-//	// // O: insert return statement here
-//}
-//
-//Queue<Cargo*>& Company::get_w_e_m()
-//{
-//	// // O: insert return statement here
-//}
 
 void Company::Waiting_To_Delivered()
 {
 	Cargo* c;
 	if (!W_V_C.QueueEmpty())
 	{
+		c = NULL;
 		c = W_V_C.Peek();
 		W_V_C.DeQueue();
 		if (c)
@@ -194,199 +208,176 @@ void Company::Waiting_To_Delivered()
 	}
 	if (!W_S_C.QueueEmpty())
 	{
+		c = NULL;
 		c = W_S_C.Peek();
 		W_S_C.DeQueue();
 		if (c)
 			Delivered_cargo.EnQueue(c);
 	}
-	if(!W_N_C.IsEmpty())
+	if (!W_N_C.IsEmpty())
 	{
-		c = W_N_C.getFirst();
-		W_N_C.removeFirst();
-		if (c)
+		if (W_N_C.removeFirst(c))
 			Delivered_cargo.EnQueue(c);
 	}
 }
 
-void Company::Output_Console() 
+bool Company::All_Delivered()
 {
-	ui_p->print("Current Time (Day:Hour):" +to_string(Company::get_Sim_Time().getDay())+":"+ to_string(Company::get_Sim_Time().getHour())+"\n");
+	//Add Moving Lists in phase 2
+	if (W_N_C.IsEmpty() && W_S_C.QueueEmpty() && W_V_C.QueueEmpty())
+		return true;
+	else
+		return false;
+}
+
+void Company::Output_Console()
+{
+	ui_p->print("Current Time (Day:Hour):" + to_string(Company::get_Sim_Time().getDay()) + ":" + to_string(Company::get_Sim_Time().getHour()) + "\n");
 	//calculate # of waiting cargos
-	int W_C = Company:: get_W_V_C().GetCount() + Company::get_W_S_C().GetCount() + Company::get_W_N_C().GetCount();
-	ui_p->print( to_string(W_C) + " Waiting Cargos: [");
+	int W_C = W_V_C.GetCount() + W_S_C.GetCount() + W_N_C.GetCount();
+	ui_p->print(to_string(W_C) + " Waiting Cargos: [");
 	// First --> print the ID of the Normal Cargos
-	get_W_N_C().print();
-	ui_p->print( "] (");
+	W_N_C.print();
+	ui_p->print("] (");
 	// Second --> print the ID of the Special Cargos
-	get_W_S_C().print();
+	W_S_C.print();
 	ui_p->print(") {");
-    // Third --> print the ID of the VIP Cargos
-      get_W_V_C().print();
-	  ui_p->print("}\n");
-	  ui_p->print("----------------------------------------------------------------------------\n");
-	  //---------------------------------------------------------------------------------------------------------//
-	  ui_p->print(to_string(get_Loading().GetCount()) + "  Loading Trucks: \n");
-	  ui_p->print("----------------------------------------------------------------------------\n");
-	  //---------------------------------------------------------------------------------------------------------//
-	  ui_p->print(to_string(get_Empty().GetCount()) + "  Empty Trucks: \n");
-	  ui_p->print("----------------------------------------------------------------------------\n");
-	  //---------------------------------------------------------------------------------------------------------//
-	  int M_C = Company::get_M_V_C().GetCount() + Company::get_M_S_C().GetCount() + Company::get_M_N_C().GetCount();
-	  ui_p->print(to_string(M_C) + " Moving Cargos: "+to_string(get_M_N_C().GetCount())+"[");
-	  // First --> print the ID of the Normal Cargos
-	  get_M_N_C().print();
-	  ui_p->print("] "+ to_string(get_M_S_C().GetCount()) +"(");
-	  // Second --> print the ID of the Special Cargos
-	  get_M_S_C().print();
-	  ui_p->print(") "+to_string(get_M_V_C().GetCount()) + "{");
-	  // Third --> print the ID of the VIP Cargos
-	  get_M_V_C().print();
-	  ui_p->print("}\n");
-	  ui_p->print("----------------------------------------------------------------------------\n");
+	// Third --> print the ID of the VIP Cargos
+	W_V_C.print();
+	ui_p->print("}\n");
+	ui_p->print("----------------------------------------------------------------------------\n");
+	//---------------------------------------------------------------------------------------------------------//
+	ui_p->print(to_string(Loading.GetCount()) + "  Loading Trucks: \n");
+	ui_p->print("----------------------------------------------------------------------------\n");
+	//---------------------------------------------------------------------------------------------------------//
+	ui_p->print(to_string(Empty.GetCount()) + "  Empty Trucks: \n");
+	ui_p->print("----------------------------------------------------------------------------\n");
+	//---------------------------------------------------------------------------------------------------------//
+	int M_C = M_V_C.GetCount() + M_S_C.GetCount() + M_N_C.GetCount();
+	ui_p->print(to_string(M_C) + " Moving Cargos: " + to_string(M_N_C.GetCount()) + "[");
+	// First --> print the ID of the Normal Cargos
+	M_N_C.print();
+	ui_p->print("] " + to_string(M_S_C.GetCount()) + "(");
+	// Second --> print the ID of the Special Cargos
+	M_S_C.print();
+	ui_p->print(") " + to_string(M_V_C.GetCount()) + "{");
+	// Third --> print the ID of the VIP Cargos
+	M_V_C.print();
+	ui_p->print("}\n");
+	ui_p->print("----------------------------------------------------------------------------\n");
 
-	  //---------------------------------------------------------------------------------------------------------//
+	//---------------------------------------------------------------------------------------------------------//
 
-	  int C_T = Company::get_check_up_v_trucks().GetCount() + Company::get_check_up_s_trucks().GetCount() + Company::get_check_up_n_trucks().GetCount();
-	  ui_p->print(to_string(C_T) + " In-Checkup Trucks: [");
-	  // First --> print the ID of the Normal Cargos
-	  get_check_up_n_trucks().print();
-	  ui_p->print("] (");
-	  // Second --> print the ID of the Special Cargos
-	  get_check_up_s_trucks().print();
-	  ui_p->print(") {");
-	  // Third --> print the ID of the VIP Cargos
-	  get_check_up_v_trucks().print();
-	  ui_p->print("}\n");
-	  ui_p->print("----------------------------------------------------------------------------\n");
-	  //---------------------------------------------------------------------------------------------------------//
-	  Queue<Cargo*> temp;
-	  ui_p->print(to_string(Delivered_cargo.GetCount()) + " Delivered Cargos:");
-	  while (Delivered_cargo.GetFront())
-	  {
-		  if (Delivered_cargo.Peek()->GetType() == CARGO_TYPE::NORMAL)
-			  ui_p->print("[" + to_string(Delivered_cargo.Peek()->GetID()) + "]");
+	int C_T = Check_up_VIP.GetCount() + Check_up_Special.GetCount() + Check_up_Normal.GetCount();
+	ui_p->print(to_string(C_T) + " In-Checkup Trucks: [");
+	// First --> print the ID of the Normal Cargos
+	Check_up_Normal.print();
+	ui_p->print("] (");
+	// Second --> print the ID of the Special Cargos
+	Check_up_Special.print();
+	ui_p->print(") {");
+	// Third --> print the ID of the VIP Cargos
+	Check_up_VIP.print();
+	ui_p->print("}\n");
+	ui_p->print("----------------------------------------------------------------------------\n");
+	//---------------------------------------------------------------------------------------------------------//
+	Queue<Cargo*> temp;
+	ui_p->print(to_string(Delivered_cargo.GetCount()) + " Delivered Cargos:");
+	while (Delivered_cargo.GetFront())
+	{
+		if (Delivered_cargo.Peek()->GetType() == CARGO_TYPE::NORMAL)
+			ui_p->print("[" + to_string(Delivered_cargo.Peek()->GetID()) + "]");
 
-		  else if (Delivered_cargo.Peek()->GetType() == CARGO_TYPE::VIP)
-			  ui_p->print("{" + to_string(Delivered_cargo.Peek()->GetID()) + "}");
-		  else 
-			  ui_p->print("(" + to_string(Delivered_cargo.Peek()->GetID()) + ")");
-	      temp.EnQueue(Delivered_cargo.Peek());
-		  Delivered_cargo.DeQueue();
-	  }
-	  while (temp.GetFront())
-	  {
-		  Delivered_cargo.EnQueue(temp.Peek());
-		  temp.DeQueue();
-	  }
-	  ui_p->print("\n//////////////////////////////////////////////////////////////////////////////////////\n");
+		else if (Delivered_cargo.Peek()->GetType() == CARGO_TYPE::VIP)
+			ui_p->print("{" + to_string(Delivered_cargo.Peek()->GetID()) + "}");
+		else
+			ui_p->print("(" + to_string(Delivered_cargo.Peek()->GetID()) + ")");
+		temp.EnQueue(Delivered_cargo.Peek());
+		Delivered_cargo.DeQueue();
+	}
+	while (temp.GetFront())
+	{
+		Delivered_cargo.EnQueue(temp.Peek());
+		temp.DeQueue();
+	}
+	ui_p->print("\n//////////////////////////////////////////////////////////////////////////////////////\n");
 }
 
 void Company::InteractivePrinting()
 {
 	ui_p->print("Interactive Mode\n");
 	int Five_Counter = 0;
-	while (!Events_empty())
+
+	while (!Events_empty() || !All_Delivered())
 	{
-		//UI_P->print("Current Time (Day:Hour): ");
-		//company.Print_Sim_Time();
-		//UI_P->print("\n");
-		//company.Print_Waiting_Cargos();
-		//UI_P->print("-----------------------------------------------------------------------------------------\n");
-		//company.Print_Moving_Cargos();
-		//UI_P->print("-----------------------------------------------------------------------------------------\n");
-		//company.Print_Delivered_Cargos();
-		//UI_P->print("-----------------------------------------------------------------------------------------\n");
 
-		if (get_Sim_Time() == get_Nearest_Event_Time())
+		if (!Events_empty())
 		{
-			Event* Eptr = get_Nearest_Event();
-			Eptr->Execute();
-		}
-
-		while (true)
-		{
-			if (cin.get())
+			if (get_Sim_Time() == get_Nearest_Event_Time())
 			{
-				Output_Console();
-
-				Advance_Sim_Time();
-				Five_Counter++;
-				if (Five_Counter == 5)
-				{
-					Five_Counter = 0;
-					Waiting_To_Delivered();
-				}
-				break;
+				Event* Eptr = get_Nearest_Event();
+				Eptr->Execute();
 			}
+		}
+		if (cin.get())
+		{
+			Output_Console();
 
+			Advance_Sim_Time();
+			Five_Counter++;
+			if (Five_Counter == 5)
+			{
+				Five_Counter = 0;
+				Waiting_To_Delivered();
+			}
 		}
 	}
-	ui_p->print("All Events are done, Simulation over.");
+
+	cin.get();
+	Output_Console();
+	ui_p->print("Everything is done, Simulation over.");
 }
 
-void Company::SilentPrinting() 
+void Company::SilentPrinting()
 {
 	ui_p->print("Silent Mode\n");
 	ui_p->print("Simulation Starts...\n");
 	ui_p->print("Simulation ends, Output file created\n");
-	}
+}
 void Company::StepByStepPrinting()
 {
 	ui_p->print("StepByStep Mode\n");
 	int Five_Counter = 0;
-	while (!Events_empty())
+	while (!Events_empty() || !All_Delivered())
 	{
 
-		//UI_P->print("Current Time (Day:Hour): ");
-		//company.Print_Sim_Time();
-		//UI_P->print("\n");
-		//company.Print_Waiting_Cargos();
-		//UI_P->print("-----------------------------------------------------------------------------------------\n");
-		//company.Print_Moving_Cargos();
-		//UI_P->print("-----------------------------------------------------------------------------------------\n");
-		//company.Print_Delivered_Cargos();
-		//UI_P->print("-----------------------------------------------------------------------------------------\n");
-
-
-		if (get_Sim_Time() == get_Nearest_Event_Time())
+		if (!Events_empty())
 		{
-			Event* Eptr = get_Nearest_Event();
-			Eptr->Execute();
+			if (get_Sim_Time() == get_Nearest_Event_Time())
+			{
+				Event* Eptr = get_Nearest_Event();
+				Eptr->Execute();
+			}
 		}
-
-		while (true)
+		Sleep(1000);
+		Output_Console();
+		Advance_Sim_Time();
+		Five_Counter++;
+		if (Five_Counter == 5)
 		{
-			Sleep(1000);
-			
-				Output_Console();
-
-				Advance_Sim_Time();
-				Five_Counter++;
-				if (Five_Counter == 5)
-				{
-					Five_Counter = 0;
-					Waiting_To_Delivered();
-				}
-				break;
-			
-
+			Five_Counter = 0;
+			Waiting_To_Delivered();
 		}
-
-
-		
-
-		
-
 	}
-	ui_p->print("All Events are done, Simulation over.");
+	Sleep(1000);
+	Output_Console();
+	ui_p->print("Everything is done, Simulation over.");
 }
 
-SIM_MODE Company::get_input_mode() 
+SIM_MODE Company::get_input_mode()
 {
 	return ui_p->get_sim_mode();
 }
-
-
 
 void Company::execute_mode(SIM_MODE Mode)
 {
@@ -396,61 +387,74 @@ void Company::execute_mode(SIM_MODE Mode)
 		SilentPrinting();
 	else
 		StepByStepPrinting();
-
 }
 
 bool Company::write_output_file()
 {
+	//to be implemented in phase 2
 	return 0;
 }
 
-PriQueue<Cargo*>& Company::get_W_V_C()
+void Company::print_W_V_C()
 {
-	return W_V_C;
+	W_V_C.print();
 }
 
-Queue<Cargo*>& Company::get_W_S_C()
+void Company::print_W_S_C()
 {
-	return W_S_C;
+	W_S_C.print();
 }
 
-LinkedList<Cargo*>& Company::get_W_N_C()
+void Company::print_W_N_C()
 {
-	return W_N_C;
+	W_N_C.print();
 }
 
-PriQueue<Cargo*>& Company::get_M_V_C()
+void Company::print_M_V_C()
 {
-	return M_V_C;
+	M_V_C.print();
 }
 
-PriQueue<Cargo*>& Company::get_M_S_C()
+void Company::print_M_S_C()
 {
-	return M_S_C;
+	M_S_C.print();
 }
 
-PriQueue<Cargo*>& Company::get_M_N_C()
+void Company::print_M_N_C()
 {
-	return M_N_C;
+	M_N_C.print();
 }
 
-Queue<Truck*>& Company::get_Loading()
+void Company::print_Loading()
 {
-	return Loading;
+	Loading.print();
 }
-Queue<Truck*>& Company::get_Empty()
+void Company::print_Empty()
 {
-	return Empty;
+	Empty.print();
 }
-Queue<Truck*>& Company::get_check_up_v_trucks()
+void Company::print_check_up_v_trucks()
 {
-	return Check_up_VIP;
+	Check_up_VIP.print();
 }
-Queue<Truck*>& Company::get_check_up_s_trucks()
+void Company::print_check_up_s_trucks()
 {
-	return Check_up_Special;
+	Check_up_Special.print();
 }
-Queue<Truck*>& Company::get_check_up_n_trucks()
+void Company::print_check_up_n_trucks()
 {
-	return Check_up_Normal;
+	Check_up_Normal.print();
+}
+
+//TO BE MOVED TO CARGO AND TRUCK CPP FILES
+ostream& operator<<(ostream& out, const Truck& t)
+{
+	out << t.GetID();
+	return out;
+}
+
+ostream& operator<<(ostream& out, const Cargo& c)
+{
+	out << c.GetID();
+	return out;
 }

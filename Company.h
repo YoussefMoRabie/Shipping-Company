@@ -18,15 +18,12 @@ class Company
 	//------------------------------------------------------
 
 	//Cargos
-	//PriQueue<Cargo*> VIP_cargo; //pri
-	//Queue<Cargo*> Special_cargo; 
-	//Queue<Cargo*> Normal_cargo; //list
-	PriQueue<Cargo*> W_V_C; //pri
+	PriQueue<Cargo*> W_V_C;
 	Queue<Cargo*> W_S_C; 
-	LinkedList<Cargo*> W_N_C; //list
-	PriQueue<Cargo*> M_S_C;	//pri
-	PriQueue<Cargo*> M_V_C;	//pri
-	PriQueue<Cargo*> M_N_C;	//pri
+	LinkedList<Cargo*> W_N_C; 
+	PriQueue<Cargo*> M_S_C;	
+	PriQueue<Cargo*> M_V_C;	
+	PriQueue<Cargo*> M_N_C;	
 	Queue<Cargo*> Delivered_cargo;
 
 	//------------------------------------------------------
@@ -40,15 +37,9 @@ class Company
 	Queue<Truck*> Check_up_VIP;
 	Queue<Truck*> Loading;
 	Queue<Truck*> Empty;
-	Queue<Truck*> Moving_truck; //bag
+	Queue<Truck*> Moving_truck;
 
-	//-------------------------------------------------------
-
-	
-	
-	//-------------------------------------------------------
-
-	Queue<Event*> Event_List; //pri
+	Queue<Event*> Event_List;
 
 	//-------------------------------------------------------
 
@@ -68,13 +59,10 @@ class Company
 	//-------------------------------------------------------
 	
 	//Number of cargos in each list
-	int VIP_Cargos_count;
-	int Normal_Cargos_count;
-	int Special_Cargos_count;
-	int InExec_Cargos_count;
-	int Comp_Cargos_count;
+	int Moving_Cargos_count;
+	int Delivered_Cargos_count;
 	int Total_Cargos_count;
-	int NO_Promoted_cargos;
+	int Num_Promoted_cargos;
 
 	//--------------------------------------------------------
 	int auto_promoted_count;
@@ -91,7 +79,8 @@ class Company
 
 public:
 
-	Company(UI* p);
+	Company();
+	void Start_Simuulation();
 
 	// Reading data function
 	SIM_MODE get_input_mode() ;
@@ -117,40 +106,33 @@ public:
 	void SilentPrinting();
 
 
-	//--------------------------------------
-	Queue<Cargo*>& get_vip_c();
-	Queue<Cargo*>& get_sp_c();
-	Queue<Cargo*>& get_norm_c();
-	Queue<Cargo*>& get_in_execution_cargos();
-	Queue<Cargo*>& get_completed_cargos();
-	PriQueue<Cargo*>& get_W_V_C();
-	Queue<Cargo*>& get_W_S_C();
-	LinkedList<Cargo*>& get_W_N_C();
-	PriQueue<Cargo*>& get_M_V_C();
-	PriQueue<Cargo*>& get_M_S_C();
-	PriQueue<Cargo*>& get_M_N_C();
+	//---------------------------------------
+	void print_W_V_C();
+	void print_W_S_C();
+	void print_W_N_C();
+	void print_M_V_C();
+	void print_M_S_C();
+	void print_M_N_C();
 
 	//---------------------------------------
-	Queue<Truck*>& get_check_up_v_trucks();
-	Queue<Truck*>& get_check_up_s_trucks();
-	Queue<Truck*>& get_check_up_n_trucks();
-	Queue<Truck*>& get_Loading();
-	Queue<Truck*>& get_Empty();
-	Queue<Truck*>& get_available_trucks_vip_();
-	Queue<Truck*>& get_available_trucks_normal_();
-	Queue<Truck*>& get_available_trucks_special_();
+	void print_check_up_v_trucks();
+	void print_check_up_s_trucks();
+	void print_check_up_n_trucks();
+	void print_Loading();
+	void print_Empty();
+	void print_available_trucks_vip_();
+	void print_available_trucks_normal_();
+	void print_available_trucks_special_();
 	//--------------------------------------
 	bool Events_empty();
 	
 	void AddCargo(Cargo*);
 	void Waiting_To_Delivered();
 
-	bool Find_Normal_Cargo(int id, Cargo*&);
+	bool Upgrade_Normal_Cargo(int id,int extra_money);
+	bool Cancel_Normal_Cargo(int id);
 
-
-	bool check_special_t_c();
-	void increment_cancelled_c();
-	void increment_formulated_c();
+	bool All_Delivered();		//checks that all waiting and moving lists are empty
 
 	//------------------------------------------------------------
 	void Output_Console();
@@ -158,6 +140,7 @@ public:
 
 	//Destructor
 	~Company(){}
+
 
 };
 

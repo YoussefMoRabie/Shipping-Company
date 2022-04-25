@@ -4,7 +4,6 @@
 #include<Windows.h> 
 using namespace std;
 UI::UI(){}
-
 SIM_MODE UI::get_sim_mode()
 {
 	cout << "Hello my friend.\n";
@@ -26,9 +25,22 @@ SIM_MODE UI::get_sim_mode()
 	else
 		return SIM_MODE::SILENT;
 }
-
-
-
+void UI::print(string s)
+{
+	cout << s;
+}
+int UI::getIntger()
+{
+	int input;
+	cin >> input;
+	return input;
+}
+string UI::getString()
+{
+	string str;
+	cin >> str;
+	return str;
+}
 
 
 //
@@ -51,10 +63,3 @@ SIM_MODE UI::get_sim_mode()
 //	cout << company_ptr->get_Loading().GetCount() << "  Loading Trucks: ";
 //
 //}
-
-void UI::print(string s)
-{
-	cout << s;
-}
-
-

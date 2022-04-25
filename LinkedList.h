@@ -85,12 +85,40 @@ public:
 	{
 		return count;
 	}
-	bool removeFirst()
+	bool Find_Remove(Type val,Type& x)
+	{
+		Node<Type>* prev = NULL;
+		Node<Type>* ptr = First;
+		while (ptr)
+		{
+			if (*(ptr->get_item()) == val)
+			{
+				if (prev == NULL)
+				{
+					x = ptr->get_item();
+					First = First->get_next();
+				}
+				else
+				{
+					x = ptr->get_item();
+					prev->set_next(ptr->get_next());
+				}
+				count--;
+				return true;
+			}
+			prev = ptr;
+			ptr = ptr->get_next();
+		}
+		return false;
+	}
+
+	bool removeFirst(Type& x)
 	{
 		if (count == 0)
 			return false;
-		Node<Type>* delptr;
-		delptr = First;
+
+		Node<Type>* ptr;
+		ptr = First;
 		if (count == 1)
 		{
 			First = NULL;
@@ -100,15 +128,25 @@ public:
 		{
 			First= First->get_next();
 		}
-		delptr->set_next(nullptr);
+		x = ptr->get_item();
 		count--;
 		return true;
 	}
-	void print();
+	void print()
+	{
+		Node<Type>* temp = First;
+		while (temp)
+		{
+			cout << *(temp->get_item());
+			temp = temp->get_next();
+			if (temp)
+				cout << ',';
+		}
+	}
 
 };
 
-template<class Type>
+/*template<class Type>
 inline void LinkedList<Type>::print()
 {
 }
@@ -135,4 +173,4 @@ inline void LinkedList<Truck*>::print()
 		if (temp)
 			cout << ',';
 	}
-}
+}*/

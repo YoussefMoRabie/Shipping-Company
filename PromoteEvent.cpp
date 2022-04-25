@@ -6,12 +6,5 @@ PromoteEvent::PromoteEvent(Company* p, const Time& t, int id, float x) :Event(p,
 }
 void PromoteEvent::Execute()
 {
-	Cargo* ptr;
-	/*if (cPtr->Find_Normal_Cargo(ID, ptr))
-	{
-		ptr->PromoteToVip(ExtraMoney);
-		//REMOVE FROM THE NORMAL LIST
-		//ADD TO VIP LIST
-	}
-	*/
+	cPtr->Upgrade_Normal_Cargo(ID, ExtraMoney);
 }
