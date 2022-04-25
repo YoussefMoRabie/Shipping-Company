@@ -137,7 +137,7 @@ public:
 		Node<Type>* temp = First;
 		while (temp)
 		{
-			cout << *(temp->get_item());
+			cout << (temp->get_item());
 			temp = temp->get_next();
 			if (temp)
 				cout << ',';

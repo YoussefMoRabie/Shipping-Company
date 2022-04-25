@@ -300,7 +300,7 @@ void Company::Output_Console()
 		Delivered_cargo.EnQueue(temp.Peek());
 		temp.DeQueue();
 	}
-	ui_p->print("\n//////////////////////////////////////////////////////////////////////////////////////\n");
+	ui_p->print("\n\n###########################################################################################\n\n");
 }
 
 void Company::InteractivePrinting()
@@ -447,14 +447,14 @@ void Company::print_check_up_n_trucks()
 }
 
 //TO BE MOVED TO CARGO AND TRUCK CPP FILES
-ostream& operator<<(ostream& out, const Truck& t)
+ostream& operator<<(ostream& out, const Truck* t)
 {
-	out << t.GetID();
+	out << t->GetID();
 	return out;
 }
 
-ostream& operator<<(ostream& out, const Cargo& c)
+ostream& operator<<(ostream& out, const Cargo* c)
 {
-	out << c.GetID();
+	out << c->GetID();
 	return out;
 }
