@@ -119,7 +119,7 @@ inline void Queue<Type>::print()
 		Node<Type>* temp = front;
 		while (temp)
 		{
-			cout << temp->get_item() << "  ";
+			cout << temp->get_item() ;
 			temp = temp->get_next();
 			if (temp)
 				cout << ',';
@@ -132,7 +132,7 @@ inline void Queue<Cargo*>::print()
 	Node<Cargo*>* temp = front;
 	while (temp)
 	{
-		cout << temp->get_item()->GetID() << "  ";
+		cout << temp->get_item()->GetID();
 		temp = temp->get_next();
 		if (temp)
 			cout << ',';
@@ -145,7 +145,7 @@ inline void Queue<Truck*>::print()
 	Node<Truck*>* temp = front;
 	while (temp)
 	{
-		cout << temp->get_item()->GetID() << "  ";
+		cout << temp->get_item()->GetID() ;
 		temp = temp->get_next();
 		if (temp)
 			cout << ',';

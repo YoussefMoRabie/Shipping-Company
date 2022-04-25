@@ -118,7 +118,7 @@ inline void LinkedList<Cargo*>::print()
 	Node<Cargo*>* temp = First;
 	while (temp)
 	{
-		cout << temp->get_item()->GetID() << "  ";
+		cout << temp->get_item()->GetID();
 		temp = temp->get_next();
 		if (temp)
 			cout << ',';
@@ -130,7 +130,7 @@ inline void LinkedList<Truck*>::print()
 	Node<Truck*>* temp = First;
 	while (temp)
 	{
-		cout << temp->get_item()->GetID() << "  ";
+		cout << temp->get_item()->GetID() ;
 		temp = temp->get_next();
 		if (temp)
 			cout << ',';

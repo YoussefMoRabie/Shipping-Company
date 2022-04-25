@@ -113,7 +113,7 @@ inline void PriQueue<Type>::print()
 	PriNode<Type>* temp = front;
 	while (temp)
 	{
-		cout << temp->get_item() << "  ";
+		cout << temp->get_item() ;
 		temp = temp->get_next();
 		if (temp)
 			cout << ',';
@@ -125,7 +125,7 @@ inline void PriQueue<Cargo*>::print()
 	PriNode <Cargo*>* temp = front;
 	while (temp)
 	{
-		cout << temp->get_item()->GetID() << "  ";
+		cout << temp->get_item()->GetID();
 		temp = temp->get_next();
 		if (temp)
 			cout << ',';
@@ -137,7 +137,7 @@ inline void PriQueue<Truck*>::print()
 	PriNode<Truck*>* temp = front;
 	while (temp)
 	{
-		cout << temp->get_item()->GetID() << "  ";
+		cout << temp->get_item()->GetID() ;
 		temp = temp->get_next();
 		if (temp)
 			cout << ',';
