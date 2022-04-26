@@ -15,9 +15,12 @@ void Company::Start_Simuulation()
 {
 	string filename;
 	filename = ui_p->getString();
-	readFile(filename+".txt");
-	cin.get();
-	execute_mode(get_input_mode());
+	if (readFile(filename + ".txt")) {
+
+
+		cin.get();
+		execute_mode(get_input_mode());
+	}
 }
 
 void Company::move_to_checkup(Truck*)
@@ -76,14 +79,14 @@ void Company::AddCargo(Cargo* c)
 	}
 }
 
-void Company::readFile(string filename)
+bool Company::readFile(string filename)
 {
 	Loaded.open(filename);
 
 	if (!Loaded.is_open())
 	{
 		ui_p->print("Error: Can't open file! Click to continue ...");
-		return;
+		return false;
 	}
 	int N, S, V, nCap, sCap, vCap;
 	float nSpeed, sSpeed, vSpeed;
@@ -447,7 +450,7 @@ void Company::print_check_up_n_trucks()
 }
 
 //TO BE MOVED TO CARGO AND TRUCK CPP FILES
-ostream& operator<<(ostream& out, const Truck* t)
+/*ostream& operator<<(ostream& out, const Truck* t)
 {
 	out << t->GetID();
 	return out;
@@ -457,4 +460,7 @@ ostream& operator<<(ostream& out, const Cargo* c)
 {
 	out << c->GetID();
 	return out;
-}
+}*/ 
+
+
+//Moved..!

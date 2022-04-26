@@ -85,7 +85,7 @@ public:
 	// Reading data function
 	SIM_MODE get_input_mode() ;
 	void execute_mode(SIM_MODE);
-	void readFile(string);
+	bool readFile(string);
 	bool write_output_file(); // need to implementation
 
 	Time& get_Sim_Time() ;

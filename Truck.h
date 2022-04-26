@@ -15,38 +15,16 @@ private:
 	float Delivery_Interval; //Time to deliver all cargos & comeback, Calculated
 	int ID;
 public:
-	Truck(TRUCK_TYPE T, int TC, float MT, int j, float S)
-	{
-		Type = T;
-		Truck_Capacity = TC;
-		Maintenance_Time = MT;
-		J = j;
-		Speed = S;
-	}
-	TRUCK_TYPE GetType() const
-	{
-		return Type;
-	}
-	int GetCapacity() const
-	{
-		return Truck_Capacity;
-	}
+	Truck(TRUCK_TYPE T, int TC, float MT, int j, float S);
+	TRUCK_TYPE GetType() const;
+	int GetCapacity() const;
 
-	float GetMaintenanceTime() const
-	{
-		return Maintenance_Time;
-	}
-	float GetSpeed() const
-	{
-		return Speed;
-	}
-	float GetDeliveryInterval()
-	{
-		return Delivery_Interval;
-	}
-	int GetID() const
-	{
-		return ID;
-	}
+	float GetMaintenanceTime() const;
+	float GetSpeed() const;
+	float GetDeliveryInterval();
+	int GetID() const;
+	void set_DInterval(float x);
+	
+	
 };
 

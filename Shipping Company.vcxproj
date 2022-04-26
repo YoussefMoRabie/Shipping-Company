@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CancelEvent.cpp" />
+    <ClCompile Include="Cargo.cpp" />
     <ClCompile Include="Company.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
@@ -149,6 +150,7 @@
     <ClCompile Include="PreparationEvent.cpp" />
     <ClCompile Include="PromoteEvent.cpp" />
     <ClCompile Include="Time.cpp" />
+    <ClCompile Include="Truck.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
