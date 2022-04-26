@@ -24,7 +24,7 @@ public:
 	float GetDeliveryInterval();
 	int GetID() const;
 	void set_DInterval(float x);
-	
+	friend ostream& operator<<(ostream& out, const Truck* t);
 	
 };
 

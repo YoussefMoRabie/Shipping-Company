@@ -26,7 +26,10 @@ public:
 	void PromoteToVip(double ExtraMoney);
 	bool operator==(Cargo* ptr);
 	int GetID() const;
+	friend ostream& operator<<(ostream& out, const Cargo* c);
+	
 };
+
 
 
 
