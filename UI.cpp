@@ -41,25 +41,3 @@ string UI::getString()
 	cin >> str;
 	return str;
 }
-
-
-//
-//void UI::Output_Console() const
-//{
-//	cout << "Current Time (Day:Hour):" << company_ptr->get_Sim_Time().getDay() << ":" << company_ptr->get_Sim_Time().getHour()<<endl;
-//	//calculate # of waiting cargos
-//	int W_C = company_ptr->get_W_V_C().GetCount()+ company_ptr->get_W_S_C().GetCount()+ company_ptr->get_W_N_C().GetCount();
-//	cout << W_C << " Waiting Cargos: [";
-//	// First --> print the ID of the Normal Cargos
-//	company_ptr->get_W_N_C().print();
-//	cout << "] (";
-//	// Second --> print the ID of the Special Cargos
-//	company_ptr->get_W_S_C().print();
-//	cout << ") {";
-//	// Third --> print the ID of the VIP Cargos
-//	company_ptr->get_W_V_C().print();
-//	cout << "}"<<endl;
-//	cout << "----------------------------------------------------------------------------"<<endl;
-//	cout << company_ptr->get_Loading().GetCount() << "  Loading Trucks: ";
-//
-//}

@@ -145,32 +145,3 @@ public:
 	}
 
 };
-
-/*template<class Type>
-inline void LinkedList<Type>::print()
-{
-}
-template<>
-inline void LinkedList<Cargo*>::print()
-{
-	Node<Cargo*>* temp = First;
-	while (temp)
-	{
-		cout << temp->get_item()->GetID();
-		temp = temp->get_next();
-		if (temp)
-			cout << ',';
-	}
-}
-template<>
-inline void LinkedList<Truck*>::print()
-{
-	Node<Truck*>* temp = First;
-	while (temp)
-	{
-		cout << temp->get_item()->GetID() ;
-		temp = temp->get_next();
-		if (temp)
-			cout << ',';
-	}
-}*/
