@@ -73,6 +73,11 @@ bool Time::operator==(const Time& t)
 	return false;
 }
 
+int Time::operator-(const Time& t)
+{
+	return (24 * day + hour) - (24 * t.day + t.hour);
+}
+
 Time::~Time()
 {
 

@@ -2,8 +2,9 @@
 #include<iostream>
 using namespace std;
 
-Truck::Truck(TRUCK_TYPE T, int TC, float MT, int j, float S)
+Truck::Truck(int id, TRUCK_TYPE T, int TC, float MT, int j, float S)
 {
+	ID = id;
 	Type = T;
 	Truck_Capacity = TC;
 	Maintenance_Time = MT;
@@ -37,6 +38,44 @@ float Truck::GetDeliveryInterval()
 int Truck:: GetID() const
 {
 	return ID;
+}
+void Truck::load(Cargo* x, int LT)
+{
+	container.EnQueue(x, LT);
+	move_counter = container.Peek()->GetLU_Time();
+}
+void Truck::count_down()
+{
+	move_counter--;
+}
+int Truck::get_move_counter()
+{
+	return move_counter;
+}
+void Truck::print()
+{
+	if (container.QueueEmpty())
+		return;
+
+	ui_p->print(to_string(ID));
+	if (container.Peek()->GetType() == CARGO_TYPE::VIP)
+	{
+		ui_p->print("{");
+		container.print();
+		ui_p->print("} ");
+	}
+	else if (container.Peek()->GetType() == CARGO_TYPE::SPECIAL)
+	{
+		ui_p->print("(");
+		container.print();
+		ui_p->print(") ");
+	}
+	else if (container.Peek()->GetType() == CARGO_TYPE::NORMAL)
+	{
+		ui_p->print("[");
+		container.print();
+		ui_p->print("] ");
+	}
 }
 ostream& operator<<(ostream& out, const Truck* t)
 {

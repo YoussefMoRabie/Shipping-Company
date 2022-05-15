@@ -50,7 +50,7 @@ public:
 		return true;
 
 	}
-	bool DeQueue()
+	bool DeQueue(Type& x)
 	{
 		if (count == 0)
 			return false;
@@ -66,6 +66,7 @@ public:
 			front = front->get_next();
 		}
 		delptr->set_next(nullptr);
+		x = delptr->get_item();
 		count--;
 		return true;
 	}
@@ -75,9 +76,10 @@ public:
 	}
 	void DistroyQueue()
 	{
+		Type x;
 		int c = count;
 		for (int i = 0; i < c; i++)
-			DeQueue();
+			DeQueue(x);
 	}
 	PriNode<Type>* GetFront()
 	{

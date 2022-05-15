@@ -9,6 +9,9 @@ using namespace std;
 
 Company::Company()
 {
+	Loading_Normal = nullptr;
+	Loading_Special = nullptr;
+	Loading_VIP = nullptr;
 }
 
 void Company::Start_Simuulation()
@@ -23,8 +26,221 @@ void Company::Start_Simuulation()
 	}
 }
 
-void Company::move_to_checkup(Truck*)
+void Company::Working_Hours()
 {
+	Move_Trucks();
+
+	while (load_VIP())
+	{
+	}
+	while (load_Special())
+	{
+	}
+	while (load_Normal())
+	{
+	}
+	while (load_MaxW())
+	{
+	}
+}
+
+void Company::Off_Hours()
+{
+
+}
+
+bool Company::load_VIP()
+{
+	Truck* t_temp;
+	Cargo* c_temp;
+	if (W_V_C.GetCount() >= vCap && !Loading_VIP)
+	{
+		if (empty_VIP.DeQueue(t_temp))
+		{
+			for (int i = 0; i < vCap; i++)
+			{
+				W_V_C.DeQueue(c_temp);
+				t_temp->load(c_temp, c_temp->GetLU_Time());
+			}
+			Loading_VIP = t_temp;
+			return true;
+		}
+	}
+	if (W_V_C.GetCount() >= nCap && !Loading_Normal)
+	{
+		if (empty_Normal.DeQueue(t_temp))
+		{
+			for (int i = 0; i < nCap; i++)
+			{
+				W_V_C.DeQueue(c_temp);
+				t_temp->load(c_temp, c_temp->GetLU_Time());
+			}
+			Loading_Normal = t_temp;
+			return true;
+		}
+	}
+	if (W_V_C.GetCount() >= sCap && !Loading_Special)
+	{
+		if (empty_Special.DeQueue(t_temp))
+		{
+			for (int i = 0; i < sCap; i++)
+			{
+				W_V_C.DeQueue(c_temp);
+				t_temp->load(c_temp, c_temp->GetLU_Time());
+			}
+			Loading_Special = t_temp;
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Company::load_Special()
+{
+	Truck* t_temp;
+	Cargo* c_temp;
+	if (W_S_C.GetCount() >= sCap && !Loading_Special)
+	{
+		if (empty_Special.DeQueue(t_temp))
+		{
+			for (int i = 0; i < sCap; i++)
+			{
+				W_S_C.DeQueue(c_temp);
+				t_temp->load(c_temp, c_temp->GetLU_Time());
+			}
+			Loading_Special = t_temp;
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Company::load_Normal()
+{
+	Truck* t_temp;
+	Cargo* c_temp;
+	if (W_N_C.GetCount() >= nCap && !Loading_Normal)
+	{
+		if (empty_Normal.DeQueue(t_temp))
+		{
+			for (int i = 0; i < nCap; i++)
+			{
+				W_N_C.removeFirst(c_temp);
+				t_temp->load(c_temp, c_temp->GetLU_Time());
+			}
+			Loading_Normal = t_temp;
+			return true;
+		}
+	}
+	if (W_N_C.GetCount() >= vCap && !Loading_VIP)
+	{
+		if (empty_VIP.DeQueue(t_temp))
+		{
+			for (int i = 0; i < vCap; i++)
+			{
+				W_N_C.removeFirst(c_temp);
+				t_temp->load(c_temp, c_temp->GetLU_Time());
+			}
+			Loading_VIP = t_temp;
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Company::load_MaxW()
+{
+	Truck* t_temp;
+	Cargo* c_temp;
+	int wait_time;
+	
+	//a special cargo has exceeded maxW
+	if (!W_S_C.QueueEmpty())
+	{
+		wait_time = Sim_Time - W_S_C.Peek()->GetPrepTime();
+		if (wait_time >= MaxWait)
+		{
+			if (!Loading_Special)
+			{
+				if (empty_Special.DeQueue(t_temp))
+				{
+					W_S_C.DeQueue(c_temp);
+					t_temp->load(c_temp, c_temp->GetLU_Time());
+					Loading_Special = t_temp;
+					return true;
+				}
+			}
+		}
+	}
+	//a normal cargo has exceeded maxW
+	if (!W_N_C.IsEmpty())
+	{
+		wait_time = Sim_Time - W_N_C.getFirst()->GetPrepTime();
+		if (wait_time >= MaxWait)
+		{
+			if (!Loading_Normal)
+			{
+				if (empty_Normal.DeQueue(t_temp))
+				{
+					W_N_C.removeFirst(c_temp);
+					t_temp->load(c_temp, c_temp->GetLU_Time());
+					Loading_Normal = t_temp;
+					return true;
+				}
+			}
+			if (!Loading_VIP)
+			{
+				if (empty_VIP.DeQueue(t_temp))
+				{
+					W_N_C.removeFirst(c_temp);
+					t_temp->load(c_temp, c_temp->GetLU_Time());
+					Loading_VIP = t_temp;
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
+void Company::Move_Trucks()
+{
+	if (Loading_VIP)
+	{
+		Loading_VIP->count_down();
+		if (Loading_VIP->get_move_counter() == 0)
+		{
+			Move_Truck(Loading_VIP);
+		}
+	}
+	if (Loading_Special)
+	{
+		Loading_Special->count_down();
+		if (Loading_Special->get_move_counter() == 0)
+		{
+			Move_Truck(Loading_Special);
+		}
+	}
+	if (Loading_Normal)
+	{
+		Loading_Normal->count_down();
+		if (Loading_Normal->get_move_counter() == 0)
+		{
+			Move_Truck(Loading_Normal);
+		}
+	}
+}
+
+void Company::Move_Truck(Truck*& t)
+{
+	int finish_time = 0; //TO BE CALCULATED
+	Moving_truck.EnQueue(t,finish_time);
+	t = nullptr;
+}
+
+void Company::move_to_checkup(Truck* t)
+{
+
 }
 
 bool Company::Events_empty()
@@ -88,7 +304,8 @@ bool Company::readFile(string filename)
 		ui_p->print("Error: Can't open file! Click to continue ...");
 		return false;
 	}
-	int N, S, V, nCap, sCap, vCap;
+	int truck_id = 1;
+	int N, S, V;
 	float nSpeed, sSpeed, vSpeed;
 	int Num_of_journeys, nCheck, sCheck, vCheck;
 
@@ -97,18 +314,21 @@ bool Company::readFile(string filename)
 
 	for (int i = 0; i < N; i++)
 	{
-		Truck* T = new Truck(TRUCK_TYPE::NORMAL, nCap, nCheck, Num_of_journeys, nSpeed);
-		Normal_truck.EnQueue(T);
+		Truck* T = new Truck(truck_id, TRUCK_TYPE::NORMAL, nCap, nCheck, Num_of_journeys, nSpeed);
+		empty_Normal.EnQueue(T);
+		truck_id++;
 	}
 	for (int i = 0; i < S; i++)
 	{
-		Truck* T = new Truck(TRUCK_TYPE::SPECIAL, sCap, sCheck, Num_of_journeys, sSpeed);
-		Special_truck.EnQueue(T);
+		Truck* T = new Truck(truck_id, TRUCK_TYPE::SPECIAL, sCap, sCheck, Num_of_journeys, sSpeed);
+		empty_Special.EnQueue(T);
+		truck_id++;
 	}
 	for (int i = 0; i < V; i++)
 	{
-		Truck* T = new Truck(TRUCK_TYPE::VIP, vCap, vCheck, Num_of_journeys, vSpeed);
-		VIP_truck.EnQueue(T);
+		Truck* T = new Truck(truck_id, TRUCK_TYPE::VIP, vCap, vCheck, Num_of_journeys, vSpeed);
+		empty_VIP.EnQueue(T);
+		truck_id++;
 	}
 
 	Event* Eptr = nullptr;
@@ -188,8 +408,8 @@ Time& Company::get_Nearest_Event_Time()
 
 Event* Company::get_Nearest_Event()
 {
-	Event* Eptr = Event_List.Peek();
-	Event_List.DeQueue();
+	Event* Eptr;
+	Event_List.DeQueue(Eptr);
 	return Eptr;
 }
 
@@ -204,17 +424,13 @@ void Company::Waiting_To_Delivered()
 	if (!W_V_C.QueueEmpty())
 	{
 		c = NULL;
-		c = W_V_C.Peek();
-		W_V_C.DeQueue();
-		if (c)
+		if (W_V_C.DeQueue(c))
 			Delivered_cargo.EnQueue(c);
 	}
 	if (!W_S_C.QueueEmpty())
 	{
 		c = NULL;
-		c = W_S_C.Peek();
-		W_S_C.DeQueue();
-		if (c)
+		if (W_S_C.DeQueue(c))
 			Delivered_cargo.EnQueue(c);
 	}
 	if (!W_N_C.IsEmpty())
@@ -222,6 +438,18 @@ void Company::Waiting_To_Delivered()
 		if (W_N_C.removeFirst(c))
 			Delivered_cargo.EnQueue(c);
 	}
+}
+
+int Company::Loading_count()
+{
+	int count = 0;
+	if (Loading_Normal)
+		count++;
+	if (Loading_Special)
+		count++;
+	if (Loading_VIP)
+		count++;
+	return count;
 }
 
 bool Company::All_Delivered()
@@ -250,13 +478,29 @@ void Company::Output_Console()
 	ui_p->print("}\n");
 	ui_p->print("----------------------------------------------------------------------------\n");
 	//---------------------------------------------------------------------------------------------------------//
-	ui_p->print(to_string(Loading.GetCount()) + "  Loading Trucks: \n");
+	ui_p->print(to_string(Loading_count()) + " Loading Trucks: ");
+	if(Loading_Normal)
+		Loading_Normal->print();
+	if(Loading_Special)
+		Loading_Special->print();
+	if(Loading_VIP)
+		Loading_VIP->print();
+	ui_p->print("\n----------------------------------------------------------------------------\n");
+	//---------------------------------------------------------------------------------------------------------//
+	int E_C = empty_Normal.GetCount() + empty_Special.GetCount() + empty_VIP.GetCount();
+	ui_p->print(to_string(E_C) + " Empty Trucks: [");
+	// First --> print the ID of the Normal trucks
+	empty_Normal.print();
+	ui_p->print("] (");
+	// Second --> print the ID of the Special trucks
+	empty_Special.print();
+	ui_p->print(") {");
+	// Third --> print the ID of the VIP trucks
+	empty_VIP.print();
+	ui_p->print("}\n");
 	ui_p->print("----------------------------------------------------------------------------\n");
 	//---------------------------------------------------------------------------------------------------------//
-	ui_p->print(to_string(Empty.GetCount()) + "  Empty Trucks: \n");
-	ui_p->print("----------------------------------------------------------------------------\n");
-	//---------------------------------------------------------------------------------------------------------//
-	int M_C = M_V_C.GetCount() + M_S_C.GetCount() + M_N_C.GetCount();
+/*	int M_C = Moving_truck.GetCount();
 	ui_p->print(to_string(M_C) + " Moving Cargos: " + to_string(M_N_C.GetCount()) + "[");
 	// First --> print the ID of the Normal Cargos
 	M_N_C.print();
@@ -273,13 +517,13 @@ void Company::Output_Console()
 
 	int C_T = Check_up_VIP.GetCount() + Check_up_Special.GetCount() + Check_up_Normal.GetCount();
 	ui_p->print(to_string(C_T) + " In-Checkup Trucks: [");
-	// First --> print the ID of the Normal Cargos
+	// First --> print the ID of the Normal trucks
 	Check_up_Normal.print();
 	ui_p->print("] (");
-	// Second --> print the ID of the Special Cargos
+	// Second --> print the ID of the Special trucks
 	Check_up_Special.print();
 	ui_p->print(") {");
-	// Third --> print the ID of the VIP Cargos
+	// Third --> print the ID of the VIP trucks
 	Check_up_VIP.print();
 	ui_p->print("}\n");
 	ui_p->print("----------------------------------------------------------------------------\n");
@@ -302,14 +546,13 @@ void Company::Output_Console()
 	{
 		Delivered_cargo.EnQueue(temp.Peek());
 		temp.DeQueue();
-	}
+	}*/
 	ui_p->print("\n\n###########################################################################################\n\n");
 }
 
 void Company::InteractivePrinting()
 {
 	ui_p->print("Interactive Mode\n");
-	int Five_Counter = 0;
 
 	while (!Events_empty() || !All_Delivered())
 	{
@@ -327,11 +570,13 @@ void Company::InteractivePrinting()
 			Output_Console();
 
 			Advance_Sim_Time();
-			Five_Counter++;
-			if (Five_Counter == 5)
+			if (5 <= Sim_Time.getHour() <= 23)
 			{
-				Five_Counter = 0;
-				Waiting_To_Delivered();
+				Working_Hours();
+			}
+			else
+			{
+				Off_Hours();
 			}
 		}
 	}
@@ -350,7 +595,6 @@ void Company::SilentPrinting()
 void Company::StepByStepPrinting()
 {
 	ui_p->print("StepByStep Mode\n");
-	int Five_Counter = 0;
 	while (!Events_empty() || !All_Delivered())
 	{
 
@@ -365,11 +609,13 @@ void Company::StepByStepPrinting()
 		Sleep(1000);
 		Output_Console();
 		Advance_Sim_Time();
-		Five_Counter++;
-		if (Five_Counter == 5)
+		if (5 <= Sim_Time.getHour() <= 23)
 		{
-			Five_Counter = 0;
-			Waiting_To_Delivered();
+			Working_Hours();
+		}
+		else
+		{
+			Off_Hours();
 		}
 	}
 	Sleep(1000);
@@ -412,29 +658,17 @@ void Company::print_W_N_C()
 {
 	W_N_C.print();
 }
-
-void Company::print_M_V_C()
+void Company::print_empty_Normal()
 {
-	M_V_C.print();
+	empty_Normal.print();
 }
-
-void Company::print_M_S_C()
+void Company::print_empty_Special()
 {
-	M_S_C.print();
+	empty_Special.print();
 }
-
-void Company::print_M_N_C()
+void Company::print_empty_VIP()
 {
-	M_N_C.print();
-}
-
-void Company::print_Loading()
-{
-	Loading.print();
-}
-void Company::print_Empty()
-{
-	Empty.print();
+	empty_VIP.print();
 }
 void Company::print_check_up_v_trucks()
 {
@@ -448,20 +682,3 @@ void Company::print_check_up_n_trucks()
 {
 	Check_up_Normal.print();
 }
-
-//TO BE MOVED TO CARGO AND TRUCK CPP FILES
-/*ostream& operator<<(ostream& out, const Truck* t)
-{
-	out << t->GetID();
-	return out;
-}
-
-ostream& operator<<(ostream& out, const Cargo* c)
-{
-	out << c->GetID();
-	return out;
-}*/ 
-
-
-
-//Moved..!

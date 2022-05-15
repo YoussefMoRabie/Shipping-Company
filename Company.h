@@ -18,26 +18,21 @@ class Company
 	//------------------------------------------------------
 
 	//Cargos
-	PriQueue<Cargo*> W_V_C;
-	Queue<Cargo*> W_S_C; 
-	LinkedList<Cargo*> W_N_C; 
-	PriQueue<Cargo*> M_S_C;	
-	PriQueue<Cargo*> M_V_C;	
-	PriQueue<Cargo*> M_N_C;	
+	PriQueue<Cargo*> W_V_C;		//waiting vip cargos
+	Queue<Cargo*> W_S_C;		//waiting special cargos
+	LinkedList<Cargo*> W_N_C;	//waiting normal cargos
 	Queue<Cargo*> Delivered_cargo;
 
 	//------------------------------------------------------
 
 	//Trucks
-	Queue<Truck*> VIP_truck;
-	Queue<Truck*> Special_truck;
-	Queue<Truck*> Normal_truck;
+	Queue<Truck*> empty_VIP;
+	Queue<Truck*> empty_Special;
+	Queue<Truck*> empty_Normal;
 	Queue<Truck*> Check_up_Normal;
 	Queue<Truck*> Check_up_Special;
 	Queue<Truck*> Check_up_VIP;
-	Queue<Truck*> Loading;
-	Queue<Truck*> Empty;
-	Queue<Truck*> Moving_truck;
+	PriQueue<Truck*> Moving_truck;
 
 	Queue<Event*> Event_List;
 
@@ -46,7 +41,7 @@ class Company
 	int MaxWait;
 	int AutoPro;
 	int Num_of_events;
-
+	int nCap, sCap, vCap;
 	//Numbers of Trucks in each list
 
 	int VIP_Trucks_count;
@@ -69,7 +64,11 @@ class Company
 	int cancelled;
 	
 	//--------------------------------------------------------
+	Truck* Loading_Normal;
+	Truck* Loading_Special;
+	Truck* Loading_VIP;
 
+	//--------------------------------------------------------
 	// Utility functions
 	void check_auto_promotion();
 	void check_checkup_list();
@@ -77,10 +76,18 @@ class Company
 	void move_to_available(int);
 	void move_to_checkup(Truck*);
 
+	bool load_VIP();
+	bool load_Normal();
+	bool load_Special();
+	bool load_MaxW();
+	int Loading_count();
+
 public:
 
 	Company();
 	void Start_Simuulation();
+	void Working_Hours();
+	void Off_Hours();
 
 	// Reading data function
 	SIM_MODE get_input_mode() ;
@@ -99,30 +106,23 @@ public:
 	void increment_cancelled();
 
 	//Printing Functions
-
 	void Print_Sim_Time();
 	void InteractivePrinting();
 	void StepByStepPrinting();
 	void SilentPrinting();
 
-
 	//---------------------------------------
 	void print_W_V_C();
 	void print_W_S_C();
 	void print_W_N_C();
-	void print_M_V_C();
-	void print_M_S_C();
-	void print_M_N_C();
 
 	//---------------------------------------
 	void print_check_up_v_trucks();
 	void print_check_up_s_trucks();
 	void print_check_up_n_trucks();
-	void print_Loading();
-	void print_Empty();
-	void print_available_trucks_vip_();
-	void print_available_trucks_normal_();
-	void print_available_trucks_special_();
+	void print_empty_VIP();
+	void print_empty_Normal();
+	void print_empty_Special();
 	//--------------------------------------
 	bool Events_empty();
 	
@@ -131,6 +131,8 @@ public:
 
 	bool Upgrade_Normal_Cargo(int id,int extra_money);
 	bool Cancel_Normal_Cargo(int id);
+	void Move_Trucks();			//checks for truck movement and calls Move_Truck accordingly
+	void Move_Truck(Truck*& t);	//actually moves the truck, adding it to the Moving_Truck queue
 
 	bool All_Delivered();		//checks that all waiting and moving lists are empty
 

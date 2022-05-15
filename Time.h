@@ -18,6 +18,7 @@ public:
 	int getDay();
 	int Time_In_Hours();   //returns (24*day+hour) which is the total number of hours 
 	bool operator==(const Time&);
+	int operator-(const Time&);
 	~Time();
 };
 
