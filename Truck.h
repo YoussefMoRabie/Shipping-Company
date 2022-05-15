@@ -28,7 +28,7 @@ public:
 	float GetDeliveryInterval();
 	int GetID() const;
 	void set_DInterval(float x);
-	void load(Cargo*, int LT);
+	void load(Cargo*, float delivery_time);
 	void count_down();
 	int get_move_counter();
 	void print();

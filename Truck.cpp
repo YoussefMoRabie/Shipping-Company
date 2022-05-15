@@ -39,10 +39,12 @@ int Truck:: GetID() const
 {
 	return ID;
 }
-void Truck::load(Cargo* x, int LT)
+void Truck::load(Cargo* x, float delivery_time)
 {
-	container.EnQueue(x, LT);
-	move_counter = container.Peek()->GetLU_Time();
+	container.EnQueue(x, 100/delivery_time);
+
+	if (x->GetLU_Time() > move_counter)
+		move_counter = x->GetLU_Time();
 }
 void Truck::count_down()
 {

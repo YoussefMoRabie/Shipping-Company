@@ -60,7 +60,8 @@ bool Company::load_VIP()
 			for (int i = 0; i < vCap; i++)
 			{
 				W_V_C.DeQueue(c_temp);
-				t_temp->load(c_temp, c_temp->GetLU_Time());
+				float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
+				t_temp->load(c_temp, delivery_time);
 			}
 			Loading_VIP = t_temp;
 			return true;
@@ -73,7 +74,8 @@ bool Company::load_VIP()
 			for (int i = 0; i < nCap; i++)
 			{
 				W_V_C.DeQueue(c_temp);
-				t_temp->load(c_temp, c_temp->GetLU_Time());
+				float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
+				t_temp->load(c_temp, delivery_time);
 			}
 			Loading_Normal = t_temp;
 			return true;
@@ -86,7 +88,8 @@ bool Company::load_VIP()
 			for (int i = 0; i < sCap; i++)
 			{
 				W_V_C.DeQueue(c_temp);
-				t_temp->load(c_temp, c_temp->GetLU_Time());
+				float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
+				t_temp->load(c_temp, delivery_time);
 			}
 			Loading_Special = t_temp;
 			return true;
@@ -106,7 +109,8 @@ bool Company::load_Special()
 			for (int i = 0; i < sCap; i++)
 			{
 				W_S_C.DeQueue(c_temp);
-				t_temp->load(c_temp, c_temp->GetLU_Time());
+				float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
+				t_temp->load(c_temp, delivery_time);
 			}
 			Loading_Special = t_temp;
 			return true;
@@ -126,7 +130,8 @@ bool Company::load_Normal()
 			for (int i = 0; i < nCap; i++)
 			{
 				W_N_C.removeFirst(c_temp);
-				t_temp->load(c_temp, c_temp->GetLU_Time());
+				float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
+				t_temp->load(c_temp, delivery_time);
 			}
 			Loading_Normal = t_temp;
 			return true;
@@ -139,7 +144,8 @@ bool Company::load_Normal()
 			for (int i = 0; i < vCap; i++)
 			{
 				W_N_C.removeFirst(c_temp);
-				t_temp->load(c_temp, c_temp->GetLU_Time());
+				float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
+				t_temp->load(c_temp, delivery_time);
 			}
 			Loading_VIP = t_temp;
 			return true;
@@ -165,7 +171,8 @@ bool Company::load_MaxW()
 				if (empty_Special.DeQueue(t_temp))
 				{
 					W_S_C.DeQueue(c_temp);
-					t_temp->load(c_temp, c_temp->GetLU_Time());
+					float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
+					t_temp->load(c_temp, delivery_time);
 					Loading_Special = t_temp;
 					return true;
 				}
@@ -183,7 +190,8 @@ bool Company::load_MaxW()
 				if (empty_Normal.DeQueue(t_temp))
 				{
 					W_N_C.removeFirst(c_temp);
-					t_temp->load(c_temp, c_temp->GetLU_Time());
+					float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
+					t_temp->load(c_temp, delivery_time);
 					Loading_Normal = t_temp;
 					return true;
 				}
@@ -193,7 +201,8 @@ bool Company::load_MaxW()
 				if (empty_VIP.DeQueue(t_temp))
 				{
 					W_N_C.removeFirst(c_temp);
-					t_temp->load(c_temp, c_temp->GetLU_Time());
+					float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
+					t_temp->load(c_temp, delivery_time);
 					Loading_VIP = t_temp;
 					return true;
 				}
