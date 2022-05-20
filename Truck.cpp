@@ -10,6 +10,7 @@ Truck::Truck(int id, TRUCK_TYPE T, int TC, float MT, int j, float S)
 	Maintenance_Time = MT;
 	J = j;
 	Speed = S;
+	Journeys_Till_Check = j;
 }
 TRUCK_TYPE Truck:: GetType() const
 {
@@ -19,13 +20,33 @@ int Truck::GetCapacity() const
 {
 	return Truck_Capacity;
 }
-void Truck::set_DInterval(float x) {
-	Delivery_Interval = x;
-}
+void Truck::set_DInterval() {
+	float temp = 2* Delivery_Distance/ GetSpeed() + GetCapacity() * container.GetFront()->get_item()->GetLU_Time();
 
+	Delivery_Interval = temp;
+}
+int Truck:: GetJTC() {
+	return Journeys_Till_Check;
+}
+int Truck::GetContainer_count() {
+	return container.GetCount();
+}
+void Truck::restore_JTC() {
+	Journeys_Till_Check = J;
+}
+void Truck::DecrementJTC() {
+	Journeys_Till_Check--;
+}
 float Truck::GetMaintenanceTime() const
 {
+	
 	return Maintenance_Time;
+}
+void Truck::set_finish_point(const Time& t) {
+	finish_point = t;
+}
+Time Truck::get_finish_point() {
+	return finish_point;
 }
 float Truck:: GetSpeed() const
 {
@@ -41,10 +62,19 @@ int Truck:: GetID() const
 }
 void Truck::load(Cargo* x, float delivery_time)
 {
+	if (container.QueueEmpty())
+		Delivery_Distance=x->GetDistance();
 	container.EnQueue(x, 100/delivery_time);
-
 	if (x->GetLU_Time() > move_counter)
 		move_counter = x->GetLU_Time();
+}
+Cargo* Truck::unload() {
+	if (GetContainer_count() > 0) {
+		Cargo* c_temp;
+		container.DeQueue(c_temp);
+		return c_temp;
+	}
+	return nullptr;
 }
 void Truck::count_down()
 {
@@ -53,6 +83,19 @@ void Truck::count_down()
 int Truck::get_move_counter()
 {
 	return move_counter;
+}
+float Truck::Get_nearest_dis() {
+	if (GetContainer_count() > 0)
+		return container.GetFront()->get_item()->GetDistance();
+	else
+		return Delivery_Distance;
+}
+Time Truck::Get_nearest_stop() {
+	return Nearest_stop;
+}
+void Truck::set_nearest_stop(Time t) {
+	int l_t = container.GetFront()->get_item()->GetLU_Time();
+	Nearest_stop = t + l_t;
 }
 void Truck::print()
 {

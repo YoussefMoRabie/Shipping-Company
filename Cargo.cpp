@@ -1,6 +1,6 @@
 #include"Cargo.h"
 
-Cargo::Cargo (CARGO_TYPE T, const Time& PT, int id, double DD, float LT, double C) {
+Cargo::Cargo (CARGO_TYPE T, const Time& PT, int id, float DD, float LT, double C) {
 	Preparation_Time = PT;
 	Load_Unload_Time = LT;
 	Delivery_Distance = DD;
@@ -12,7 +12,7 @@ Cargo::Cargo(int id)  //Fake cargo just for comparison with id
 {
 	ID = id;
 }
-double Cargo::GetDistance() const
+float Cargo::GetDistance() const
 {
 	return Delivery_Distance;
 }

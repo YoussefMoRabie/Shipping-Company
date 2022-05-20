@@ -28,8 +28,8 @@ void Company::Start_Simuulation()
 
 void Company::Working_Hours()
 {
-	Move_Trucks();
-
+	
+	Truck_Controller();
 	while (load_VIP())
 	{
 	}
@@ -42,70 +42,132 @@ void Company::Working_Hours()
 	while (load_MaxW())
 	{
 	}
+
+
+}
+
+void Company::Truck_Controller() {
+	Move_Trucks();
+	Truck* t_temp;
+	if (get_Sim_Time() == Moving_truck.GetFront()->get_item()->get_finish_point()&& Moving_truck.GetFront()->get_item()->GetContainer_count()==0) {
+		Moving_truck.DeQueue(t_temp);
+		t_temp->DecrementJTC();
+		if (Need_Checkup(t_temp)) {
+			move_to_checkup(t_temp);
+		}
+		else move_to_available(t_temp);
+	}
+	if (get_Sim_Time() == Check_up_VIP.GetFront()->get_item()->get_finish_point()) {
+		Check_up_VIP.DeQueue(t_temp);
+		check_to_available(t_temp);
+	}
+	if (get_Sim_Time() == Check_up_Special.GetFront()->get_item()->get_finish_point()) {
+		Check_up_Special.DeQueue(t_temp);
+		check_to_available(t_temp);
+	}
+	if (get_Sim_Time() == Check_up_Normal.GetFront()->get_item()->get_finish_point()) {
+		Check_up_Normal.DeQueue(t_temp);
+		check_to_available(t_temp);
+	}
+
 }
 
 void Company::Off_Hours()
 {
 
 }
+Truck* Company::Pick_VIP_Truck() {
+	Truck* t_temp;
+
+		
+		if (W_V_C.GetCount() >= vCap && !Loading_VIP)
+		{
+			if (!empty_VIP.QueueEmpty()) {
+				empty_VIP.DeQueue(t_temp);
+				return t_temp;
+			}
+		}
+		if (W_V_C.GetCount() >= nCap && !Loading_Normal)
+		{
+			if (!empty_Normal.QueueEmpty()) {
+				empty_Normal.DeQueue(t_temp);
+				return t_temp;
+			}
+		}
+		if (W_V_C.GetCount() >= sCap && !Loading_Special)
+		{
+			if (!empty_Special.QueueEmpty()) {
+				empty_Special.DeQueue(t_temp);
+				return t_temp;
+			}
+		}
+		return nullptr;
+	
+	
+
+}
+Truck* Company::Pick_Normal_Truck() {
+	Truck* t_temp;
+
+	if (W_V_C.GetCount() >= nCap && !Loading_Normal)
+	{
+		if (!empty_Normal.QueueEmpty()) {
+			empty_Normal.DeQueue(t_temp);
+			return t_temp;
+		}
+	}
+	if (W_V_C.GetCount() >= vCap && !Loading_VIP)
+	{
+		if (!empty_VIP.QueueEmpty()) {
+			empty_VIP.DeQueue(t_temp);
+			return t_temp;
+		}
+	}
+
+	return nullptr;
+
+}
+
+Truck* Company::Pick_Special_Truck() {
+	Truck* t_temp;
+
+
+	if (W_V_C.GetCount() >= sCap && !Loading_Special)
+	{
+		if (!empty_Special.QueueEmpty()) {
+			empty_Special.DeQueue(t_temp);
+			return t_temp;
+		}
+	}
+
+	return nullptr;
+}
+
 
 bool Company::load_VIP()
 {
-	Truck* t_temp;
+	Truck* t_temp =Pick_VIP_Truck();
 	Cargo* c_temp;
-	if (W_V_C.GetCount() >= vCap && !Loading_VIP)
-	{
-		if (empty_VIP.DeQueue(t_temp))
+	if (t_temp) {
+		for (int i = 0; i < vCap; i++)
 		{
-			for (int i = 0; i < vCap; i++)
-			{
-				W_V_C.DeQueue(c_temp);
-				float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
-				t_temp->load(c_temp, delivery_time);
-			}
-			Loading_VIP = t_temp;
-			return true;
+			W_V_C.DeQueue(c_temp);
+			float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
+			t_temp->load(c_temp, delivery_time);
 		}
+		Loading_VIP = t_temp;
+		return true;
+
 	}
-	if (W_V_C.GetCount() >= nCap && !Loading_Normal)
-	{
-		if (empty_Normal.DeQueue(t_temp))
-		{
-			for (int i = 0; i < nCap; i++)
-			{
-				W_V_C.DeQueue(c_temp);
-				float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
-				t_temp->load(c_temp, delivery_time);
-			}
-			Loading_Normal = t_temp;
-			return true;
-		}
-	}
-	if (W_V_C.GetCount() >= sCap && !Loading_Special)
-	{
-		if (empty_Special.DeQueue(t_temp))
-		{
-			for (int i = 0; i < sCap; i++)
-			{
-				W_V_C.DeQueue(c_temp);
-				float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
-				t_temp->load(c_temp, delivery_time);
-			}
-			Loading_Special = t_temp;
-			return true;
-		}
-	}
+	else	
 	return false;
 }
 
 bool Company::load_Special()
 {
-	Truck* t_temp;
+	Truck* t_temp = Pick_Special_Truck();
 	Cargo* c_temp;
-	if (W_S_C.GetCount() >= sCap && !Loading_Special)
-	{
-		if (empty_Special.DeQueue(t_temp))
-		{
+	if (t_temp){
 			for (int i = 0; i < sCap; i++)
 			{
 				W_S_C.DeQueue(c_temp);
@@ -115,18 +177,18 @@ bool Company::load_Special()
 			Loading_Special = t_temp;
 			return true;
 		}
-	}
+	
+else
 	return false;
 }
 
 bool Company::load_Normal()
 {
-	Truck* t_temp;
+	Truck* t_temp=Pick_Normal_Truck();
 	Cargo* c_temp;
-	if (W_N_C.GetCount() >= nCap && !Loading_Normal)
+	if (t_temp)
 	{
-		if (empty_Normal.DeQueue(t_temp))
-		{
+		
 			for (int i = 0; i < nCap; i++)
 			{
 				W_N_C.removeFirst(c_temp);
@@ -135,22 +197,9 @@ bool Company::load_Normal()
 			}
 			Loading_Normal = t_temp;
 			return true;
-		}
+		
 	}
-	if (W_N_C.GetCount() >= vCap && !Loading_VIP)
-	{
-		if (empty_VIP.DeQueue(t_temp))
-		{
-			for (int i = 0; i < vCap; i++)
-			{
-				W_N_C.removeFirst(c_temp);
-				float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
-				t_temp->load(c_temp, delivery_time);
-			}
-			Loading_VIP = t_temp;
-			return true;
-		}
-	}
+	else
 	return false;
 }
 
@@ -239,17 +288,93 @@ void Company::Move_Trucks()
 		}
 	}
 }
+void Company::Deliver_cargos() {
+	if (get_Sim_Time() == Moving_truck.GetFront()->get_item()->Get_nearest_stop()) {
+		Truck* temp;
+		PriQueue<Truck*> truck_temp;
+		Cargo* c_temp = Moving_truck.GetFront()->get_item()->unload();
+		Delivered_cargo.EnQueue(c_temp);
+		float x = Moving_truck.GetFront()->get_item()->Get_nearest_dis();
+		Moving_truck.GetFront()->get_item()->set_nearest_stop(get_Sim_Time() + (x - c_temp->GetDistance()) / Moving_truck.GetFront()->get_item()->GetSpeed());
+		while (Moving_truck.GetCount()>1) {
+			Moving_truck.DeQueue(temp);
+		
+			truck_temp.EnQueue(temp, temp->Get_nearest_stop()-get_Sim_Time());
+			
+				
 
+		}
+		while (truck_temp.GetCount() > 1) {
+			truck_temp.DeQueue(temp);
+			Moving_truck.EnQueue(temp);
+		}
+
+
+	}
+
+}
 void Company::Move_Truck(Truck*& t)
 {
-	int finish_time = 0; //TO BE CALCULATED
-	Moving_truck.EnQueue(t,finish_time);
+	float dis_temp;
+	t->set_DInterval();
+	int finish_time = t->GetDeliveryInterval(); //TO BE CALCULATED
+	t->set_finish_point(get_Sim_Time() + finish_time);
+	dis_temp = t->Get_nearest_dis();
+	float time_temp= dis_temp / t->GetSpeed();
+	t->set_nearest_stop(get_Sim_Time() + time_temp);
+	Moving_truck.EnQueue(t,time_temp);
 	t = nullptr;
+}
+bool Company::Need_Checkup(Truck* t) {
+	if (t->GetJTC() == 0)
+		return true;
+	return false;
 }
 
 void Company::move_to_checkup(Truck* t)
-{
+{ 
+	t->set_finish_point(get_Sim_Time() + t->GetMaintenanceTime());
+	if (t->GetType() == TRUCK_TYPE::VIP) {
+		Check_up_VIP.EnQueue(t);
+	}
+	else {
+		if (t->GetType() == TRUCK_TYPE::NORMAL)
+			Check_up_Normal.EnQueue(t);
+		else {
+			if (t->GetType() == TRUCK_TYPE::SPECIAL)
+				Check_up_Special.EnQueue(t);
+		}
+	}
 
+}
+void Company::check_to_available(Truck*& t) {
+	t->restore_JTC();
+	if (t->GetType() == TRUCK_TYPE::VIP) {
+		empty_VIP.EnQueue(t);
+	}
+	else {
+		if (t->GetType() == TRUCK_TYPE::NORMAL)
+			empty_Normal.EnQueue(t);
+		else {
+			if (t->GetType() == TRUCK_TYPE::SPECIAL)
+				empty_Special.EnQueue(t);
+		}
+	}
+}
+void Company::move_to_available(Truck* t) {
+
+	
+	if (t->GetType() == TRUCK_TYPE::VIP) {
+		empty_VIP.EnQueue(t);
+	}
+	else {
+		if (t->GetType() == TRUCK_TYPE::NORMAL)
+			empty_Normal.EnQueue(t);
+		else {
+			if (t->GetType() == TRUCK_TYPE::SPECIAL)
+				empty_Special.EnQueue(t);
+		}
+	}
 }
 
 bool Company::Events_empty()

@@ -64,6 +64,18 @@ void Time::printTime()
 {
 	UI_P.print(to_string(day) + ":" + to_string(hour));
 }
+Time Time::operator+(int value) {
+
+	Time temp = *this;
+	while (temp.hour + value >= 24)
+	{
+		value = value - (24 - temp.hour);
+		temp.day++;
+			temp.hour = 0;
+	}
+	temp.hour += value;
+	return temp;
+}
 
 bool Time::operator==(const Time& t)
 {

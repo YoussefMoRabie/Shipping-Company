@@ -72,14 +72,18 @@ class Company
 	// Utility functions
 	void check_auto_promotion();
 	void check_checkup_list();
+	void check_to_available(Truck*&);
 	void move_to_available(Truck*);
 	void move_to_available(int);
 	void move_to_checkup(Truck*);
-
+	Truck* Pick_VIP_Truck();
+	Truck* Pick_Normal_Truck();
+	Truck* Pick_Special_Truck();
 	bool load_VIP();
 	bool load_Normal();
 	bool load_Special();
 	bool load_MaxW();
+	bool Need_Checkup(Truck*);
 	int Loading_count();
 
 public:
@@ -87,6 +91,7 @@ public:
 	Company();
 	void Start_Simuulation();
 	void Working_Hours();
+	void Truck_Controller();
 	void Off_Hours();
 
 	// Reading data function
@@ -104,6 +109,7 @@ public:
 	void assign_cargo();
 	void check_completed_cargo();
 	void increment_cancelled();
+	void Deliver_cargos();
 
 	//Printing Functions
 	void Print_Sim_Time();

@@ -10,15 +10,15 @@ private:
 	Time Preparation_Time; //Time(day:hour) at which the cargo is ready to be loaded
 	float Load_Unload_Time;
 	CARGO_TYPE Type;
-	double Delivery_Distance; //Km
+	float Delivery_Distance; //Km
 	double Cost;
 	int ID;
 
 public:
 
-	Cargo(CARGO_TYPE T, const Time& PT, int id, double DD, float LT, double C);
+	Cargo(CARGO_TYPE T, const Time& PT, int id, float DD, float LT, double C);
 	Cargo(int id); //Fake cargo just for comparison with id
-	double GetDistance() const;
+	float GetDistance() const;
 	double GetCost() const;
 	float GetLU_Time() const;
 	CARGO_TYPE GetType() const;
