@@ -12,6 +12,7 @@ Company::Company()
 	Loading_Normal = nullptr;
 	Loading_Special = nullptr;
 	Loading_VIP = nullptr;
+	Num_Promoted_cargos = 0;
 }
 
 void Company::Start_Simuulation()
@@ -29,7 +30,7 @@ void Company::Start_Simuulation()
 void Company::Working_Hours()
 {
 	
-	Truck_Controller();
+	/*Truck_Controller();
 	while (load_VIP())
 	{
 	}
@@ -41,7 +42,7 @@ void Company::Working_Hours()
 	}
 	while (load_MaxW())
 	{
-	}
+	}*/
 
 
 }
@@ -428,7 +429,24 @@ void Company::AddCargo(Cargo* c)
 	}
 	}
 }
-
+void Company::Auto_Promotion()
+{
+	if (!W_N_C.GetCount())
+		return;
+	
+	while (rest_in_waiting(W_N_C.getFirst()) == AutoPro * 24)
+	{
+		Upgrade_Normal_Cargo(W_N_C.getFirst()->GetID());
+		Cargo* car;
+		W_N_C.removeFirst(car);
+		car->PromoteToVip(0);
+		AddCargo(car);
+	}
+}
+int Company::rest_in_waiting(Cargo * car)
+{
+	return get_Sim_Time() - car->GetPrepTime();
+}
 bool Company::readFile(string filename)
 {
 	Loaded.open(filename);
@@ -683,14 +701,15 @@ void Company::Output_Console()
 	}*/
 	ui_p->print("\n\n###########################################################################################\n\n");
 }
-
-void Company::InteractivePrinting()
+void Company::Print(SIM_MODE Mode)
 {
-	ui_p->print("Interactive Mode\n");
-
+	if (Mode == SIM_MODE::INTERACTIVE)
+		ui_p->print("Interactive Mode\n");
+	else if (Mode == SIM_MODE::STEP_BY_STEP)
+		ui_p->print("StepByStep Mode\n");
 	while (!Events_empty() || !All_Delivered())
 	{
-
+		Auto_Promotion();
 		if (!Events_empty())
 		{
 			if (get_Sim_Time() == get_Nearest_Event_Time())
@@ -699,8 +718,10 @@ void Company::InteractivePrinting()
 				Eptr->Execute();
 			}
 		}
-		if (cin.get())
+		if ( Mode == SIM_MODE::STEP_BY_STEP||cin.get()&& Mode == SIM_MODE::INTERACTIVE)
 		{
+			if(Mode == SIM_MODE::STEP_BY_STEP)
+				Sleep(1000);
 			Output_Console();
 
 			Advance_Sim_Time();
@@ -714,10 +735,16 @@ void Company::InteractivePrinting()
 			}
 		}
 	}
-
-	cin.get();
+	if (Mode == SIM_MODE::STEP_BY_STEP)
+		Sleep(1000);
+	else
+		cin.get();
 	Output_Console();
 	ui_p->print("Everything is done, Simulation over.");
+}
+void Company::InteractivePrinting()
+{
+	Print(SIM_MODE::INTERACTIVE);
 }
 
 void Company::SilentPrinting()
@@ -728,33 +755,7 @@ void Company::SilentPrinting()
 }
 void Company::StepByStepPrinting()
 {
-	ui_p->print("StepByStep Mode\n");
-	while (!Events_empty() || !All_Delivered())
-	{
-
-		if (!Events_empty())
-		{
-			if (get_Sim_Time() == get_Nearest_Event_Time())
-			{
-				Event* Eptr = get_Nearest_Event();
-				Eptr->Execute();
-			}
-		}
-		Sleep(1000);
-		Output_Console();
-		Advance_Sim_Time();
-		if (5 <= Sim_Time.getHour() <= 23)
-		{
-			Working_Hours();
-		}
-		else
-		{
-			Off_Hours();
-		}
-	}
-	Sleep(1000);
-	Output_Console();
-	ui_p->print("Everything is done, Simulation over.");
+	Print(SIM_MODE::STEP_BY_STEP);
 }
 
 SIM_MODE Company::get_input_mode()

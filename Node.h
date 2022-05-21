@@ -23,7 +23,10 @@ public:
 	void set_item(const Type anitem) { item = anitem; }
 	void set_next(Node<Type>* nextptr) { next = nextptr; }
 
-	Type get_item()const { return item; }
+	Type get_item()const 
+	{
+		return item;
+	}
 	Node<Type>* get_next()const { return next; }
 
 

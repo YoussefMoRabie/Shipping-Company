@@ -70,7 +70,6 @@ class Company
 
 	//--------------------------------------------------------
 	// Utility functions
-	void check_auto_promotion();
 	void check_checkup_list();
 	void check_to_available(Truck*&);
 	void move_to_available(Truck*);
@@ -99,12 +98,12 @@ public:
 	void execute_mode(SIM_MODE);
 	bool readFile(string);
 	bool write_output_file(); // need to implementation
-
+	int rest_in_waiting(Cargo* car);
 	Time& get_Sim_Time() ;
 	Time& get_Nearest_Event_Time();
 	Event* get_Nearest_Event();
 	void Advance_Sim_Time(int = 1);
-
+	void Auto_Promotion();
 	// Simulation Functions
 	void assign_cargo();
 	void check_completed_cargo();
@@ -116,6 +115,7 @@ public:
 	void InteractivePrinting();
 	void StepByStepPrinting();
 	void SilentPrinting();
+	void Print(SIM_MODE Mode);
 
 	//---------------------------------------
 	void print_W_V_C();
@@ -135,7 +135,7 @@ public:
 	void AddCargo(Cargo*);
 	void Waiting_To_Delivered();
 
-	bool Upgrade_Normal_Cargo(int id,int extra_money);
+	bool Upgrade_Normal_Cargo(int id,int extra_money=0);
 	bool Cancel_Normal_Cargo(int id);
 	void Move_Trucks();			//checks for truck movement and calls Move_Truck accordingly
 	void Move_Truck(Truck*& t);	//actually moves the truck, adding it to the Moving_Truck queue
