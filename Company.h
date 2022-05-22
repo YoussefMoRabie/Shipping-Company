@@ -73,7 +73,6 @@ class Company
 	void check_checkup_list();
 	void check_to_available(Truck*&);
 	void move_to_available(Truck*);
-	void move_to_available(int);
 	void move_to_checkup(Truck*);
 	Truck* Pick_VIP_Truck();
 	Truck* Pick_Normal_Truck();

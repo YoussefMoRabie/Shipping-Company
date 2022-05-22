@@ -3,8 +3,9 @@
 #include "PreparationEvent.h"
 #include "CancelEvent.h"
 #include "PromoteEvent.h"
-#include<Windows.h>
+#include <Windows.h>
 #include <string>
+#include <cmath>
 using namespace std;
 
 Company::Company()
@@ -29,128 +30,35 @@ void Company::Start_Simuulation()
 
 void Company::Working_Hours()
 {
-	
-	/*Truck_Controller();
-	while (load_VIP())
+	Auto_Promotion();
+	Truck_Controller();
+	Deliver_cargos();
+	if(!Loading_VIP)
 	{
+		load_VIP();
 	}
-	while (load_Special())
+	if (!Loading_Special)
 	{
+		load_VIP();
 	}
-	while (load_Normal())
+	if (!Loading_Normal)
 	{
+		load_Normal();
 	}
-	while (load_MaxW())
-	{
-	}*/
-
-
+	load_MaxW();
 }
-
-void Company::Truck_Controller() {
-	Move_Trucks();
-	Truck* t_temp;
-	if (get_Sim_Time() == Moving_truck.GetFront()->get_item()->get_finish_point()&& Moving_truck.GetFront()->get_item()->GetContainer_count()==0) {
-		Moving_truck.DeQueue(t_temp);
-		t_temp->DecrementJTC();
-		if (Need_Checkup(t_temp)) {
-			move_to_checkup(t_temp);
-		}
-		else move_to_available(t_temp);
-	}
-	if (get_Sim_Time() == Check_up_VIP.GetFront()->get_item()->get_finish_point()) {
-		Check_up_VIP.DeQueue(t_temp);
-		check_to_available(t_temp);
-	}
-	if (get_Sim_Time() == Check_up_Special.GetFront()->get_item()->get_finish_point()) {
-		Check_up_Special.DeQueue(t_temp);
-		check_to_available(t_temp);
-	}
-	if (get_Sim_Time() == Check_up_Normal.GetFront()->get_item()->get_finish_point()) {
-		Check_up_Normal.DeQueue(t_temp);
-		check_to_available(t_temp);
-	}
-
-}
-
 void Company::Off_Hours()
 {
 
 }
-Truck* Company::Pick_VIP_Truck() {
-	Truck* t_temp;
-
-		
-		if (W_V_C.GetCount() >= vCap && !Loading_VIP)
-		{
-			if (!empty_VIP.QueueEmpty()) {
-				empty_VIP.DeQueue(t_temp);
-				return t_temp;
-			}
-		}
-		if (W_V_C.GetCount() >= nCap && !Loading_Normal)
-		{
-			if (!empty_Normal.QueueEmpty()) {
-				empty_Normal.DeQueue(t_temp);
-				return t_temp;
-			}
-		}
-		if (W_V_C.GetCount() >= sCap && !Loading_Special)
-		{
-			if (!empty_Special.QueueEmpty()) {
-				empty_Special.DeQueue(t_temp);
-				return t_temp;
-			}
-		}
-		return nullptr;
-	
-	
-
-}
-Truck* Company::Pick_Normal_Truck() {
-	Truck* t_temp;
-
-	if (W_V_C.GetCount() >= nCap && !Loading_Normal)
-	{
-		if (!empty_Normal.QueueEmpty()) {
-			empty_Normal.DeQueue(t_temp);
-			return t_temp;
-		}
-	}
-	if (W_V_C.GetCount() >= vCap && !Loading_VIP)
-	{
-		if (!empty_VIP.QueueEmpty()) {
-			empty_VIP.DeQueue(t_temp);
-			return t_temp;
-		}
-	}
-
-	return nullptr;
-
-}
-
-Truck* Company::Pick_Special_Truck() {
-	Truck* t_temp;
-
-
-	if (W_V_C.GetCount() >= sCap && !Loading_Special)
-	{
-		if (!empty_Special.QueueEmpty()) {
-			empty_Special.DeQueue(t_temp);
-			return t_temp;
-		}
-	}
-
-	return nullptr;
-}
-
 
 bool Company::load_VIP()
 {
-	Truck* t_temp =Pick_VIP_Truck();
+	Truck* t_temp = Pick_VIP_Truck();
 	Cargo* c_temp;
-	if (t_temp) {
-		for (int i = 0; i < vCap; i++)
+	if (t_temp) 
+	{
+		for (int i = 0; i < t_temp->GetCapacity(); i++)
 		{
 			W_V_C.DeQueue(c_temp);
 			float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
@@ -158,50 +66,49 @@ bool Company::load_VIP()
 		}
 		Loading_VIP = t_temp;
 		return true;
-
 	}
-	else	
-	return false;
+	else
+		return false;
 }
 
 bool Company::load_Special()
 {
 	Truck* t_temp = Pick_Special_Truck();
 	Cargo* c_temp;
-	if (t_temp){
-			for (int i = 0; i < sCap; i++)
-			{
-				W_S_C.DeQueue(c_temp);
-				float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
-				t_temp->load(c_temp, delivery_time);
-			}
-			Loading_Special = t_temp;
-			return true;
+	if (t_temp) {
+		for (int i = 0; i < t_temp->GetCapacity(); i++)
+		{
+			W_S_C.DeQueue(c_temp);
+			float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
+			t_temp->load(c_temp, delivery_time);
 		}
-	
-else
-	return false;
+		Loading_Special = t_temp;
+		return true;
+	}
+
+	else
+		return false;
 }
 
 bool Company::load_Normal()
 {
-	Truck* t_temp=Pick_Normal_Truck();
+	Truck* t_temp = Pick_Normal_Truck();
 	Cargo* c_temp;
 	if (t_temp)
 	{
-		
-			for (int i = 0; i < nCap; i++)
-			{
-				W_N_C.removeFirst(c_temp);
-				float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
-				t_temp->load(c_temp, delivery_time);
-			}
-			Loading_Normal = t_temp;
-			return true;
-		
+
+		for (int i = 0; i < t_temp->GetCapacity(); i++)
+		{
+			W_N_C.removeFirst(c_temp);
+			float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
+			t_temp->load(c_temp, delivery_time);
+		}
+		Loading_Normal = t_temp;
+		return true;
+
 	}
 	else
-	return false;
+		return false;
 }
 
 bool Company::load_MaxW()
@@ -209,7 +116,7 @@ bool Company::load_MaxW()
 	Truck* t_temp;
 	Cargo* c_temp;
 	int wait_time;
-	
+
 	//a special cargo has exceeded maxW
 	if (!W_S_C.QueueEmpty())
 	{
@@ -262,6 +169,105 @@ bool Company::load_MaxW()
 	return false;
 }
 
+
+void Company::Truck_Controller() {
+	Move_Trucks();
+	Truck* t_temp;
+	if (!Moving_truck.QueueEmpty())
+		if (Sim_Time >= Moving_truck.Peek()->get_finish_point() && Moving_truck.Peek()->GetContainer_count() == 0) {
+			Moving_truck.DeQueue(t_temp);
+			t_temp->DecrementJTC();
+			if (Need_Checkup(t_temp)) {
+				move_to_checkup(t_temp);
+			}
+			else move_to_available(t_temp);
+		}
+
+	if (!Check_up_VIP.QueueEmpty())
+		if (Sim_Time == Check_up_VIP.Peek()->get_finish_point())
+		{
+			Check_up_VIP.DeQueue(t_temp);
+			check_to_available(t_temp);
+		}
+
+	if (!Check_up_Special.QueueEmpty())
+		if (Sim_Time == Check_up_Special.Peek()->get_finish_point())
+		{
+			Check_up_Special.DeQueue(t_temp);
+			check_to_available(t_temp);
+		}
+
+	if (!Check_up_Normal.QueueEmpty())
+		if (Sim_Time == Check_up_Normal.Peek()->get_finish_point())
+		{
+			Check_up_Normal.DeQueue(t_temp);
+			check_to_available(t_temp);
+		}
+
+}
+
+//Picks an available truck for a vip cargo
+Truck* Company::Pick_VIP_Truck() {
+	Truck* t_temp;
+
+	if (W_V_C.GetCount() >= vCap && !Loading_VIP)
+	{
+		if (!empty_VIP.QueueEmpty()) {
+			empty_VIP.DeQueue(t_temp);
+			return t_temp;
+		}
+	}
+	if (W_V_C.GetCount() >= nCap && !Loading_Normal)
+	{
+		if (!empty_Normal.QueueEmpty()) {
+			empty_Normal.DeQueue(t_temp);
+			return t_temp;
+		}
+	}
+	if (W_V_C.GetCount() >= sCap && !Loading_Special)
+	{
+		if (!empty_Special.QueueEmpty()) {
+			empty_Special.DeQueue(t_temp);
+			return t_temp;
+		}
+	}
+	return nullptr;
+}
+//Picks an available truck for a normal cargo
+Truck* Company::Pick_Normal_Truck() {
+	Truck* t_temp;
+
+	if (W_N_C.GetCount() >= nCap && !Loading_Normal)
+	{
+		if (!empty_Normal.QueueEmpty()) {
+			empty_Normal.DeQueue(t_temp);
+			return t_temp;
+		}
+	}
+	if (W_N_C.GetCount() >= vCap && !Loading_VIP)
+	{
+		if (!empty_VIP.QueueEmpty()) {
+			empty_VIP.DeQueue(t_temp);
+			return t_temp;
+		}
+	}
+	return nullptr;
+
+}
+//Picks an available truck for a special cargo
+Truck* Company::Pick_Special_Truck() {
+	Truck* t_temp;
+
+	if (W_S_C.GetCount() >= sCap && !Loading_Special)
+	{
+		if (!empty_Special.QueueEmpty()) {
+			empty_Special.DeQueue(t_temp);
+			return t_temp;
+		}
+	}
+	return nullptr;
+}
+
 void Company::Move_Trucks()
 {
 	if (Loading_VIP)
@@ -290,38 +296,40 @@ void Company::Move_Trucks()
 	}
 }
 void Company::Deliver_cargos() {
-	if (get_Sim_Time() == Moving_truck.GetFront()->get_item()->Get_nearest_stop()) {
+	if (!Moving_truck.Peek())
+		return;
+
+	if (Moving_truck.Peek() && Moving_truck.Peek()->GetContainer_count() == 0)
+		return;
+
+	if (get_Sim_Time() >= Moving_truck.Peek()->Get_nearest_stop()) 
+	{
 		Truck* temp;
 		PriQueue<Truck*> truck_temp;
-		Cargo* c_temp = Moving_truck.GetFront()->get_item()->unload();
+		Cargo* c_temp = Moving_truck.Peek()->unload();
 		Delivered_cargo.EnQueue(c_temp);
-		float x = Moving_truck.GetFront()->get_item()->Get_nearest_dis();
-		Moving_truck.GetFront()->get_item()->set_nearest_stop(get_Sim_Time() + (x - c_temp->GetDistance()) / Moving_truck.GetFront()->get_item()->GetSpeed());
+		float x = Moving_truck.Peek()->Get_nearest_dis();
+		if (Moving_truck.Peek()->GetContainer_count() != 0)
+			Moving_truck.Peek()->set_nearest_stop(get_Sim_Time() + (x - c_temp->GetDistance()) / Moving_truck.Peek()->GetSpeed());
 		while (Moving_truck.GetCount()>1) {
 			Moving_truck.DeQueue(temp);
 		
-			truck_temp.EnQueue(temp, temp->Get_nearest_stop()-get_Sim_Time());
-			
-				
-
+			truck_temp.EnQueue(temp, temp->Get_nearest_stop() - get_Sim_Time());
 		}
 		while (truck_temp.GetCount() > 1) {
 			truck_temp.DeQueue(temp);
 			Moving_truck.EnQueue(temp);
 		}
-
-
 	}
-
 }
 void Company::Move_Truck(Truck*& t)
 {
 	float dis_temp;
 	t->set_DInterval();
-	int finish_time = t->GetDeliveryInterval(); //TO BE CALCULATED
+	int finish_time = ceil(t->GetDeliveryInterval());
 	t->set_finish_point(get_Sim_Time() + finish_time);
 	dis_temp = t->Get_nearest_dis();
-	float time_temp= dis_temp / t->GetSpeed();
+	float time_temp= ceil(dis_temp / t->GetSpeed());
 	t->set_nearest_stop(get_Sim_Time() + time_temp);
 	Moving_truck.EnQueue(t,time_temp);
 	t = nullptr;
@@ -431,16 +439,12 @@ void Company::AddCargo(Cargo* c)
 }
 void Company::Auto_Promotion()
 {
-	if (!W_N_C.GetCount())
+	if (W_N_C.IsEmpty())
 		return;
 	
-	while (rest_in_waiting(W_N_C.getFirst()) == AutoPro * 24)
+	while (rest_in_waiting(W_N_C.getFirst()) >= AutoPro * 24)
 	{
 		Upgrade_Normal_Cargo(W_N_C.getFirst()->GetID());
-		Cargo* car;
-		W_N_C.removeFirst(car);
-		car->PromoteToVip(0);
-		AddCargo(car);
 	}
 }
 int Company::rest_in_waiting(Cargo * car)
@@ -652,18 +656,10 @@ void Company::Output_Console()
 	ui_p->print("}\n");
 	ui_p->print("----------------------------------------------------------------------------\n");
 	//---------------------------------------------------------------------------------------------------------//
-/*	int M_C = Moving_truck.GetCount();
-	ui_p->print(to_string(M_C) + " Moving Cargos: " + to_string(M_N_C.GetCount()) + "[");
-	// First --> print the ID of the Normal Cargos
-	M_N_C.print();
-	ui_p->print("] " + to_string(M_S_C.GetCount()) + "(");
-	// Second --> print the ID of the Special Cargos
-	M_S_C.print();
-	ui_p->print(") " + to_string(M_V_C.GetCount()) + "{");
-	// Third --> print the ID of the VIP Cargos
-	M_V_C.print();
-	ui_p->print("}\n");
-	ui_p->print("----------------------------------------------------------------------------\n");
+	int M_C = Moving_truck.GetCount();
+	ui_p->print(to_string(M_C) + " Moving Cargos: ");
+	Moving_truck.print();
+	ui_p->print("\n----------------------------------------------------------------------------\n");
 
 	//---------------------------------------------------------------------------------------------------------//
 
@@ -681,24 +677,25 @@ void Company::Output_Console()
 	ui_p->print("----------------------------------------------------------------------------\n");
 	//---------------------------------------------------------------------------------------------------------//
 	Queue<Cargo*> temp;
+	Cargo* c;
 	ui_p->print(to_string(Delivered_cargo.GetCount()) + " Delivered Cargos:");
-	while (Delivered_cargo.GetFront())
+	while (!Delivered_cargo.QueueEmpty())
 	{
-		if (Delivered_cargo.Peek()->GetType() == CARGO_TYPE::NORMAL)
-			ui_p->print("[" + to_string(Delivered_cargo.Peek()->GetID()) + "]");
-
-		else if (Delivered_cargo.Peek()->GetType() == CARGO_TYPE::VIP)
-			ui_p->print("{" + to_string(Delivered_cargo.Peek()->GetID()) + "}");
+		Delivered_cargo.DeQueue(c);
+		if (c->GetType() == CARGO_TYPE::NORMAL)
+			ui_p->print("[" + to_string(c->GetID()) + "]");
+		else if (c->GetType() == CARGO_TYPE::VIP)
+			ui_p->print("{" + to_string(c->GetID()) + "}");
 		else
-			ui_p->print("(" + to_string(Delivered_cargo.Peek()->GetID()) + ")");
-		temp.EnQueue(Delivered_cargo.Peek());
-		Delivered_cargo.DeQueue();
+			ui_p->print("(" + to_string(c->GetID()) + ")");
+		temp.EnQueue(c);
+	
 	}
-	while (temp.GetFront())
+	while (!temp.QueueEmpty())
 	{
-		Delivered_cargo.EnQueue(temp.Peek());
-		temp.DeQueue();
-	}*/
+		temp.DeQueue(c);
+		Delivered_cargo.EnQueue(c);
+	}
 	ui_p->print("\n\n###########################################################################################\n\n");
 }
 void Company::Print(SIM_MODE Mode)
@@ -709,7 +706,6 @@ void Company::Print(SIM_MODE Mode)
 		ui_p->print("StepByStep Mode\n");
 	while (!Events_empty() || !All_Delivered())
 	{
-		Auto_Promotion();
 		if (!Events_empty())
 		{
 			if (get_Sim_Time() == get_Nearest_Event_Time())

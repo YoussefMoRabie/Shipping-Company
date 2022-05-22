@@ -84,6 +84,16 @@ bool Time::operator==(const Time& t)
 			return true;
 	return false;
 }
+bool Time::operator>=(const Time& t)
+{
+	if (day > t.day)
+		return true;
+
+	if (day == t.day)
+		if (hour >= t.hour)
+			return true;
+	return false;
+}
 
 int Time::operator-(const Time& t)
 {

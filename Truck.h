@@ -46,6 +46,6 @@ public:
 	void count_down();
 	int get_move_counter();
 	void print();
-	friend ostream& operator<<(ostream& out, const Truck* t);
+	friend ostream& operator<<(ostream& out, Truck* t);
 };
 
