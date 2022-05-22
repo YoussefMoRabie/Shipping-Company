@@ -395,12 +395,15 @@ bool Company::Events_empty()
 bool Company::Upgrade_Normal_Cargo(int id, int extra_money)
 {
 	Cargo* ptr = new Cargo(id);
-	if (W_N_C.Find_Remove(ptr, ptr))
+	Cargo* temp;
+	if (W_N_C.Find_Remove(ptr, temp))
 	{
-		ptr->PromoteToVip(extra_money);
-		AddCargo(ptr);
+		temp->PromoteToVip(extra_money);
+		AddCargo(temp);
+		delete ptr;
 		return true;
 	}
+	delete ptr;
 	return false;
 }
 
