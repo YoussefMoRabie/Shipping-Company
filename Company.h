@@ -82,6 +82,7 @@ class Company
 	bool load_Special();
 	bool load_MaxW();
 	bool Need_Checkup(Truck*);
+	bool in_working(Time T);
 	int Loading_count();
 
 public:

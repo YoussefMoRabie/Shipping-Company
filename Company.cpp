@@ -49,7 +49,8 @@ void Company::Working_Hours()
 }
 void Company::Off_Hours()
 {
-
+	Truck_Controller();
+	Deliver_cargos();
 }
 
 bool Company::load_VIP()
@@ -506,6 +507,7 @@ bool Company::readFile(string filename)
 			Loaded >> cargo_type >> t >> id >> dist >> LT >> cost;
 
 			T.setTime(t);
+			if(in_working(T))
 			switch (cargo_type)
 			{
 			case 'N':
@@ -562,7 +564,13 @@ Time& Company::get_Sim_Time()
 
 Time& Company::get_Nearest_Event_Time()
 {
+	if (Event_List.Peek())
 	return Event_List.Peek()->getTime();
+	else
+	{
+		Time t(0, 0);
+		return t;
+	}
 }
 
 Event* Company::get_Nearest_Event()
@@ -711,7 +719,7 @@ void Company::Print(SIM_MODE Mode)
 	{
 		if (!Events_empty())
 		{
-			if (get_Sim_Time() == get_Nearest_Event_Time())
+			while ( get_Sim_Time() == get_Nearest_Event_Time() )
 			{
 				Event* Eptr = get_Nearest_Event();
 				Eptr->Execute();
@@ -724,7 +732,7 @@ void Company::Print(SIM_MODE Mode)
 			Output_Console();
 
 			Advance_Sim_Time();
-			if (5 <= Sim_Time.getHour() <= 23)
+			if (in_working(Sim_Time))
 			{
 				Working_Hours();
 			}
@@ -740,6 +748,10 @@ void Company::Print(SIM_MODE Mode)
 		cin.get();
 	Output_Console();
 	ui_p->print("Everything is done, Simulation over.");
+}
+bool Company::in_working(Time T)
+{
+	return 5 <= T.getHour() && T.getHour() <= 23;
 }
 void Company::InteractivePrinting()
 {
