@@ -6,6 +6,8 @@
 #include <Windows.h>
 #include <string>
 #include <cmath>
+#include <sstream>
+
 using namespace std;
 
 Company::Company()
@@ -14,6 +16,14 @@ Company::Company()
 	Loading_Special = nullptr;
 	Loading_VIP = nullptr;
 	Num_Promoted_cargos = 0;
+	VIP_Cargos_count=0;
+	Normal_Cargos_count=0;
+	Special_Cargos_count=0;
+	VIP_Trucks_count=0;
+	Normal_Trucks_count=0;
+	Special_Trucks_count=0;
+	Total_Trucks_count = 0;
+	Total_Cargos_count=0;
 }
 
 void Company::Start_Simuulation()
@@ -39,7 +49,8 @@ void Company::Working_Hours()
 	}
 	if (!Loading_Special)
 	{
-		load_VIP();
+
+		load_Special();
 	}
 	if (!Loading_Normal)
 	{
@@ -57,14 +68,27 @@ bool Company::load_VIP()
 {
 	Truck* t_temp = Pick_VIP_Truck();
 	Cargo* c_temp;
+	float T_L_T=0;
+	float M_L_T = 0;
 	if (t_temp) 
 	{
 		for (int i = 0; i < t_temp->GetCapacity(); i++)
 		{
-			W_V_C.DeQueue(c_temp);
+			W_V_C.DeQueue(c_temp);			
+			if (c_temp)
+			{
+				c_temp->Set_Truck_ID(t_temp->GetID());
+				c_temp->Set_PT(get_Sim_Time());
+				if (c_temp->GetLU_Time() > M_L_T)
+					M_L_T = c_temp->GetLU_Time();
+				T_L_T += c_temp->GetLU_Time();
+			}
+
 			float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
 			t_temp->load(c_temp, delivery_time);
 		}
+		T_L_T += M_L_T;
+		t_temp->Set_AT(ceil(T_L_T));
 		Loading_VIP = t_temp;
 		return true;
 	}
@@ -76,13 +100,26 @@ bool Company::load_Special()
 {
 	Truck* t_temp = Pick_Special_Truck();
 	Cargo* c_temp;
+	float T_L_T = 0;
+	float M_L_T = 0;
 	if (t_temp) {
 		for (int i = 0; i < t_temp->GetCapacity(); i++)
 		{
 			W_S_C.DeQueue(c_temp);
+			if (c_temp)
+			{
+				c_temp->Set_Truck_ID(t_temp->GetID());
+				c_temp->Set_PT(get_Sim_Time());
+				if (c_temp->GetLU_Time() > M_L_T)
+					M_L_T = c_temp->GetLU_Time();
+				T_L_T += c_temp->GetLU_Time();
+			}
+
 			float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
 			t_temp->load(c_temp, delivery_time);
 		}
+		T_L_T += M_L_T;
+		t_temp->Set_AT(ceil(T_L_T));
 		Loading_Special = t_temp;
 		return true;
 	}
@@ -95,15 +132,28 @@ bool Company::load_Normal()
 {
 	Truck* t_temp = Pick_Normal_Truck();
 	Cargo* c_temp;
+	float T_L_T = 0;
+	float M_L_T = 0;
 	if (t_temp)
 	{
 
 		for (int i = 0; i < t_temp->GetCapacity(); i++)
 		{
 			W_N_C.removeFirst(c_temp);
+			if (c_temp)
+			{
+				c_temp->Set_Truck_ID(t_temp->GetID());
+				c_temp->Set_PT(get_Sim_Time());
+				if (c_temp->GetLU_Time() > M_L_T)
+					M_L_T = c_temp->GetLU_Time();
+				T_L_T += c_temp->GetLU_Time();
+			}
+
 			float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
 			t_temp->load(c_temp, delivery_time);
 		}
+		T_L_T += M_L_T;
+		t_temp->Set_AT(ceil(T_L_T));
 		Loading_Normal = t_temp;
 		return true;
 
@@ -132,6 +182,12 @@ bool Company::load_MaxW()
 					float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
 					t_temp->load(c_temp, delivery_time);
 					Loading_Special = t_temp;
+					if (c_temp)
+					{
+						c_temp->Set_Truck_ID(t_temp->GetID());
+						c_temp->Set_PT(get_Sim_Time());
+						t_temp->Set_AT(ceil(c_temp->GetLU_Time()*2+ (c_temp->GetDistance()/t_temp->GetSpeed())));
+					}
 					return true;
 				}
 			}
@@ -151,6 +207,12 @@ bool Company::load_MaxW()
 					float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
 					t_temp->load(c_temp, delivery_time);
 					Loading_Normal = t_temp;
+					if (c_temp)
+					{
+						c_temp->Set_Truck_ID(t_temp->GetID());
+						c_temp->Set_PT(get_Sim_Time());
+						t_temp->Set_AT(ceil(c_temp->GetLU_Time() * 2 + (c_temp->GetDistance() / t_temp->GetSpeed())));
+					}
 					return true;
 				}
 			}
@@ -162,6 +224,12 @@ bool Company::load_MaxW()
 					float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
 					t_temp->load(c_temp, delivery_time);
 					Loading_VIP = t_temp;
+					if (c_temp)
+					{
+						c_temp->Set_Truck_ID(t_temp->GetID());
+						c_temp->Set_PT(get_Sim_Time());
+						t_temp->Set_AT(ceil(c_temp->GetLU_Time() * 2 + (c_temp->GetDistance() / t_temp->GetSpeed())));
+					}
 					return true;
 				}
 			}
@@ -305,9 +373,11 @@ void Company::Deliver_cargos() {
 
 	if (get_Sim_Time() >= Moving_truck.Peek()->Get_nearest_stop()) 
 	{
+		
 		Truck* temp;
 		PriQueue<Truck*> truck_temp;
 		Cargo* c_temp = Moving_truck.Peek()->unload();
+		c_temp->Set_DT(get_Sim_Time());
 		Delivered_cargo.EnQueue(c_temp);
 		float x = Moving_truck.Peek()->Get_nearest_dis();
 		if (Moving_truck.Peek()->GetContainer_count() != 0)
@@ -449,6 +519,7 @@ void Company::Auto_Promotion()
 	while (rest_in_waiting(W_N_C.getFirst()) >= AutoPro * 24)
 	{
 		Upgrade_Normal_Cargo(W_N_C.getFirst()->GetID());
+		Num_Promoted_cargos++;
 	}
 }
 int Company::rest_in_waiting(Cargo * car)
@@ -477,18 +548,22 @@ bool Company::readFile(string filename)
 		Truck* T = new Truck(truck_id, TRUCK_TYPE::NORMAL, nCap, nCheck, Num_of_journeys, nSpeed);
 		empty_Normal.EnQueue(T);
 		truck_id++;
+		Normal_Trucks_count++;
 	}
 	for (int i = 0; i < S; i++)
 	{
 		Truck* T = new Truck(truck_id, TRUCK_TYPE::SPECIAL, sCap, sCheck, Num_of_journeys, sSpeed);
 		empty_Special.EnQueue(T);
 		truck_id++;
+		Special_Trucks_count++;
+
 	}
 	for (int i = 0; i < V; i++)
 	{
 		Truck* T = new Truck(truck_id, TRUCK_TYPE::VIP, vCap, vCheck, Num_of_journeys, vSpeed);
 		empty_VIP.EnQueue(T);
 		truck_id++;
+		VIP_Trucks_count++;
 	}
 
 	Event* Eptr = nullptr;
@@ -513,16 +588,19 @@ bool Company::readFile(string filename)
 			case 'N':
 			{
 				Eptr = new PreparationEvent(this, CARGO_TYPE::NORMAL, T, id, dist, LT, cost);
+				Normal_Cargos_count ++;
 				break;
 			}
 			case 'S':
 			{
 				Eptr = new PreparationEvent(this, CARGO_TYPE::SPECIAL, T, id, dist, LT, cost);
+				Special_Cargos_count++;
 				break;
 			}
 			case 'V':
 			{
 				Eptr = new PreparationEvent(this, CARGO_TYPE::VIP, T, id, dist, LT, cost);
+				VIP_Cargos_count++;
 				break;
 			}
 			}
@@ -715,6 +793,11 @@ void Company::Print(SIM_MODE Mode)
 		ui_p->print("Interactive Mode\n");
 	else if (Mode == SIM_MODE::STEP_BY_STEP)
 		ui_p->print("StepByStep Mode\n");
+
+
+
+
+
 	while (!Events_empty() || !All_Delivered())
 	{
 		if (!Events_empty())
@@ -730,6 +813,7 @@ void Company::Print(SIM_MODE Mode)
 			if(Mode == SIM_MODE::STEP_BY_STEP)
 				Sleep(1000);
 			Output_Console();
+
 
 			Advance_Sim_Time();
 			if (in_working(Sim_Time))
@@ -782,12 +866,62 @@ void Company::execute_mode(SIM_MODE Mode)
 		SilentPrinting();
 	else
 		StepByStepPrinting();
+
+	write_output_file();
+
 }
 
 bool Company::write_output_file()
 {
-	//to be implemented in phase 2
-	return 0;
+	int Delivered = Delivered_cargo.GetCount();
+	string Text = "";
+	ofstream outFile("output.txt");
+	if (!(outFile.is_open()))return false;
+	if (!Delivered)
+		Text = "THERE ARE NO COMPLETED MISSIONS !!!!\n";
+	else
+		Statistics_File(Delivered, Text);
+	outFile << Text;
+	outFile.close();
+	if (outFile.is_open())return false;
+	return true;
+}
+void Company::Statistics_File(int Delivered, string & text)
+{
+	stringstream str;
+	Cargo* car;
+	Queue<Cargo*> temp;
+	int T_W=0;
+	Total_Cargos_count = Normal_Cargos_count + Special_Cargos_count + VIP_Cargos_count;
+	 Total_Trucks_count= VIP_Trucks_count + Normal_Trucks_count + Special_Trucks_count;;
+	str << "CDT\tID\tPT\tWT\tTID\n";
+	for (int i = 0; i < Delivered; i++)
+	{
+		Delivered_cargo.DeQueue(car);
+		Time WT((car->Get_PT() - car->Get_Preparation_Time()));
+		str <<car->Get_DT().Time_to_print() << "\t" << car->GetID() << "\t"<<car->Get_PT().Time_to_print()<<"\t"<< WT.Time_to_print()<< "\t" << car->Get_Truck_ID() << "\n";
+		T_W += WT.Time_In_Hours();
+		temp.EnQueue(car);
+	}
+	while (!temp.QueueEmpty())
+	{
+		temp.DeQueue(car);
+		Delivered_cargo.EnQueue(car);
+	}
+	Time Avg_Wait(T_W / Delivered);
+	str << "-------------------------------------------------------------\n";
+	str << "Cargos: " << to_string(Total_Cargos_count) << " [N: " << to_string(Normal_Cargos_count) << ", S: " << to_string(Special_Cargos_count) << ", V: " << to_string(VIP_Cargos_count) << "]\n";
+	str << "Cargo Avg Wait = " << Avg_Wait.Time_to_print() << "\n";
+	str << "Auto-promoted Caros:" << to_string((auto_promoted_count/ Total_Cargos_count)*100)<<"%\n";
+	str << "Trucks: " << to_string(Total_Trucks_count) << " [N: " << to_string(Normal_Trucks_count) << ", S: " << to_string(Special_Trucks_count) << ", V: " << to_string(VIP_Trucks_count) << "]\n";
+	str << "Avg Active time = ";
+	str << "Avg utilization = ";
+
+
+
+
+
+	text = str.str();
 }
 
 void Company::print_W_V_C()

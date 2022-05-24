@@ -102,6 +102,14 @@ void Truck::set_nearest_stop(Time t) {
 	int l_t = container.Peek()->GetLU_Time();
 	Nearest_stop = t + l_t;
 }
+void Truck::Set_AT(int h)
+{
+	AT.setTime(h);
+}
+Time Truck::Get_AT()
+{
+	return AT;
+}
 void Truck::print()
 {
 	ui_p->print(to_string(ID));

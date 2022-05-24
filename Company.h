@@ -54,13 +54,17 @@ class Company
 	//-------------------------------------------------------
 	
 	//Number of cargos in each list
+
+	int VIP_Cargos_count;
+	int Normal_Cargos_count;
+	int Special_Cargos_count;
 	int Moving_Cargos_count;
 	int Delivered_Cargos_count;
 	int Total_Cargos_count;
 	int Num_Promoted_cargos;
 
 	//--------------------------------------------------------
-	int auto_promoted_count;
+	float auto_promoted_count;
 	int cancelled;
 	
 	//--------------------------------------------------------
@@ -98,6 +102,7 @@ public:
 	void execute_mode(SIM_MODE);
 	bool readFile(string);
 	bool write_output_file(); // need to implementation
+	void Statistics_File(int Delivered,string & text);
 	int rest_in_waiting(Cargo* car);
 	Time& get_Sim_Time() ;
 	Time& get_Nearest_Event_Time();

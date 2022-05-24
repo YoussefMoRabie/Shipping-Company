@@ -1,4 +1,9 @@
 #include "Time.h"
+Time::Time()
+{
+	day = 0;
+	hour = 0;
+}
 Time::Time(int d, int h)
 {
 	if (h >= 24 || h < 0)
@@ -12,6 +17,18 @@ Time::Time(int d, int h)
 Time::Time(string s)
 {
 	setTime(s);
+}
+
+Time::Time(int h)
+{
+	day = h / 24;
+	hour = h % 24;
+}
+
+void Time::setTime(int h)
+{
+	day = h / 24;
+	hour = h % 24;
 }
 
 void Time::setTime(string s)
@@ -44,6 +61,11 @@ int Time::getHour()
 int Time::Time_In_Hours()
 {
 	return 24 * day + hour;
+}
+
+string Time::Time_to_print()
+{
+	return to_string(day)+":"+to_string(hour);
 }
 
 void Time::AdvanceTime(int value)

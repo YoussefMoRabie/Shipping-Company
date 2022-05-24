@@ -23,6 +23,7 @@ private:
 	int ID;
 	int move_counter;	//initialized with the highest load_time cargo in the container, once it reaches 0 the truck moves.
 	Time finish_point;
+	Time AT;
 public:
 	Truck(int id, TRUCK_TYPE T, int TC, float MT, int j, float S);
 	TRUCK_TYPE GetType() const;
@@ -45,6 +46,8 @@ public:
 	Cargo* unload();
 	void count_down();
 	int get_move_counter();
+	void Set_AT(int h);
+	Time Get_AT();
 	void print();
 	friend ostream& operator<<(ostream& out, Truck* t);
 };

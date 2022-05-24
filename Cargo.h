@@ -8,11 +8,14 @@ class Cargo
 {
 private:
 	Time Preparation_Time; //Time(day:hour) at which the cargo is ready to be loaded
+	Time DT;
+	Time PT;
 	float Load_Unload_Time;
 	CARGO_TYPE Type;
 	float Delivery_Distance; //Km
 	double Cost;
 	int ID;
+	int Truck_ID;
 
 public:
 
@@ -26,6 +29,13 @@ public:
 	void PromoteToVip(double ExtraMoney);
 	bool operator==(Cargo* ptr);
 	int GetID() const;
+	void Set_Truck_ID(int id);
+	int Get_Truck_ID();
+	void Set_DT(Time t);
+	void Set_PT(Time t);
+	Time& Get_DT();
+	Time& Get_PT();
+	Time& Get_Preparation_Time();
 	friend ostream& operator<<(ostream& out, const Cargo* c);
 	
 };
