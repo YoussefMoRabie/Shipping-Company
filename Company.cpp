@@ -1,3 +1,9 @@
+
+
+
+
+
+
 #include "Company.h"
 #include "Event.h"
 #include "PreparationEvent.h"
@@ -289,14 +295,15 @@ Truck* Company::Pick_VIP_Truck() {
 			return t_temp;
 		}
 	}
-	if (W_V_C.GetCount() >= nCap && !Loading_Normal)
+	
+	if (empty_VIP.QueueEmpty()&& W_V_C.GetCount() >= nCap && !Loading_VIP)
 	{
 		if (!empty_Normal.QueueEmpty()) {
 			empty_Normal.DeQueue(t_temp);
 			return t_temp;
 		}
 	}
-	if (W_V_C.GetCount() >= sCap && !Loading_Special)
+	if (empty_VIP.QueueEmpty()&& empty_Normal.QueueEmpty() && W_V_C.GetCount() >= sCap && !Loading_VIP)
 	{
 		if (!empty_Special.QueueEmpty()) {
 			empty_Special.DeQueue(t_temp);
@@ -316,7 +323,7 @@ Truck* Company::Pick_Normal_Truck() {
 			return t_temp;
 		}
 	}
-	if (W_N_C.GetCount() >= vCap && !Loading_VIP)
+	if (empty_Normal.QueueEmpty()&& W_N_C.GetCount() >= vCap && !Loading_Normal)
 	{
 		if (!empty_VIP.QueueEmpty()) {
 			empty_VIP.DeQueue(t_temp);

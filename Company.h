@@ -26,22 +26,22 @@ class Company
 	//------------------------------------------------------
 
 	//Trucks
-	Queue<Truck*> empty_VIP;
-	Queue<Truck*> empty_Special;
-	Queue<Truck*> empty_Normal;
-	Queue<Truck*> Check_up_Normal;
-	Queue<Truck*> Check_up_Special;
-	Queue<Truck*> Check_up_VIP;
-	PriQueue<Truck*> Moving_truck;
+	Queue<Truck*> empty_VIP; //availabe VIP Trucks
+	Queue<Truck*> empty_Special; //availabe Special Trucks
+	Queue<Truck*> empty_Normal; //availabe Normal Trucks
+	Queue<Truck*> Check_up_Normal; //Normal Trucks in checkup
+	Queue<Truck*> Check_up_Special;//Special Trucks in checkup
+	Queue<Truck*> Check_up_VIP;//availabe VIP Trucks in checkup
+	PriQueue<Truck*> Moving_truck;//Moving Trucks
 
 	Queue<Event*> Event_List;
 
 	//-------------------------------------------------------
 
-	int MaxWait;
-	int AutoPro;
+	int MaxWait; //maximum waiting time for cargo
+	int AutoPro; //time needed to promote a normal cargo to vip
 	int Num_of_events;
-	int nCap, sCap, vCap;
+	int nCap, sCap, vCap; //Capcity for each type of truck
 	//Numbers of Trucks in each list
 
 	int VIP_Trucks_count;
@@ -75,17 +75,27 @@ class Company
 	//--------------------------------------------------------
 	// Utility functions
 	void check_checkup_list();
-	void check_to_available(Truck*&);
-	void move_to_available(Truck*);
-	void move_to_checkup(Truck*);
-	Truck* Pick_VIP_Truck();
-	Truck* Pick_Normal_Truck();
-	Truck* Pick_Special_Truck();
-	bool load_VIP();
-	bool load_Normal();
-	bool load_Special();
-	bool load_MaxW();
-	bool Need_Checkup(Truck*);
+	void check_to_available(Truck*&); //it Moves trucks from checkup to availabe list 
+	
+	void move_to_available(Truck*);//it moves trucks from moving to availabe list
+	
+	void move_to_checkup(Truck*);//it moves trucks from moving to checkup list
+	
+	Truck* Pick_VIP_Truck();//it picks the appropriate truck for a VIP cargos
+	
+	Truck* Pick_Normal_Truck();//it picks the appropriate truck for a Normal cargos
+	
+	Truck* Pick_Special_Truck();//it picks the appropriate truck for a Special cargos
+	
+	bool load_VIP();//it load VIP trucks with cargos
+	
+	bool load_Normal();//it load Normal trucks with cargos
+
+	bool load_Special();//it load Special trucks with cargos
+	
+	bool load_MaxW();//it loads cargos with maxw into truck
+	
+	bool Need_Checkup(Truck*);//it checks if a returnning truck needs checkup or not
 	bool in_working(Time T);
 	int Loading_count();
 
@@ -94,7 +104,8 @@ public:
 	Company();
 	void Start_Simuulation();
 	void Working_Hours();
-	void Truck_Controller();
+	
+	void Truck_Controller();//it control the transition of trucks between different lists
 	void Off_Hours();
 
 	// Reading data function
@@ -113,7 +124,8 @@ public:
 	void assign_cargo();
 	void check_completed_cargo();
 	void increment_cancelled();
-	void Deliver_cargos();
+	
+	void Deliver_cargos();//it deliver cargos when they reach their destination and move them into delivered cargos
 
 	//Printing Functions
 	void Print_Sim_Time();
