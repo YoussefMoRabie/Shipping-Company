@@ -26,6 +26,7 @@ private:
 	Time AT;
 	int TDC;
 	int N;
+	Time moving_time;
 
 public:
 	Truck(int id, TRUCK_TYPE T, int TC, float MT, int j, float S);
@@ -57,6 +58,8 @@ public:
 	Time Get_AT();
 	float utilization(Time& Sim_Time);
 	void print();
+	void Set_moving_time(Time& Sim_Time);
+	Time get_moving_time();
 	friend ostream& operator<<(ostream& out, Truck* t);
 };
 

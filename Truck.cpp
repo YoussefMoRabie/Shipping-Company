@@ -166,6 +166,14 @@ void Truck::print()
 		ui_p->print("] ");
 	}
 }
+void Truck::Set_moving_time(Time& Sim_Time)
+{
+	moving_time = Sim_Time;
+}
+Time Truck::get_moving_time()
+{
+	return moving_time;
+}
 ostream& operator<<(ostream& out, Truck* t)
 {
 	t->print();
