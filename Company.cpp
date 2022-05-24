@@ -86,7 +86,6 @@ bool Company::load_VIP()
 			if (c_temp)
 			{
 				c_temp->Set_Truck_ID(t_temp->GetID());
-				c_temp->Set_PT(get_Sim_Time());
 				if (c_temp->GetLU_Time() > M_L_T)
 					M_L_T = c_temp->GetLU_Time();
 				T_L_T += c_temp->GetLU_Time();
@@ -121,7 +120,6 @@ bool Company::load_Special()
 			if (c_temp)
 			{
 				c_temp->Set_Truck_ID(t_temp->GetID());
-				c_temp->Set_PT(get_Sim_Time());
 				if (c_temp->GetLU_Time() > M_L_T)
 					M_L_T = c_temp->GetLU_Time();
 				T_L_T += c_temp->GetLU_Time();
@@ -160,7 +158,6 @@ bool Company::load_Normal()
 			if (c_temp)
 			{
 				c_temp->Set_Truck_ID(t_temp->GetID());
-				c_temp->Set_PT(get_Sim_Time());
 				if (c_temp->GetLU_Time() > M_L_T)
 					M_L_T = c_temp->GetLU_Time();
 				T_L_T += c_temp->GetLU_Time();
@@ -207,7 +204,6 @@ bool Company::load_MaxW()
 					if (c_temp)
 					{
 						c_temp->Set_Truck_ID(t_temp->GetID());
-						c_temp->Set_PT(get_Sim_Time());
 						t_temp->Set_AT(ceil(c_temp->GetLU_Time()*2+ (c_temp->GetDistance()/t_temp->GetSpeed())+t_temp->Get_AT().Time_In_Hours()));
 
 					}
@@ -234,7 +230,6 @@ bool Company::load_MaxW()
 					if (c_temp)
 					{
 						c_temp->Set_Truck_ID(t_temp->GetID());
-						c_temp->Set_PT(get_Sim_Time());
 						t_temp->Set_AT(ceil(c_temp->GetLU_Time() * 2 + (c_temp->GetDistance() / t_temp->GetSpeed()) + t_temp->Get_AT().Time_In_Hours()));
 					}
 					return true;
@@ -252,7 +247,6 @@ bool Company::load_MaxW()
 					if (c_temp)
 					{
 						c_temp->Set_Truck_ID(t_temp->GetID());
-						c_temp->Set_PT(get_Sim_Time());
 						t_temp->Set_AT(ceil(c_temp->GetLU_Time() * 2 + (c_temp->GetDistance() / t_temp->GetSpeed()) + t_temp->Get_AT().Time_In_Hours()));
 					}
 					return true;
@@ -409,6 +403,7 @@ void Company::Deliver_cargos() {
 			temp->set_nearest_stop(get_Sim_Time(), 
 			c_temp->GetDistance()); // set the nest destination
 			c_temp->Set_DT(get_Sim_Time());
+			c_temp->Set_WT(temp->get_moving_time() - c_temp->Get_Preparation_Time());
 
 
 
@@ -429,7 +424,7 @@ void Company::Move_Truck(Truck*& t)
 	
 	dis_temp = t->Get_nearest_dis(); 
 	float time_temp= dis_temp / t->GetSpeed();
-
+	t->Set_moving_time(Sim_Time);
 	t->set_nearest_stop(get_Sim_Time(),0 ); //set the first destination
 	Moving_truck.EnQueue(t,1/ (t->Get_nearest_stop() - Sim_Time)); 
 	t = nullptr;
@@ -957,9 +952,8 @@ void Company::Statistics_File(int Delivered, string & text)
 	for (int i = 0; i < Delivered; i++)
 	{
 		Delivered_cargo.DeQueue(car);
-		Time WT((car->Get_PT() - car->Get_Preparation_Time()));
-		str <<car->Get_DT().Time_to_print() << "\t" << car->GetID() << "\t"<<car->Get_PT().Time_to_print()<<"\t"<< WT.Time_to_print()<< "\t" << car->Get_Truck_ID() << "\n";
-		T_W += WT.Time_In_Hours();
+		str <<car->Get_DT().Time_to_print() << "\t" << car->GetID() << "\t"<<car->Get_Preparation_Time().Time_to_print()<<"\t"<< car->Get_WT().Time_to_print() << "\t" << car->Get_Truck_ID() << "\n";
+		T_W += car->Get_WT().Time_In_Hours();
 	}
 	while (!empty_VIP.QueueEmpty())
 	{

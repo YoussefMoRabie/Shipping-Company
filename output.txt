@@ -10,9 +10,9 @@ CDT	ID	PT	WT	TID
 1:16	6	1:6	0:11	7
 1:20	4	1:6	1:1	7
 -------------------------------------------------------------
-Cargos: 11 [N: 6, S: 2, V: 3]
-Cargo Avg Wait = 0:8
+Cargos: 8 [N: 4, S: 2, V: 2]
+Cargo Avg Wait = 0:11
 Auto-promoted Caros:0.000000%
 Trucks: 8 [N: 3, S: 3, V: 2]
-Avg Active time = 7.547170%
-Avg utilization = 8.018868%
+Avg Active time = 7.142858%
+Avg utilization = 7.142858%

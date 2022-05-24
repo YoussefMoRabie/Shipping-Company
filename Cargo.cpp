@@ -60,17 +60,18 @@ void Cargo::Set_DT(Time t)
 {
 	DT = t;
 }
-void Cargo::Set_PT(Time t)
+void Cargo::Set_WT(int t)
 {
-	PT = t;
+	WT.setTime(t);
+	
 }
 Time& Cargo::Get_DT()
 {
 	return DT;
 }
-Time& Cargo::Get_PT()
+Time& Cargo::Get_WT()
 {
-	return PT;
+	return WT;
 }
 Time& Cargo::Get_Preparation_Time()
 {
