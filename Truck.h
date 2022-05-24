@@ -10,7 +10,7 @@ class Truck
 private:
 	UI* ui_p;
 	PriQueue<Cargo*>container;
-	TRUCK_TYPE Type;
+	TRUCK_TYPE Type; 
 	int Truck_Capacity; //# of cargos
 	float Maintenance_Time; //hours
 	float Speed; //Km/h
