@@ -24,6 +24,9 @@ private:
 	int move_counter;	//initialized with the highest load_time cargo in the container, once it reaches 0 the truck moves.
 	Time finish_point; // when the checkup finishes
 	Time AT;
+	int TDC;
+	int N;
+
 public:
 	Truck(int id, TRUCK_TYPE T, int TC, float MT, int j, float S);
 	TRUCK_TYPE GetType() const;
@@ -47,7 +50,12 @@ public:
 	void count_down();
 	int get_move_counter();
 	void Set_AT(int h);
+	void inc_TDC();
+	void inc_N();
+	int Get_TDC();
+	int Get_N();
 	Time Get_AT();
+	float utilization(Time& Sim_Time);
 	void print();
 	friend ostream& operator<<(ostream& out, Truck* t);
 };
