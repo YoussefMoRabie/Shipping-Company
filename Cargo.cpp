@@ -48,6 +48,34 @@ int Cargo::GetID() const
 {
 	return ID;
 }
+void Cargo::Set_Truck_ID(int id)
+{
+	Truck_ID = id;
+}
+int Cargo::Get_Truck_ID()
+{
+	return Truck_ID;
+}
+void Cargo::Set_DT(Time t)
+{
+	DT = t;
+}
+void Cargo::Set_PT(Time t)
+{
+	PT = t;
+}
+Time& Cargo::Get_DT()
+{
+	return DT;
+}
+Time& Cargo::Get_PT()
+{
+	return PT;
+}
+Time& Cargo::Get_Preparation_Time()
+{
+	return Preparation_Time;
+}
 ostream& operator<<(ostream& out, const Cargo* c)
 {
 	out << c->GetID();

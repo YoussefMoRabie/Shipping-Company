@@ -106,6 +106,14 @@ void Truck::set_nearest_stop(Time t, float x) {
 		l_t = ceil(Get_nearest_dis() / GetSpeed());
 	Nearest_stop = t + l_t;
 }
+void Truck::Set_AT(int h)
+{
+	AT.setTime(h);
+}
+Time Truck::Get_AT()
+{
+	return AT;
+}
 void Truck::print()
 {
 	ui_p->print(to_string(ID));
