@@ -263,14 +263,12 @@ void Company::Truck_Controller() //controll the transition of trucks between lis
 	if((in_working(Sim_Time)))
 		Move_Trucks();
 	Truck* t_temp;
-	int i = Moving_truck.GetCount();
-		while (i > 0 && Sim_Time >= Moving_truck.Peek()->Get_nearest_stop()) //if the truck finished the journey
+		while (!Moving_truck.QueueEmpty() && Sim_Time >= Moving_truck.Peek()->Get_nearest_stop()&& Moving_truck.Peek()->GetContainer_count() == 0) //if the truck finished the journey
 		{
-			float pri;
-			pri = Moving_truck.GetFront()->get_priority();
+			
 			Moving_truck.DeQueue(t_temp);//remove it from the moving
-			if (t_temp->GetContainer_count() == 0)
-			{
+			
+			
 				t_temp->DecrementJTC(); //decrement the journeys untill its maintainence
 				t_temp->inc_N(); //increment total journeys 
 				if (Need_Checkup(t_temp)) //checks if it needs maintainence
@@ -278,10 +276,8 @@ void Company::Truck_Controller() //controll the transition of trucks between lis
 					move_to_checkup(t_temp);
 				}
 				else move_to_available(t_temp);
-			}
-			else
-				Moving_truck.EnQueue(t_temp, pri);
-			i--;
+			
+			
 		}
 
 	
@@ -415,6 +411,8 @@ void Company::Deliver_cargos() {
 
 
 		}
+		if (Moving_truck.Peek() &&Moving_truck.Peek()->GetContainer_count() == 0)
+			Truck_Controller();
 		truck_temp.EnQueue(temp, -(temp->Get_nearest_stop() - Sim_Time)); // enqueue the truck based on its new destination among the moving trucks
 	}
 	while (!truck_temp.QueueEmpty()) //updates the moving list
