@@ -14,15 +14,15 @@ private:
 	int Truck_Capacity; //# of cargos
 	float Maintenance_Time; //hours
 	float Speed; //Km/h
-	int J;
-	int Journeys_Till_Check;
+	int J;  // journeys untill checkup
+	int Journeys_Till_Check; ////counter for journeys untill checkup
 	float Delivery_Interval; //Time to deliver all cargos & comeback, Calculated
 	float Delivery_Distance; //distance of the furthest cargo in container
-	Time Nearest_stop;
-	float Nearest_dis;
+	Time Nearest_stop; // the delivery time for the nearsest cargo
+	float Nearest_dis;// distance for the nearest cargo
 	int ID;
 	int move_counter;	//initialized with the highest load_time cargo in the container, once it reaches 0 the truck moves.
-	Time finish_point;
+	Time finish_point; // when the checkup finishes
 	Time AT;
 public:
 	Truck(int id, TRUCK_TYPE T, int TC, float MT, int j, float S);

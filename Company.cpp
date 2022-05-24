@@ -413,6 +413,7 @@ bool Company::Need_Checkup(Truck* t) //checks every journey if the truck needs m
 
 void Company::move_to_checkup(Truck* t)
 { 
+	
 	t->set_finish_point(get_Sim_Time() + t->GetMaintenanceTime());
 	if (t->GetType() == TRUCK_TYPE::VIP) {
 		Check_up_VIP.EnQueue(t);

@@ -89,6 +89,8 @@ int Truck::get_move_counter()
 {
 	return move_counter;
 }
+
+
 float Truck::Get_nearest_dis() {
 	if (GetContainer_count() > 0)
 		return container.Peek()->GetDistance();
