@@ -263,17 +263,25 @@ void Company::Truck_Controller() //controll the transition of trucks between lis
 	if((in_working(Sim_Time)))
 		Move_Trucks();
 	Truck* t_temp;
-	
-		while (!Moving_truck.QueueEmpty()&&Sim_Time >= Moving_truck.Peek()->Get_nearest_stop() && Moving_truck.Peek()->GetContainer_count() == 0) //if the truck finished the journey
+	int i = Moving_truck.GetCount();
+		while (i > 0 && Sim_Time >= Moving_truck.Peek()->Get_nearest_stop()) //if the truck finished the journey
 		{
+			float pri;
+			pri = Moving_truck.GetFront()->get_priority();
 			Moving_truck.DeQueue(t_temp);//remove it from the moving
-			t_temp->DecrementJTC(); //decrement the journeys untill its maintainence
-			t_temp->inc_N(); //increment total journeys 
-			if (Need_Checkup(t_temp)) //checks if it needs maintainence
+			if (t_temp->GetContainer_count() == 0)
 			{
-				move_to_checkup(t_temp);
+				t_temp->DecrementJTC(); //decrement the journeys untill its maintainence
+				t_temp->inc_N(); //increment total journeys 
+				if (Need_Checkup(t_temp)) //checks if it needs maintainence
+				{
+					move_to_checkup(t_temp);
+				}
+				else move_to_available(t_temp);
 			}
-			else move_to_available(t_temp);
+			else
+				Moving_truck.EnQueue(t_temp, pri);
+			i--;
 		}
 
 	
@@ -400,20 +408,19 @@ void Company::Deliver_cargos() {
 		{
 			 c_temp = temp->unload(); //unload cargo from conatiner
 			Delivered_cargo.EnQueue(c_temp); //moves it to delivered
-			temp->set_nearest_stop(get_Sim_Time(), 
-			c_temp->GetDistance()); // set the nest destination
+			temp->set_nearest_stop(get_Sim_Time(), c_temp->GetDistance()); // set the nest destination
 			c_temp->Set_DT(get_Sim_Time());
 			c_temp->Set_WT(temp->get_moving_time() - c_temp->Get_Preparation_Time());
 
 
 
 		}
-		truck_temp.EnQueue(temp, 1 / (temp->Get_nearest_stop() - Sim_Time)); // enqueue the truck based on its new destination among the moving trucks
+		truck_temp.EnQueue(temp, -(temp->Get_nearest_stop() - Sim_Time)); // enqueue the truck based on its new destination among the moving trucks
 	}
 	while (!truck_temp.QueueEmpty()) //updates the moving list
 	{
 		truck_temp.DeQueue(temp);
-		Moving_truck.EnQueue(temp, 1 / (temp->Get_nearest_stop() - Sim_Time));
+		Moving_truck.EnQueue(temp,  -(temp->Get_nearest_stop() - Sim_Time));
 	}
 
 }
@@ -426,7 +433,7 @@ void Company::Move_Truck(Truck*& t)
 	float time_temp= dis_temp / t->GetSpeed();
 	t->Set_moving_time(Sim_Time);
 	t->set_nearest_stop(get_Sim_Time(),0 ); //set the first destination
-	Moving_truck.EnQueue(t,1/ (t->Get_nearest_stop() - Sim_Time)); 
+	Moving_truck.EnQueue(t,-(t->Get_nearest_stop() - Sim_Time)); 
 	t = nullptr;
 }
 bool Company::Need_Checkup(Truck* t) //checks every journey if the truck needs maintainence
@@ -530,7 +537,7 @@ void Company::AddCargo(Cargo* c)
 	}
 	case CARGO_TYPE::VIP:
 	{
-		int time = (c->GetPrepTime().getDay() * 24) + c->GetPrepTime().getHour();
+		int time = c->GetPrepTime().Time_In_Hours();
 		float priority = 10 * c->GetCost() / (c->GetDistance() * time);
 		W_V_C.EnQueue(c, priority);
 		break;
@@ -749,7 +756,8 @@ void Company::Output_Console()
 	if (Loading_Normal)
 	{
 		Loading_Normal->print_container();
-		ui_p->print(",");
+		if(!W_N_C.IsEmpty())
+			ui_p->print(",");
 	}
 	W_N_C.print();
 	ui_p->print("] (");
@@ -757,7 +765,8 @@ void Company::Output_Console()
 	if (Loading_Special)
 	{
 		Loading_Special->print_container();
-		ui_p->print(",");
+		if (!W_S_C.QueueEmpty())
+			ui_p->print(",");
 	}
 	W_S_C.print();
 	ui_p->print(") {");
@@ -765,7 +774,8 @@ void Company::Output_Console()
 	if (Loading_VIP)
 	{
 		Loading_VIP->print_container();
-		ui_p->print(",");
+		if (!W_V_C.QueueEmpty())
+			ui_p->print(",");
 	}
 	W_V_C.print();
 	ui_p->print("}\n");

@@ -146,13 +146,26 @@ void Truck::print_container()
 {
 	Cargo* c;
 	PriQueue<Cargo*>temp;
-	for (int i=0; i < GetContainer_count(); i++)
+	float pri = 0;
+	while (!container.QueueEmpty())
 	{
 		container.DeQueue(c);
-		temp.EnQueue(c, 10/c->GetPrepTime().Time_In_Hours());
-		container.EnQueue(c,-i);
+		if (c->GetType() == CARGO_TYPE::VIP)
+		{
+			int time = c->GetPrepTime().Time_In_Hours();
+			pri = 10 * c->GetCost() / (c->GetDistance() * time);
+		}
+		else
+			pri = 10 / c->GetPrepTime().Time_In_Hours();
+		temp.EnQueue(c, pri);
 	}
 	temp.print();
+	while (!temp.QueueEmpty())
+	{
+	temp.DeQueue(c);
+	pri	= 10 / (c->GetDistance() / Speed);
+	container.EnQueue(c, pri);
+	}
 }
 
 void Truck::print()
