@@ -11,6 +11,9 @@ Truck::Truck(int id, TRUCK_TYPE T, int TC, float MT, int j, float S)
 	J = j;
 	Speed = S;
 	Journeys_Till_Check = j;
+	Set_AT(0);
+	TDC = 0;
+	N = 0;
 }
 TRUCK_TYPE Truck:: GetType() const
 {
@@ -112,9 +115,31 @@ void Truck::Set_AT(int h)
 {
 	AT.setTime(h);
 }
+void Truck::inc_TDC()
+{
+	TDC++;
+}
+void Truck::inc_N()
+{
+	N++;
+}
+int Truck::Get_TDC()
+{
+	return TDC;
+}
+int Truck::Get_N()
+{
+	return N;
+}
 Time Truck::Get_AT()
 {
 	return AT;
+}
+float Truck::utilization(Time & Sim_Time)
+{
+	if(N==0)
+	return 0;
+	return 100*(TDC/(N* Truck_Capacity)*(float(AT.Time_In_Hours())/ Sim_Time.Time_In_Hours()));
 }
 void Truck::print()
 {

@@ -41,6 +41,13 @@ class Company
 	int MaxWait;
 	int AutoPro;
 	int Num_of_events;
+
+
+
+
+
+
+
 	int nCap, sCap, vCap;
 	//Numbers of Trucks in each list
 
@@ -120,7 +127,7 @@ public:
 	void InteractivePrinting();
 	void StepByStepPrinting();
 	void SilentPrinting();
-	void Print(SIM_MODE Mode);
+	void Sim_Manager(SIM_MODE Mode);
 
 	//---------------------------------------
 	void print_W_V_C();
