@@ -266,7 +266,8 @@ bool Company::load_MaxW()
 
 void Company::Truck_Controller() //controll the transition of trucks between lists
 {
-	Move_Trucks();
+	if((in_working(Sim_Time)))
+		Move_Trucks();
 	Truck* t_temp;
 	
 		while (!Moving_truck.QueueEmpty()&&Sim_Time >= Moving_truck.Peek()->Get_nearest_stop() && Moving_truck.Peek()->GetContainer_count() == 0) //if the truck finished the journey
@@ -294,7 +295,6 @@ void Company::Truck_Controller() //controll the transition of trucks between lis
 			check_to_available(t_temp);
 		}
 
-	
 		while (!Check_up_Normal.QueueEmpty()&&Sim_Time == Check_up_Normal.Peek()->get_finish_point())// checks if it finished checkup
 		{
 			Check_up_Normal.DeQueue(t_temp);
@@ -741,15 +741,37 @@ void Company::Output_Console()
 {
 	ui_p->print("Current Time (Day:Hour):" + to_string(Company::get_Sim_Time().getDay()) + ":" + to_string(Company::get_Sim_Time().getHour()) + "\n");
 	//calculate # of waiting cargos
-	int W_C = W_V_C.GetCount() + W_S_C.GetCount() + W_N_C.GetCount();
+	int loading_count=0;
+	if (Loading_Normal)
+		loading_count += Loading_Normal->GetContainer_count();
+	if (Loading_Special)
+		loading_count += Loading_Special->GetContainer_count();
+	if (Loading_VIP)
+		loading_count += Loading_VIP->GetContainer_count();
+	int W_C = W_V_C.GetCount() + W_S_C.GetCount() + W_N_C.GetCount() + loading_count;
 	ui_p->print(to_string(W_C) + " Waiting Cargos: [");
 	// First --> print the ID of the Normal Cargos
+	if (Loading_Normal)
+	{
+		Loading_Normal->print_container();
+		ui_p->print(",");
+	}
 	W_N_C.print();
 	ui_p->print("] (");
 	// Second --> print the ID of the Special Cargos
+	if (Loading_Special)
+	{
+		Loading_Special->print_container();
+		ui_p->print(",");
+	}
 	W_S_C.print();
 	ui_p->print(") {");
 	// Third --> print the ID of the VIP Cargos
+	if (Loading_VIP)
+	{
+		Loading_VIP->print_container();
+		ui_p->print(",");
+	}
 	W_V_C.print();
 	ui_p->print("}\n");
 	ui_p->print("----------------------------------------------------------------------------\n");

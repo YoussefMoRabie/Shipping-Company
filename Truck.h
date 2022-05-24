@@ -56,6 +56,7 @@ public:
 	int Get_N();
 	Time Get_AT();
 	float utilization(Time& Sim_Time);
+	void print_container();
 	void print();
 	friend ostream& operator<<(ostream& out, Truck* t);
 };

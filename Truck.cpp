@@ -135,12 +135,26 @@ Time Truck::Get_AT()
 {
 	return AT;
 }
-float Truck::utilization(Time & Sim_Time)
+float Truck::utilization(Time& Sim_Time)
 {
-	if(N==0)
-	return 0;
-	return 100*(TDC/(N* Truck_Capacity)*(float(AT.Time_In_Hours())/ Sim_Time.Time_In_Hours()));
+	if (N == 0)
+		return 0;
+	return 100 * (TDC / (N * Truck_Capacity) * (float(AT.Time_In_Hours()) / Sim_Time.Time_In_Hours()));
 }
+
+void Truck::print_container()
+{
+	Cargo* c;
+	PriQueue<Cargo*>temp;
+	for (int i=0; i < GetContainer_count(); i++)
+	{
+		container.DeQueue(c);
+		temp.EnQueue(c, 10/c->GetPrepTime().Time_In_Hours());
+		container.EnQueue(c,-i);
+	}
+	temp.print();
+}
+
 void Truck::print()
 {
 	ui_p->print(to_string(ID));
