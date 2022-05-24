@@ -64,7 +64,7 @@ void Time::printTime()
 {
 	UI_P.print(to_string(day) + ":" + to_string(hour));
 }
-Time Time::operator+(int value) {
+Time Time::operator+(float value) {
 
 	Time temp = *this;
 	while (temp.hour + value >= 24)

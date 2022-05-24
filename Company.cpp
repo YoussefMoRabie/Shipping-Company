@@ -33,6 +33,7 @@ void Company::Working_Hours()
 	Auto_Promotion();
 	Truck_Controller();
 	Deliver_cargos();
+
 	if(!Loading_VIP)
 	{
 		load_VIP();
@@ -170,35 +171,37 @@ bool Company::load_MaxW()
 }
 
 
-void Company::Truck_Controller() {
+void Company::Truck_Controller() //controll the transition of trucks between lists
+{
 	Move_Trucks();
 	Truck* t_temp;
-	if (!Moving_truck.QueueEmpty())
-		if (Sim_Time >= Moving_truck.Peek()->get_finish_point() && Moving_truck.Peek()->GetContainer_count() == 0) {
-			Moving_truck.DeQueue(t_temp);
-			t_temp->DecrementJTC();
-			if (Need_Checkup(t_temp)) {
+	
+		while (!Moving_truck.QueueEmpty()&&Sim_Time >= Moving_truck.Peek()->Get_nearest_stop() && Moving_truck.Peek()->GetContainer_count() == 0) //if the truck finished the journey
+		{
+			Moving_truck.DeQueue(t_temp);//remove it from the moving
+			t_temp->DecrementJTC(); //decrement the journeys untill its maintainence
+			if (Need_Checkup(t_temp)) //checks if it needs maintainence
+			{
 				move_to_checkup(t_temp);
 			}
 			else move_to_available(t_temp);
 		}
 
-	if (!Check_up_VIP.QueueEmpty())
-		if (Sim_Time == Check_up_VIP.Peek()->get_finish_point())
+	
+		while (!Check_up_VIP.QueueEmpty()&& Sim_Time == Check_up_VIP.Peek()->get_finish_point())// checks if it finished checkup
 		{
 			Check_up_VIP.DeQueue(t_temp);
 			check_to_available(t_temp);
 		}
 
-	if (!Check_up_Special.QueueEmpty())
-		if (Sim_Time == Check_up_Special.Peek()->get_finish_point())
+		while (!Check_up_Special.QueueEmpty()&&Sim_Time == Check_up_Special.Peek()->get_finish_point())// checks if it finished checkup
 		{
 			Check_up_Special.DeQueue(t_temp);
 			check_to_available(t_temp);
 		}
 
-	if (!Check_up_Normal.QueueEmpty())
-		if (Sim_Time == Check_up_Normal.Peek()->get_finish_point())
+	
+		while (!Check_up_Normal.QueueEmpty()&&Sim_Time == Check_up_Normal.Peek()->get_finish_point())// checks if it finished checkup
 		{
 			Check_up_Normal.DeQueue(t_temp);
 			check_to_available(t_temp);
@@ -296,45 +299,44 @@ void Company::Move_Trucks()
 	}
 }
 void Company::Deliver_cargos() {
-	if (!Moving_truck.Peek())
-		return;
+	Truck* temp;
+	PriQueue<Truck*> truck_temp;
+	Cargo* c_temp;
 
-	if (Moving_truck.Peek() && Moving_truck.Peek()->GetContainer_count() == 0)
-		return;
-
-	if (get_Sim_Time() >= Moving_truck.Peek()->Get_nearest_stop()) 
+	while (Moving_truck.Peek() && Moving_truck.Peek()->GetContainer_count() != 0)//if there is moving truck and not empty
 	{
-		Truck* temp;
-		PriQueue<Truck*> truck_temp;
-		Cargo* c_temp = Moving_truck.Peek()->unload();
-		Delivered_cargo.EnQueue(c_temp);
-		float x = Moving_truck.Peek()->Get_nearest_dis();
-		if (Moving_truck.Peek()->GetContainer_count() != 0)
-			Moving_truck.Peek()->set_nearest_stop(get_Sim_Time() + (x - c_temp->GetDistance()) / Moving_truck.Peek()->GetSpeed());
-		while (Moving_truck.GetCount()>1) {
-			Moving_truck.DeQueue(temp);
 		
-			truck_temp.EnQueue(temp, temp->Get_nearest_stop() - get_Sim_Time());
+		Moving_truck.DeQueue(temp);
+		if (Sim_Time >= temp->Get_nearest_stop())//checks if it has arrvived for its destination
+		{
+			 c_temp = temp->unload(); //unload cargo from conatiner
+			Delivered_cargo.EnQueue(c_temp); //moves it to delivered
+			temp->set_nearest_stop(get_Sim_Time(), c_temp->GetDistance()); // set the nest destination
+
 		}
-		while (truck_temp.GetCount() > 1) {
-			truck_temp.DeQueue(temp);
-			Moving_truck.EnQueue(temp);
-		}
+		truck_temp.EnQueue(temp, 1 / (temp->Get_nearest_stop() - Sim_Time)); // enqueue the truck based on its new destination among the moving trucks
 	}
+	while (!truck_temp.QueueEmpty()) //updates the moving list
+	{
+		truck_temp.DeQueue(temp);
+		Moving_truck.EnQueue(temp, 1 / (temp->Get_nearest_stop() - Sim_Time));
+	}
+
 }
 void Company::Move_Truck(Truck*& t)
 {
 	float dis_temp;
-	t->set_DInterval();
-	int finish_time = ceil(t->GetDeliveryInterval());
-	t->set_finish_point(get_Sim_Time() + finish_time);
-	dis_temp = t->Get_nearest_dis();
-	float time_temp= ceil(dis_temp / t->GetSpeed());
-	t->set_nearest_stop(get_Sim_Time() + time_temp);
-	Moving_truck.EnQueue(t,time_temp);
+	t->set_DInterval(); //set the delivery distance
+	
+	dis_temp = t->Get_nearest_dis(); 
+	float time_temp= dis_temp / t->GetSpeed();
+
+	t->set_nearest_stop(get_Sim_Time(),0 ); //set the first destination
+	Moving_truck.EnQueue(t,1/ (t->Get_nearest_stop() - Sim_Time)); 
 	t = nullptr;
 }
-bool Company::Need_Checkup(Truck* t) {
+bool Company::Need_Checkup(Truck* t) //checks every journey if the truck needs maintainence
+{
 	if (t->GetJTC() == 0)
 		return true;
 	return false;

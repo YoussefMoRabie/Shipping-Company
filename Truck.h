@@ -34,7 +34,7 @@ public:
 	float GetSpeed() const;
 	float GetDeliveryInterval();
 	Time Get_nearest_stop();
-	void set_nearest_stop( Time);
+	void set_nearest_stop( Time,float);
 	int GetJTC();
 	int GetContainer_count();
 	void restore_JTC();

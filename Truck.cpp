@@ -21,7 +21,7 @@ int Truck::GetCapacity() const
 	return Truck_Capacity;
 }
 void Truck::set_DInterval() {
-	float temp = 2* Delivery_Distance/ GetSpeed() + GetContainer_count() * container.Peek()->GetLU_Time();
+	float temp = 2* ceil( Delivery_Distance/ GetSpeed()) + GetContainer_count() * container.Peek()->GetLU_Time();
 
 	Delivery_Interval = temp;
 }
@@ -98,8 +98,12 @@ float Truck::Get_nearest_dis() {
 Time Truck::Get_nearest_stop() {
 	return Nearest_stop;
 }
-void Truck::set_nearest_stop(Time t) {
-	int l_t = container.Peek()->GetLU_Time();
+void Truck::set_nearest_stop(Time t, float x) {
+	float l_t;
+	if (GetContainer_count() > 0)
+		l_t = ceil(container.Peek()->GetLU_Time() +( Get_nearest_dis() - x) / GetSpeed());
+	else
+		l_t = ceil(Get_nearest_dis() / GetSpeed());
 	Nearest_stop = t + l_t;
 }
 void Truck::print()

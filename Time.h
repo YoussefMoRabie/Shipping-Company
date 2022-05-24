@@ -20,7 +20,7 @@ public:
 	bool operator==(const Time&);
 	bool operator>=(const Time&);
 	int operator-(const Time&);
-	Time operator +(int x);
+	Time operator +(float x);
 	~Time();
 };
 
