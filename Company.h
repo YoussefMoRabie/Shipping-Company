@@ -31,16 +31,26 @@ class Company
 
 	//------------------------------------------------------
 
-	//Trucks
-	Queue<Truck*> empty_VIP; //avail. VIP trucks
-	Queue<Truck*> empty_Special; //avail. Special trucks
-	Queue<Truck*> empty_Normal;  //avail. Normal trucks
+	//Original Lists
+
+	PriQueue<Truck*> empty_VIP; //avail. VIP trucks
+	PriQueue<Truck*> empty_Special; //avail. Special trucks
+	PriQueue<Truck*> empty_Normal;  //avail. Normal trucks
 	Queue<Truck*> Check_up_Normal;  //Normla trucks in check up
 	Queue<Truck*> Check_up_Special;  //Special trucks in Check up
 	Queue<Truck*> Check_up_VIP;  //VIP trucks in check up
-	PriQueue<Truck*> Moving_truck; 
-
+	PriQueue<Truck*> Moving_truck;
 	Queue<Event*> Event_List;
+
+	//------------------------------------------------------
+	//Bonus Lists
+	PriQueue<Truck*> empty_VIP_night; //avail. VIP night shift trucks
+	PriQueue<Truck*> empty_Special_night; //avail. Special night shift trucks
+	PriQueue<Truck*> empty_Normal_night;  //avail. Normal night shift trucks
+	Queue<Truck*> urgent_Check_up_Normal;  //Normla trucks in unusual check up
+	Queue<Truck*> urgent_Check_up_Special;  //Special trucks in unusual Check up
+	Queue<Truck*> urgent_Check_up_VIP;  //VIP trucks in unusual check up
+
 
 	//-------------------------------------------------------
 
@@ -48,7 +58,6 @@ class Company
 	int AutoPro;
 	int Num_of_events;
 
-	int nCap, sCap, vCap;
 	//Numbers of Trucks in each list
 
 	int VIP_Trucks_count;

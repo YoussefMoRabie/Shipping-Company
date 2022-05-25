@@ -33,9 +33,10 @@ private:
 	int TDC;
 	int N;
 	Time moving_time;
+	TRUCK_SHIFT shift;
 
 public:
-	Truck(int id, TRUCK_TYPE T, int TC, float MT, int j, float S);
+	Truck(int id, TRUCK_TYPE T, int TC, float MT, int j, float S,TRUCK_SHIFT sh);
 	TRUCK_TYPE GetType() const;
 	int GetCapacity() const;
 	void set_finish_point(const Time&);// set the time at which the checkup finishes

@@ -297,22 +297,24 @@ void Company::Truck_Controller() //controll the transition of trucks between lis
 Truck* Company::Pick_VIP_Truck() {
 	Truck* t_temp;
 
-	if (W_V_C.GetCount() >= vCap && !Loading_VIP)
+	t_temp = empty_VIP.Peek();
+	if (t_temp && W_V_C.GetCount() >= t_temp->GetCapacity() && !Loading_VIP)
 	{
 		if (!empty_VIP.QueueEmpty()) {
 			empty_VIP.DeQueue(t_temp);
 			return t_temp;
 		}
 	}
-
-	if (empty_VIP.QueueEmpty() && W_V_C.GetCount() >= nCap && !Loading_VIP)
+	t_temp = empty_Normal.Peek();
+	if (t_temp && empty_VIP.QueueEmpty() && W_V_C.GetCount() >= t_temp->GetCapacity() && !Loading_VIP)
 	{
 		if (!empty_Normal.QueueEmpty()) {
 			empty_Normal.DeQueue(t_temp);
 			return t_temp;
 		}
 	}
-	if (empty_VIP.QueueEmpty() && empty_Normal.QueueEmpty() && W_V_C.GetCount() >= sCap && !Loading_VIP)
+	t_temp = empty_Special.Peek();
+	if (t_temp && empty_VIP.QueueEmpty() && empty_Normal.QueueEmpty() && W_V_C.GetCount() >= t_temp->GetCapacity() && !Loading_VIP)
 	{
 		if (!empty_Special.QueueEmpty()) {
 			empty_Special.DeQueue(t_temp);
@@ -325,14 +327,16 @@ Truck* Company::Pick_VIP_Truck() {
 Truck* Company::Pick_Normal_Truck() {
 	Truck* t_temp;
 
-	if (W_N_C.GetCount() >= nCap && !Loading_Normal)
+	t_temp = empty_Normal.Peek();
+	if (t_temp && W_N_C.GetCount() >= t_temp->GetCapacity() && !Loading_Normal)
 	{
 		if (!empty_Normal.QueueEmpty()) {
 			empty_Normal.DeQueue(t_temp);
 			return t_temp;
 		}
 	}
-	if (empty_Normal.QueueEmpty() && W_N_C.GetCount() >= vCap && !Loading_Normal)
+	t_temp = empty_VIP.Peek();
+	if (t_temp && empty_Normal.QueueEmpty() && W_N_C.GetCount() >= t_temp->GetCapacity() && !Loading_Normal)
 	{
 		if (!empty_VIP.QueueEmpty()) {
 			empty_VIP.DeQueue(t_temp);
@@ -346,7 +350,8 @@ Truck* Company::Pick_Normal_Truck() {
 Truck* Company::Pick_Special_Truck() {
 	Truck* t_temp;
 
-	if (W_S_C.GetCount() >= sCap && !Loading_Special)
+	t_temp = empty_Special.Peek();
+	if (t_temp && W_S_C.GetCount() >= t_temp->GetCapacity() && !Loading_Special)
 	{
 		if (!empty_Special.QueueEmpty()) {
 			empty_Special.DeQueue(t_temp);
@@ -453,14 +458,14 @@ void Company::move_to_checkup(Truck* t)
 void Company::check_to_available(Truck*& t) {
 	t->restore_JTC();
 	if (t->GetType() == TRUCK_TYPE::VIP) {
-		empty_VIP.EnQueue(t);
+		empty_VIP.EnQueue(t, t->GetSpeed() * t->GetCapacity());
 	}
 	else {
 		if (t->GetType() == TRUCK_TYPE::NORMAL)
-			empty_Normal.EnQueue(t);
+			empty_Normal.EnQueue(t, t->GetSpeed() * t->GetCapacity());
 		else {
 			if (t->GetType() == TRUCK_TYPE::SPECIAL)
-				empty_Special.EnQueue(t);
+				empty_Special.EnQueue(t, t->GetSpeed() * t->GetCapacity());
 		}
 	}
 }
@@ -468,14 +473,14 @@ void Company::move_to_available(Truck* t) {
 
 
 	if (t->GetType() == TRUCK_TYPE::VIP) {
-		empty_VIP.EnQueue(t);
+		empty_VIP.EnQueue(t,t->GetSpeed()*t->GetCapacity());
 	}
 	else {
 		if (t->GetType() == TRUCK_TYPE::NORMAL)
-			empty_Normal.EnQueue(t);
+			empty_Normal.EnQueue(t, t->GetSpeed() * t->GetCapacity());
 		else {
 			if (t->GetType() == TRUCK_TYPE::SPECIAL)
-				empty_Special.EnQueue(t);
+				empty_Special.EnQueue(t, t->GetSpeed() * t->GetCapacity());
 		}
 	}
 }
@@ -557,34 +562,75 @@ bool Company::readFile(string filename)
 	}
 	int truck_id = 1;
 	int N, S, V;
-	float nSpeed, sSpeed, vSpeed;
+	float Speed;
+	int cap;
 	int Num_of_journeys, nCheck, sCheck, vCheck;
+	char shift_char;
 
-	Loaded >> N >> S >> V >> nSpeed >> sSpeed >> vSpeed >> nCap >> sCap >> vCap;
-	Loaded >> Num_of_journeys >> nCheck >> sCheck >> vCheck >> AutoPro >> MaxWait >> Num_of_events;
-
+	Loaded >> N >> S >> V;
+	Loaded >> Num_of_journeys >> nCheck >> sCheck >> vCheck;
 	for (int i = 0; i < N; i++)
 	{
-		Truck* T = new Truck(truck_id, TRUCK_TYPE::NORMAL, nCap, nCheck, Num_of_journeys, nSpeed);
-		empty_Normal.EnQueue(T);
+		Loaded >> Speed >> cap >> shift_char;
+		switch (shift_char)
+		{
+		case'N':
+		{
+			Truck* T = new Truck(truck_id, TRUCK_TYPE::NORMAL, cap, nCheck, Num_of_journeys, Speed, TRUCK_SHIFT::NIGHT);
+			empty_Normal_night.EnQueue(T,Speed*cap);
+			break;
+		}
+		default:
+		{
+			Truck* T = new Truck(truck_id, TRUCK_TYPE::NORMAL, cap, nCheck, Num_of_journeys, Speed, TRUCK_SHIFT::MORNING);
+			empty_Normal.EnQueue(T,Speed*cap);
+		}
+		}
 		truck_id++;
 		Normal_Trucks_count++;
 	}
 	for (int i = 0; i < S; i++)
 	{
-		Truck* T = new Truck(truck_id, TRUCK_TYPE::SPECIAL, sCap, sCheck, Num_of_journeys, sSpeed);
-		empty_Special.EnQueue(T);
+		Loaded >> Speed >> cap >> shift_char;
+		switch (shift_char)
+		{
+		case'N':
+		{
+			Truck* T = new Truck(truck_id, TRUCK_TYPE::SPECIAL, cap, sCheck, Num_of_journeys, Speed, TRUCK_SHIFT::NIGHT);
+			empty_Special_night.EnQueue(T, Speed * cap);
+			break;
+		}
+		default:
+		{
+			Truck* T = new Truck(truck_id, TRUCK_TYPE::SPECIAL, cap, sCheck, Num_of_journeys, Speed, TRUCK_SHIFT::MORNING);
+			empty_Special.EnQueue(T, Speed * cap);
+		}
+		}
 		truck_id++;
 		Special_Trucks_count++;
 
 	}
 	for (int i = 0; i < V; i++)
 	{
-		Truck* T = new Truck(truck_id, TRUCK_TYPE::VIP, vCap, vCheck, Num_of_journeys, vSpeed);
-		empty_VIP.EnQueue(T);
+		Loaded >> Speed >> cap >> shift_char;
+		switch (shift_char)
+		{
+		case'N':
+		{
+			Truck* T = new Truck(truck_id, TRUCK_TYPE::VIP, cap, vCheck, Num_of_journeys, Speed, TRUCK_SHIFT::NIGHT);
+			empty_VIP_night.EnQueue(T, Speed * cap);
+			break;
+		}
+		default:
+		{
+			Truck* T = new Truck(truck_id, TRUCK_TYPE::VIP, cap, vCheck, Num_of_journeys, Speed, TRUCK_SHIFT::MORNING);
+			empty_VIP.EnQueue(T, Speed * cap);
+		}
+		}
 		truck_id++;
 		VIP_Trucks_count++;
 	}
+	Loaded >> AutoPro >> MaxWait >> Num_of_events;
 
 	Event* Eptr = nullptr;
 	char event_type;

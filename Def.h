@@ -13,19 +13,10 @@ enum class SIM_MODE
 	SILENT
 };
 
-
 enum class TRUCK_TYPE {
 	VIP,
 	SPECIAL,
 	NORMAL
-};
-
-enum class TRUCK_STATUS {
-	WAITING,
-	LOADING,
-	MOVING,
-	GOING_BACK,
-	CHECKUP
 };
 
 enum class CARGO_TYPE {
@@ -34,11 +25,7 @@ enum class CARGO_TYPE {
 	NORMAL
 };
 
-enum class CARGO_STATUS {
-	READY,
-	LOADED,
-	MOVING,
-	COMPLETED,
-	CANCELLED
+enum class TRUCK_SHIFT {
+	MORNING,
+	NIGHT
 };
-

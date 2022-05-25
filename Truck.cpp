@@ -2,7 +2,7 @@
 #include<iostream>
 using namespace std;
 
-Truck::Truck(int id, TRUCK_TYPE T, int TC, float MT, int j, float S)
+Truck::Truck(int id, TRUCK_TYPE T, int TC, float MT, int j, float S,TRUCK_SHIFT sh)
 {
 	ID = id;
 	Type = T;
@@ -14,6 +14,7 @@ Truck::Truck(int id, TRUCK_TYPE T, int TC, float MT, int j, float S)
 	Set_AT(0);
 	TDC = 0;
 	N = 0;
+	shift = sh;
 }
 TRUCK_TYPE Truck:: GetType() const
 {
