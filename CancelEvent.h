@@ -11,7 +11,7 @@ class CancelEvent :
 {
 public:
     CancelEvent(Company* p, const Time&, int);
-    //cancels a normal cargo
+    //cancels a Normal cargo given its ID
     void Execute();      
 };
 

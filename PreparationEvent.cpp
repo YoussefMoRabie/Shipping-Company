@@ -11,6 +11,6 @@ PreparationEvent::PreparationEvent(Company* p, CARGO_TYPE ty, const Time& t, int
 }
 void PreparationEvent::Execute()
 {
-	Cargo *c=new Cargo(type, ET, ID, dist, loadTime, cost);
-	cPtr->AddCargo(c);
+	Cargo *c=new Cargo(type, ET, ID, dist, loadTime, cost);		//create the cargo
+	cPtr->AddCargo(c);		//add the cargo to the list based on its type
 }

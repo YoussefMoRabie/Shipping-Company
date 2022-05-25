@@ -32,13 +32,13 @@ class Company
 	//------------------------------------------------------
 
 	//Trucks
-	Queue<Truck*> empty_VIP;
-	Queue<Truck*> empty_Special;
-	Queue<Truck*> empty_Normal;
-	Queue<Truck*> Check_up_Normal;
-	Queue<Truck*> Check_up_Special;
-	Queue<Truck*> Check_up_VIP;
-	PriQueue<Truck*> Moving_truck;
+	Queue<Truck*> empty_VIP; //avail. VIP trucks
+	Queue<Truck*> empty_Special; //avail. Special trucks
+	Queue<Truck*> empty_Normal;  //avail. Normal trucks
+	Queue<Truck*> Check_up_Normal;  //Normla trucks in check up
+	Queue<Truck*> Check_up_Special;  //Special trucks in Check up
+	Queue<Truck*> Check_up_VIP;  //VIP trucks in check up
+	PriQueue<Truck*> Moving_truck; 
 
 	Queue<Event*> Event_List;
 
@@ -88,19 +88,20 @@ class Company
 	 * 
 	 */
 	void check_checkup_list();
-	void check_to_available(Truck*&);
-	void move_to_available(Truck*);
-	void move_to_checkup(Truck*);
-	Truck* Pick_VIP_Truck();
-	Truck* Pick_Normal_Truck();
-	Truck* Pick_Special_Truck();
+	void check_to_available(Truck*&); //moves a truck from checkup to available
+	void move_to_available(Truck*); //moves a truck from moving to available
+	void move_to_checkup(Truck*); //moves a truck from moving to checkup
+
+	Truck* Pick_VIP_Truck(); //picks the appropriate truck from loading VIP cargos
+	Truck* Pick_Normal_Truck(); //picks the appropriate truck from loading Normal cargos
+	Truck* Pick_Special_Truck();//picks the appropriate truck from loading Special cargos
 	bool load_VIP();
 	bool load_Normal();
 	bool load_Special();
 	bool load_MaxW();
-	bool Need_Checkup(Truck*);
+	bool Need_Checkup(Truck*); //checks on a returning truck if it needs maintainence
 	bool in_working(Time T);
-	int Loading_count();
+	void Loading_count(int&, int&);
 
 public:
 /**
@@ -110,11 +111,10 @@ public:
 	Company();
 	void Start_Simuulation();
 	void Working_Hours();
-	void Truck_Controller();
+	void Truck_Controller(); //controls the transition of trucks between different lists
 	void Off_Hours();
 
 	// Reading data function
-	SIM_MODE get_input_mode() ;
 	void execute_mode(SIM_MODE);
 	bool readFile(string);
 	/**
@@ -149,7 +149,7 @@ public:
 	void assign_cargo();
 	void check_completed_cargo();
 	void increment_cancelled();
-	void Deliver_cargos();
+	void Deliver_cargos(); //deliver cargos when reached its destination
 
 	//Printing Functions
 	void Print_Sim_Time();
@@ -189,6 +189,7 @@ public:
 	bool All_Delivered();		//checks that all waiting and moving lists are empty
 
 	//------------------------------------------------------------
+	SIM_MODE get_sim_mode();
 	/**
 	 * @brief function print data on console
 	 * 

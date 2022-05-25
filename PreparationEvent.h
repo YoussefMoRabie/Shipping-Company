@@ -9,6 +9,7 @@ class PreparationEvent :
     float dist, loadTime, cost;
 public:
     PreparationEvent(Company* p, CARGO_TYPE, const Time&, int, float, float, float);
+    //prepares a cargo and adds it to the right waiting list based on its type
     void Execute();
 };
 
