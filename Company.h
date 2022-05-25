@@ -108,7 +108,7 @@ public:
 	SIM_MODE get_input_mode() ;
 	void execute_mode(SIM_MODE);
 	bool readFile(string);
-	bool write_output_file(); // need to implementation
+	bool write_output_file(); // prepairs the output file at the end of the simulation
 	void Statistics_File(int Delivered,string & text);
 	int rest_in_waiting(Cargo* car);
 	Time& get_Sim_Time() ;

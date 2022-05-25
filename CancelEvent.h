@@ -5,6 +5,7 @@ class CancelEvent :
 {
 public:
     CancelEvent(Company* p, const Time&, int);
-    void Execute();
+    //cancels a normal cargo
+    void Execute();      
 };
 

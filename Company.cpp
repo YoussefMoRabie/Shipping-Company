@@ -268,7 +268,6 @@ void Company::Truck_Controller() //controll the transition of trucks between lis
 			
 			Moving_truck.DeQueue(t_temp);//remove it from the moving
 			
-			
 				t_temp->DecrementJTC(); //decrement the journeys untill its maintainence
 				t_temp->inc_N(); //increment total journeys 
 				if (Need_Checkup(t_temp)) //checks if it needs maintainence
@@ -276,8 +275,7 @@ void Company::Truck_Controller() //controll the transition of trucks between lis
 					move_to_checkup(t_temp);
 				}
 				else move_to_available(t_temp);
-			
-			
+		
 		}
 
 	
@@ -543,11 +541,8 @@ void Company::AddCargo(Cargo* c)
 	}
 }
 void Company::Auto_Promotion()
-{
-	if (W_N_C.IsEmpty())
-		return;
-	
-	while (rest_in_waiting(W_N_C.getFirst()) >= AutoPro * 24)
+{	
+	while (!W_N_C.IsEmpty() && rest_in_waiting(W_N_C.getFirst()) >= AutoPro * 24)
 	{
 		Upgrade_Normal_Cargo(W_N_C.getFirst()->GetID());
 		Num_Promoted_cargos++;
@@ -716,6 +711,7 @@ void Company::Waiting_To_Delivered()
 	}
 }
 
+//
 int Company::Loading_count()
 {
 	int count = 0;
@@ -728,10 +724,10 @@ int Company::Loading_count()
 	return count;
 }
 
+//simulation ends when every cargo is delivered
 bool Company::All_Delivered()
 {
-	//Add Moving Lists in phase 2
-	if (W_N_C.IsEmpty() && W_S_C.QueueEmpty() && W_V_C.QueueEmpty())
+	if (W_N_C.IsEmpty() && W_S_C.QueueEmpty() && W_V_C.QueueEmpty() && !Loading_Normal && !Loading_Special && !Loading_VIP && Moving_truck.QueueEmpty())
 		return true;
 	else
 		return false;
@@ -833,8 +829,8 @@ void Company::Output_Console()
 			ui_p->print("{" + to_string(c->GetID()) + "}");
 		else
 			ui_p->print("(" + to_string(c->GetID()) + ")");
+		ui_p->print(" ");
 		temp.EnQueue(c);
-	
 	}
 	while (!temp.QueueEmpty())
 	{
@@ -856,8 +852,6 @@ void Company::Sim_Manager(SIM_MODE Mode)
 
 	}
 
-
-
 	while (!Events_empty() || !All_Delivered())
 	{
 		if (!Events_empty())
@@ -872,11 +866,6 @@ void Company::Sim_Manager(SIM_MODE Mode)
 		{
 			if(Mode == SIM_MODE::STEP_BY_STEP)
 				Sleep(1000);
-			 if(Mode!=SIM_MODE::SILENT)
-			Output_Console();
-
-
-			Advance_Sim_Time();
 			if (in_working(Sim_Time))
 			{
 				Working_Hours();
@@ -885,6 +874,9 @@ void Company::Sim_Manager(SIM_MODE Mode)
 			{
 				Off_Hours();
 			}
+			if (Mode != SIM_MODE::SILENT)
+				Output_Console();
+			Advance_Sim_Time();
 		}
 	}
 	if (Mode == SIM_MODE::STEP_BY_STEP)
@@ -986,14 +978,10 @@ void Company::Statistics_File(int Delivered, string & text)
 	str << "-------------------------------------------------------------\n";
 	str << "Cargos: " << to_string(Total_Cargos_count) << " [N: " << to_string(Normal_Cargos_count) << ", S: " << to_string(Special_Cargos_count) << ", V: " << to_string(VIP_Cargos_count) << "]\n";
 	str << "Cargo Avg Wait = " << Avg_Wait.Time_to_print() << "\n";
-	str << "Auto-promoted Caros:" << to_string((auto_promoted_count/ Total_Cargos_count)*100)<<"%\n";
+	str << "Auto-promoted Cargos:" << to_string((auto_promoted_count/ Total_Cargos_count)*100)<<"%\n";
 	str << "Trucks: " << to_string(Total_Trucks_count) << " [N: " << to_string(Normal_Trucks_count) << ", S: " << to_string(Special_Trucks_count) << ", V: " << to_string(VIP_Trucks_count) << "]\n";
 	str << "Avg Active time = " << to_string( (float(Avg_Active_Time.Time_In_Hours())/ get_Sim_Time().Time_In_Hours())*100) << "%\n";
 	str << "Avg utilization = "<<to_string(utilization/ Total_Trucks_count)<<"%\n";
-
-
-
-
 
 	text = str.str();
 }

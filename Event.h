@@ -17,6 +17,7 @@ public:
 		ID = id;
 		ET = T;
 	}
+	//pure virtual function, definition is different for each event class
 	virtual void Execute() = 0;
 	Time& getTime()
 	{

@@ -68,12 +68,18 @@ public:
 	}
 	Type getFirst()
 	{
-		return First->get_item();
+		if (!IsEmpty())
+			return First->get_item();
+		else
+			return NULL;
 	}
 
 	Type getEnd()
 	{
-		return End->get_item();
+		if (!IsEmpty())
+			return End->get_item();
+		else
+			return NULL;
 	}
 
 	bool IsEmpty()
