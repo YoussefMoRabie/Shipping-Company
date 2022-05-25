@@ -1,0 +1,19 @@
+\hypertarget{_preparation_event_8h_source}{}\doxysection{Preparation\+Event.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}Event.h"{}}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}Time.h"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}Def.h"{}}}
+\DoxyCodeLine{5 \textcolor{keyword}{class }\mbox{\hyperlink{class_preparation_event}{PreparationEvent}} :}
+\DoxyCodeLine{6     \textcolor{keyword}{public} \mbox{\hyperlink{class_event}{Event}}}
+\DoxyCodeLine{7 \{}
+\DoxyCodeLine{8     CARGO\_TYPE type;}
+\DoxyCodeLine{9     \textcolor{keywordtype}{float} dist, loadTime, cost;}
+\DoxyCodeLine{10 \textcolor{keyword}{public}:}
+\DoxyCodeLine{11     \mbox{\hyperlink{class_preparation_event}{PreparationEvent}}(\mbox{\hyperlink{class_company}{Company}}* p, CARGO\_TYPE, \textcolor{keyword}{const} \mbox{\hyperlink{class_time}{Time}}\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{float}, \textcolor{keywordtype}{float}, \textcolor{keywordtype}{float});}
+\DoxyCodeLine{12     \textcolor{keywordtype}{void} Execute();}
+\DoxyCodeLine{13 \};}
+\DoxyCodeLine{14 }
+
+\end{DoxyCode}

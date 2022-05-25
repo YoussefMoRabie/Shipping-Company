@@ -1,0 +1,113 @@
+\hypertarget{class_truck}{}\doxysection{Truck Class Reference}
+\label{class_truck}\index{Truck@{Truck}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_truck_aa66236114919c3121c14d4c111dd8eea}\label{class_truck_aa66236114919c3121c14d4c111dd8eea}} 
+{\bfseries Truck} (int id, TRUCK\+\_\+\+TYPE T, int TC, float MT, int j, float S)
+\item 
+\mbox{\Hypertarget{class_truck_a696146830b18df3d7858af263c517340}\label{class_truck_a696146830b18df3d7858af263c517340}} 
+TRUCK\+\_\+\+TYPE {\bfseries Get\+Type} () const
+\item 
+\mbox{\Hypertarget{class_truck_a75de25a72e0782c7bbdbb172e5f38d9f}\label{class_truck_a75de25a72e0782c7bbdbb172e5f38d9f}} 
+int {\bfseries Get\+Capacity} () const
+\item 
+\mbox{\Hypertarget{class_truck_ae3061d1162ef638ca1f298648e1362c8}\label{class_truck_ae3061d1162ef638ca1f298648e1362c8}} 
+void {\bfseries set\+\_\+finish\+\_\+point} (const \mbox{\hyperlink{class_time}{Time}} \&)
+\item 
+\mbox{\Hypertarget{class_truck_a74fd62765ce4aa4c2e84bb525c05e0ed}\label{class_truck_a74fd62765ce4aa4c2e84bb525c05e0ed}} 
+\mbox{\hyperlink{class_time}{Time}} {\bfseries get\+\_\+finish\+\_\+point} ()
+\item 
+\mbox{\Hypertarget{class_truck_a03c46d9a21e7d49eac25281c141033ec}\label{class_truck_a03c46d9a21e7d49eac25281c141033ec}} 
+float {\bfseries Get\+Maintenance\+Time} () const
+\item 
+\mbox{\Hypertarget{class_truck_af2d80d395a71aeeba9f27d959935373b}\label{class_truck_af2d80d395a71aeeba9f27d959935373b}} 
+float {\bfseries Get\+\_\+nearest\+\_\+dis} ()
+\item 
+\mbox{\Hypertarget{class_truck_acdc9103fa87aa5431c25d6b75a3507a7}\label{class_truck_acdc9103fa87aa5431c25d6b75a3507a7}} 
+float {\bfseries Get\+Speed} () const
+\item 
+\mbox{\Hypertarget{class_truck_a3c15b8fb725a53370ff65bca1df98d24}\label{class_truck_a3c15b8fb725a53370ff65bca1df98d24}} 
+float {\bfseries Get\+Delivery\+Interval} ()
+\item 
+\mbox{\Hypertarget{class_truck_adfaf5f6d8229d0b3f6e2fcad9a93486e}\label{class_truck_adfaf5f6d8229d0b3f6e2fcad9a93486e}} 
+\mbox{\hyperlink{class_time}{Time}} {\bfseries Get\+\_\+nearest\+\_\+stop} ()
+\item 
+\mbox{\Hypertarget{class_truck_adb38aeaf3b688de55b0952de247a32ef}\label{class_truck_adb38aeaf3b688de55b0952de247a32ef}} 
+void {\bfseries set\+\_\+nearest\+\_\+stop} (\mbox{\hyperlink{class_time}{Time}}, float)
+\item 
+\mbox{\Hypertarget{class_truck_a95fe67530fb9cfb5a96ef1541a763c6c}\label{class_truck_a95fe67530fb9cfb5a96ef1541a763c6c}} 
+int {\bfseries Get\+JTC} ()
+\item 
+\mbox{\Hypertarget{class_truck_a829affa4455de004ffd0f758cea7890f}\label{class_truck_a829affa4455de004ffd0f758cea7890f}} 
+int {\bfseries Get\+Container\+\_\+count} ()
+\item 
+\mbox{\Hypertarget{class_truck_a44e2e9f56190fb2c09b8ef2ef5a41f45}\label{class_truck_a44e2e9f56190fb2c09b8ef2ef5a41f45}} 
+void {\bfseries restore\+\_\+\+JTC} ()
+\item 
+\mbox{\Hypertarget{class_truck_ab970a07417988bf4ea24fc5323872fd4}\label{class_truck_ab970a07417988bf4ea24fc5323872fd4}} 
+void {\bfseries Decrement\+JTC} ()
+\item 
+\mbox{\Hypertarget{class_truck_a2a33b39fb73e2b72c01bc1786d58b2c8}\label{class_truck_a2a33b39fb73e2b72c01bc1786d58b2c8}} 
+int {\bfseries Get\+ID} () const
+\item 
+\mbox{\Hypertarget{class_truck_aaa2403c9b53c618db60c41abbcb20916}\label{class_truck_aaa2403c9b53c618db60c41abbcb20916}} 
+void {\bfseries set\+\_\+\+DInterval} ()
+\item 
+\mbox{\Hypertarget{class_truck_a287c3ff61e3690c463a7a282c0fcbcf6}\label{class_truck_a287c3ff61e3690c463a7a282c0fcbcf6}} 
+void {\bfseries load} (\mbox{\hyperlink{class_cargo}{Cargo}} $\ast$, float delivery\+\_\+time)
+\item 
+\mbox{\Hypertarget{class_truck_a62aa79b274d5d8ba68b87e9554060a19}\label{class_truck_a62aa79b274d5d8ba68b87e9554060a19}} 
+\mbox{\hyperlink{class_cargo}{Cargo}} $\ast$ {\bfseries unload} ()
+\item 
+\mbox{\Hypertarget{class_truck_a6e6d094b34f66679e0b418ce3fff42ea}\label{class_truck_a6e6d094b34f66679e0b418ce3fff42ea}} 
+void {\bfseries count\+\_\+down} ()
+\item 
+\mbox{\Hypertarget{class_truck_af7c4015a638369269eddd397895c5f24}\label{class_truck_af7c4015a638369269eddd397895c5f24}} 
+int {\bfseries get\+\_\+move\+\_\+counter} ()
+\item 
+\mbox{\Hypertarget{class_truck_a49081401ba198496ede950ecb3a5e296}\label{class_truck_a49081401ba198496ede950ecb3a5e296}} 
+void {\bfseries Set\+\_\+\+AT} (int h)
+\item 
+\mbox{\Hypertarget{class_truck_a1037a0bede5cf96cc1bf0a43cde04728}\label{class_truck_a1037a0bede5cf96cc1bf0a43cde04728}} 
+void {\bfseries inc\+\_\+\+TDC} ()
+\item 
+\mbox{\Hypertarget{class_truck_a6bfe9900646f51fa09cc6471ce654569}\label{class_truck_a6bfe9900646f51fa09cc6471ce654569}} 
+void {\bfseries inc\+\_\+N} ()
+\item 
+\mbox{\Hypertarget{class_truck_af9b25dedca3a688c897c6d5bde69b424}\label{class_truck_af9b25dedca3a688c897c6d5bde69b424}} 
+int {\bfseries Get\+\_\+\+TDC} ()
+\item 
+\mbox{\Hypertarget{class_truck_ac8821bab97c668f8f14c61d8f4f44d50}\label{class_truck_ac8821bab97c668f8f14c61d8f4f44d50}} 
+int {\bfseries Get\+\_\+N} ()
+\item 
+\mbox{\Hypertarget{class_truck_ae5ce10be1ebe66ed51ff91d0a4a6004d}\label{class_truck_ae5ce10be1ebe66ed51ff91d0a4a6004d}} 
+\mbox{\hyperlink{class_time}{Time}} {\bfseries Get\+\_\+\+AT} ()
+\item 
+\mbox{\Hypertarget{class_truck_ac84555b3767d270784369bc2e397936f}\label{class_truck_ac84555b3767d270784369bc2e397936f}} 
+float {\bfseries utilization} (\mbox{\hyperlink{class_time}{Time}} \&Sim\+\_\+\+Time)
+\item 
+\mbox{\Hypertarget{class_truck_a12c493b6d144d391a748f188be2aec0b}\label{class_truck_a12c493b6d144d391a748f188be2aec0b}} 
+void {\bfseries print\+\_\+container} ()
+\item 
+\mbox{\Hypertarget{class_truck_a171bbead112f0806751726d50bb22131}\label{class_truck_a171bbead112f0806751726d50bb22131}} 
+void {\bfseries print} ()
+\item 
+\mbox{\Hypertarget{class_truck_a7a15804bdfac11cdc5b7bb419abc5dca}\label{class_truck_a7a15804bdfac11cdc5b7bb419abc5dca}} 
+void {\bfseries Set\+\_\+moving\+\_\+time} (\mbox{\hyperlink{class_time}{Time}} \&Sim\+\_\+\+Time)
+\item 
+\mbox{\Hypertarget{class_truck_a9a8b85f8981fe9725354d35c3dde8549}\label{class_truck_a9a8b85f8981fe9725354d35c3dde8549}} 
+\mbox{\hyperlink{class_time}{Time}} {\bfseries get\+\_\+moving\+\_\+time} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_truck_a7f878b877e1a2c2b1c7fef3b173ea3ad}\label{class_truck_a7f878b877e1a2c2b1c7fef3b173ea3ad}} 
+ostream \& {\bfseries operator$<$$<$} (ostream \&out, \mbox{\hyperlink{class_truck}{Truck}} $\ast$t)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Truck.\+h\item 
+Truck.\+cpp\end{DoxyCompactItemize}

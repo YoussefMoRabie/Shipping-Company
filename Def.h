@@ -1,4 +1,11 @@
+/**
+ * @file Def.h
+ * @brief Some Definitions and enums 
+ * @version 0.1
+ * @copyright Copyright secured by YMY Team(c) 2022 * 
+ */
 #pragma once
+
 enum class SIM_MODE
 {
 	INTERACTIVE,

@@ -1,0 +1,71 @@
+\hypertarget{_truck_8h_source}{}\doxysection{Truck.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include<string>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include"{}Def.h"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}Cargo.h"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}PriQueue.h"{}}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{8 \textcolor{keyword}{class }\mbox{\hyperlink{class_truck}{Truck}}}
+\DoxyCodeLine{9 \{}
+\DoxyCodeLine{10 \textcolor{keyword}{private}:}
+\DoxyCodeLine{11     \mbox{\hyperlink{class_u_i}{UI}}* ui\_p;}
+\DoxyCodeLine{12     \mbox{\hyperlink{class_pri_queue}{PriQueue<Cargo*>}}container;}
+\DoxyCodeLine{13     TRUCK\_TYPE Type; }
+\DoxyCodeLine{14     \textcolor{keywordtype}{int} Truck\_Capacity; \textcolor{comment}{//\# of cargos}}
+\DoxyCodeLine{15     \textcolor{keywordtype}{float} Maintenance\_Time; \textcolor{comment}{//hours}}
+\DoxyCodeLine{16     \textcolor{keywordtype}{float} Speed; \textcolor{comment}{//Km/h}}
+\DoxyCodeLine{17     \textcolor{keywordtype}{int} J;  \textcolor{comment}{// journeys untill checkup}}
+\DoxyCodeLine{18     \textcolor{keywordtype}{int} Journeys\_Till\_Check; }
+\DoxyCodeLine{19     \textcolor{keywordtype}{float} Delivery\_Interval; \textcolor{comment}{//Time to deliver all cargos \& comeback, Calculated}}
+\DoxyCodeLine{20     \textcolor{keywordtype}{float} Delivery\_Distance; \textcolor{comment}{//distance of the furthest cargo in container}}
+\DoxyCodeLine{21     \mbox{\hyperlink{class_time}{Time}} Nearest\_stop; \textcolor{comment}{// the delivery time for the nearsest cargo}}
+\DoxyCodeLine{22     \textcolor{keywordtype}{float} Nearest\_dis;\textcolor{comment}{// distance for the nearest cargo}}
+\DoxyCodeLine{23     \textcolor{keywordtype}{int} ID;}
+\DoxyCodeLine{24     \textcolor{keywordtype}{int} move\_counter;   \textcolor{comment}{//initialized with the highest load\_time cargo in the container, once it reaches 0 the truck moves.}}
+\DoxyCodeLine{25     \mbox{\hyperlink{class_time}{Time}} finish\_point; \textcolor{comment}{// when the checkup finishes}}
+\DoxyCodeLine{26     \mbox{\hyperlink{class_time}{Time}} AT;}
+\DoxyCodeLine{27     \textcolor{keywordtype}{int} TDC;}
+\DoxyCodeLine{28     \textcolor{keywordtype}{int} N;}
+\DoxyCodeLine{29     \mbox{\hyperlink{class_time}{Time}} moving\_time;}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{public}:}
+\DoxyCodeLine{32     \mbox{\hyperlink{class_truck}{Truck}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id}, TRUCK\_TYPE T, \textcolor{keywordtype}{int} TC, \textcolor{keywordtype}{float} MT, \textcolor{keywordtype}{int} j, \textcolor{keywordtype}{float} S);}
+\DoxyCodeLine{33     TRUCK\_TYPE GetType() \textcolor{keyword}{const};}
+\DoxyCodeLine{34     \textcolor{keywordtype}{int} GetCapacity() \textcolor{keyword}{const};}
+\DoxyCodeLine{35     \textcolor{keywordtype}{void} set\_finish\_point(\textcolor{keyword}{const} \mbox{\hyperlink{class_time}{Time}}\&);}
+\DoxyCodeLine{36     \mbox{\hyperlink{class_time}{Time}} get\_finish\_point();}
+\DoxyCodeLine{37     \textcolor{keywordtype}{float} GetMaintenanceTime() \textcolor{keyword}{const};}
+\DoxyCodeLine{38     \textcolor{keywordtype}{float} Get\_nearest\_dis();}
+\DoxyCodeLine{39     \textcolor{keywordtype}{float} GetSpeed() \textcolor{keyword}{const};}
+\DoxyCodeLine{40     \textcolor{keywordtype}{float} GetDeliveryInterval();}
+\DoxyCodeLine{41     \mbox{\hyperlink{class_time}{Time}} Get\_nearest\_stop();}
+\DoxyCodeLine{42     \textcolor{keywordtype}{void} set\_nearest\_stop( \mbox{\hyperlink{class_time}{Time}},\textcolor{keywordtype}{float});}
+\DoxyCodeLine{43     \textcolor{keywordtype}{int} GetJTC();}
+\DoxyCodeLine{44     \textcolor{keywordtype}{int} GetContainer\_count();}
+\DoxyCodeLine{45     \textcolor{keywordtype}{void} restore\_JTC();}
+\DoxyCodeLine{46     \textcolor{keywordtype}{void} DecrementJTC();}
+\DoxyCodeLine{47     \textcolor{keywordtype}{int} GetID() \textcolor{keyword}{const};}
+\DoxyCodeLine{48     \textcolor{keywordtype}{void} set\_DInterval();}
+\DoxyCodeLine{49     \textcolor{keywordtype}{void} load(\mbox{\hyperlink{class_cargo}{Cargo}}*, \textcolor{keywordtype}{float} delivery\_time);}
+\DoxyCodeLine{50     \mbox{\hyperlink{class_cargo}{Cargo}}* unload();}
+\DoxyCodeLine{51     \textcolor{keywordtype}{void} count\_down();}
+\DoxyCodeLine{52     \textcolor{keywordtype}{int} get\_move\_counter();}
+\DoxyCodeLine{53     \textcolor{keywordtype}{void} Set\_AT(\textcolor{keywordtype}{int} h);}
+\DoxyCodeLine{54     \textcolor{keywordtype}{void} inc\_TDC();}
+\DoxyCodeLine{55     \textcolor{keywordtype}{void} inc\_N();}
+\DoxyCodeLine{56     \textcolor{keywordtype}{int} Get\_TDC();}
+\DoxyCodeLine{57     \textcolor{keywordtype}{int} Get\_N();}
+\DoxyCodeLine{58     \mbox{\hyperlink{class_time}{Time}} Get\_AT();}
+\DoxyCodeLine{59     \textcolor{keywordtype}{float} utilization(\mbox{\hyperlink{class_time}{Time}}\& Sim\_Time);}
+\DoxyCodeLine{60     \textcolor{keywordtype}{void} print\_container();}
+\DoxyCodeLine{61     \textcolor{keywordtype}{void} print();}
+\DoxyCodeLine{62     \textcolor{keywordtype}{void} Set\_moving\_time(\mbox{\hyperlink{class_time}{Time}}\& Sim\_Time);}
+\DoxyCodeLine{63     \mbox{\hyperlink{class_time}{Time}} get\_moving\_time();}
+\DoxyCodeLine{64     \textcolor{keyword}{friend} ostream\& operator<<(ostream\& out, \mbox{\hyperlink{class_truck}{Truck}}* t);}
+\DoxyCodeLine{65 \};}
+\DoxyCodeLine{66 }
+
+\end{DoxyCode}

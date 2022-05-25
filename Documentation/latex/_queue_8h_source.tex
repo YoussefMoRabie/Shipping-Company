@@ -1,0 +1,108 @@
+\hypertarget{_queue_8h_source}{}\doxysection{Queue.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include"{}Node.h"{}}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{4 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keyword}{template}<\textcolor{keyword}{class} Type>}
+\DoxyCodeLine{7 \textcolor{keyword}{class }\mbox{\hyperlink{class_queue}{Queue}}}
+\DoxyCodeLine{8 \{}
+\DoxyCodeLine{9 \textcolor{keyword}{private}:}
+\DoxyCodeLine{10     \mbox{\hyperlink{class_node}{Node<Type>}}* front;}
+\DoxyCodeLine{11     \textcolor{keywordtype}{int} count;}
+\DoxyCodeLine{12     \mbox{\hyperlink{class_node}{Node<Type>}}* rear;}
+\DoxyCodeLine{13 \textcolor{keyword}{public}:}
+\DoxyCodeLine{14     \mbox{\hyperlink{class_queue}{Queue}}()}
+\DoxyCodeLine{15     \{}
+\DoxyCodeLine{16         front = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{17         rear = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{18         count = 0;}
+\DoxyCodeLine{19     \}}
+\DoxyCodeLine{20      \textcolor{keywordtype}{bool} EnQueue(Type item)}
+\DoxyCodeLine{21     \{}
+\DoxyCodeLine{22         \mbox{\hyperlink{class_node}{Node<Type>}}* temp;}
+\DoxyCodeLine{23         temp = \textcolor{keyword}{new} \mbox{\hyperlink{class_node}{Node<Type>}};}
+\DoxyCodeLine{24         temp-\/>set\_item(item);}
+\DoxyCodeLine{25         \textcolor{keywordflow}{if} (QueueEmpty())}
+\DoxyCodeLine{26             front = temp;}
+\DoxyCodeLine{27         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{28             rear-\/>set\_next(temp);}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30         rear = temp;}
+\DoxyCodeLine{31         count++;}
+\DoxyCodeLine{32         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34     \}}
+\DoxyCodeLine{35     \textcolor{keywordtype}{bool} DeQueue(Type\& x)}
+\DoxyCodeLine{36     \{}
+\DoxyCodeLine{37         \textcolor{keywordflow}{if} (count == 0)}
+\DoxyCodeLine{38             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{39         \mbox{\hyperlink{class_node}{Node<Type>}}* delptr;}
+\DoxyCodeLine{40         delptr = front;}
+\DoxyCodeLine{41         \textcolor{keywordflow}{if} (count == 1)}
+\DoxyCodeLine{42         \{}
+\DoxyCodeLine{43             rear = NULL;}
+\DoxyCodeLine{44             front = NULL;}
+\DoxyCodeLine{45         \}}
+\DoxyCodeLine{46         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{47         \{}
+\DoxyCodeLine{48             front = front-\/>get\_next();}
+\DoxyCodeLine{49         \}}
+\DoxyCodeLine{50         delptr-\/>set\_next(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{51         x = delptr-\/>get\_item();}
+\DoxyCodeLine{52         count-\/-\/;}
+\DoxyCodeLine{53         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{54     \}}
+\DoxyCodeLine{55     \textcolor{keywordtype}{bool} QueueEmpty()}
+\DoxyCodeLine{56     \{}
+\DoxyCodeLine{57         \textcolor{keywordflow}{return} !count;}
+\DoxyCodeLine{58     \}}
+\DoxyCodeLine{59     \textcolor{keywordtype}{void} DistroyQueue()}
+\DoxyCodeLine{60     \{}
+\DoxyCodeLine{61         Type x;}
+\DoxyCodeLine{62         \textcolor{keywordtype}{int} c = count;}
+\DoxyCodeLine{63         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < c; i++)}
+\DoxyCodeLine{64             DeQueue(x);}
+\DoxyCodeLine{65     \}}
+\DoxyCodeLine{66     \mbox{\hyperlink{class_node}{Node<Type>}}* GetFront()}
+\DoxyCodeLine{67     \{}
+\DoxyCodeLine{68         \textcolor{keywordflow}{return} front;}
+\DoxyCodeLine{69     \}}
+\DoxyCodeLine{70     \mbox{\hyperlink{class_node}{Node<Type>}}* GetRear()}
+\DoxyCodeLine{71     \{}
+\DoxyCodeLine{72         \textcolor{keywordflow}{return} rear;}
+\DoxyCodeLine{73     \}}
+\DoxyCodeLine{74     \textcolor{keywordtype}{int} GetCount()}
+\DoxyCodeLine{75     \{}
+\DoxyCodeLine{76         \textcolor{keywordflow}{return} count;}
+\DoxyCodeLine{77     \}}
+\DoxyCodeLine{78     Type Peek()}
+\DoxyCodeLine{79     \{}
+\DoxyCodeLine{80         \textcolor{keywordflow}{if} (!QueueEmpty())}
+\DoxyCodeLine{81             \textcolor{keywordflow}{return} front-\/>get\_item();}
+\DoxyCodeLine{82         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{83             \textcolor{keywordflow}{return} NULL;}
+\DoxyCodeLine{84     \}}
+\DoxyCodeLine{85     }
+\DoxyCodeLine{86     \mbox{\hyperlink{class_queue}{\string~Queue}}()}
+\DoxyCodeLine{87     \{}
+\DoxyCodeLine{88         DistroyQueue();}
+\DoxyCodeLine{89     \}}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \textcolor{keywordtype}{void} print()}
+\DoxyCodeLine{92     \{}
+\DoxyCodeLine{93         \mbox{\hyperlink{class_node}{Node<Type>}}* temp = front;}
+\DoxyCodeLine{94         \textcolor{keywordflow}{while} (temp)}
+\DoxyCodeLine{95         \{}
+\DoxyCodeLine{96             cout << temp-\/>get\_item();}
+\DoxyCodeLine{97             temp = temp-\/>get\_next();}
+\DoxyCodeLine{98             \textcolor{keywordflow}{if} (temp)}
+\DoxyCodeLine{99                 cout << \textcolor{charliteral}{','};}
+\DoxyCodeLine{100         \}}
+\DoxyCodeLine{101     \}}
+\DoxyCodeLine{102 \};}
+\DoxyCodeLine{103 }
+
+\end{DoxyCode}

@@ -1,0 +1,158 @@
+\hypertarget{_linked_list_8h_source}{}\doxysection{Linked\+List.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include"{}Node.h"{}}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{4 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}Cargo.h"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}Truck.h"{}}}
+\DoxyCodeLine{7 \textcolor{keyword}{template}<\textcolor{keyword}{class} Type>}
+\DoxyCodeLine{8 \textcolor{keyword}{class }\mbox{\hyperlink{class_linked_list}{LinkedList}}}
+\DoxyCodeLine{9 \{}
+\DoxyCodeLine{10 \textcolor{keyword}{private}:}
+\DoxyCodeLine{11     \textcolor{keywordtype}{int} count;}
+\DoxyCodeLine{12     \mbox{\hyperlink{class_node}{Node<Type>}}* First;}
+\DoxyCodeLine{13     \mbox{\hyperlink{class_node}{Node<Type>}}* End;}
+\DoxyCodeLine{14 \textcolor{keyword}{public}:}
+\DoxyCodeLine{15     \mbox{\hyperlink{class_linked_list}{LinkedList}}()}
+\DoxyCodeLine{16     \{}
+\DoxyCodeLine{17         First = NULL;}
+\DoxyCodeLine{18         End = NULL;}
+\DoxyCodeLine{19         count = 0;}
+\DoxyCodeLine{20     \}}
+\DoxyCodeLine{21     \textcolor{keywordtype}{void} InsertBegin(Type item)}
+\DoxyCodeLine{22     \{}
+\DoxyCodeLine{23         \mbox{\hyperlink{class_node}{Node<Type>}}* temp;}
+\DoxyCodeLine{24         temp = \textcolor{keyword}{new} \mbox{\hyperlink{class_node}{Node<Type>}};}
+\DoxyCodeLine{25         temp-\/>set\_item(item);}
+\DoxyCodeLine{26         \textcolor{keywordflow}{if} (IsEmpty())}
+\DoxyCodeLine{27             End = temp;}
+\DoxyCodeLine{28         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{29         temp-\/>set\_next(First);}
+\DoxyCodeLine{30         First = temp;}
+\DoxyCodeLine{31         count++;}
+\DoxyCodeLine{32     \}}
+\DoxyCodeLine{33     \textcolor{keywordtype}{bool} InsertIndex(Type item, \textcolor{keywordtype}{int} index)}
+\DoxyCodeLine{34     \{}
+\DoxyCodeLine{35         \textcolor{keywordflow}{if} (index <= count \&\& index >= 0)}
+\DoxyCodeLine{36         \{}
+\DoxyCodeLine{37             \textcolor{keywordflow}{if} (index == 0)}
+\DoxyCodeLine{38                 InsertBegin(item);}
+\DoxyCodeLine{39             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (index == count)}
+\DoxyCodeLine{40                 InsertEnd(item);}
+\DoxyCodeLine{41             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{42             \{}
+\DoxyCodeLine{43                 \mbox{\hyperlink{class_node}{Node<Type>}}* temp;}
+\DoxyCodeLine{44                 temp = \textcolor{keyword}{new} \mbox{\hyperlink{class_node}{Node<Type>}};}
+\DoxyCodeLine{45                 \mbox{\hyperlink{class_node}{Node<Type>}}* cur = First;}
+\DoxyCodeLine{46                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < index -\/ 1; i++)}
+\DoxyCodeLine{47                     cur = cur-\/>get\_next;}
+\DoxyCodeLine{48                 temp-\/>set\_next(cur-\/>get\_next());}
+\DoxyCodeLine{49                 cur-\/>set\_next(temp);}
+\DoxyCodeLine{50                 count++;}
+\DoxyCodeLine{51             \}}
+\DoxyCodeLine{52             \textcolor{keywordflow}{return} true ;}
+\DoxyCodeLine{53         \}}
+\DoxyCodeLine{54         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{55         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{56     \}}
+\DoxyCodeLine{57     \textcolor{keywordtype}{void} InsertEnd(Type item)}
+\DoxyCodeLine{58     \{}
+\DoxyCodeLine{59         \mbox{\hyperlink{class_node}{Node<Type>}}* temp;}
+\DoxyCodeLine{60         temp = \textcolor{keyword}{new} \mbox{\hyperlink{class_node}{Node<Type>}};}
+\DoxyCodeLine{61         temp-\/>set\_item(item);}
+\DoxyCodeLine{62         \textcolor{keywordflow}{if} (IsEmpty())}
+\DoxyCodeLine{63             First = temp;}
+\DoxyCodeLine{64         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{65             End-\/>set\_next(temp);}
+\DoxyCodeLine{66         End = temp;}
+\DoxyCodeLine{67         count++;}
+\DoxyCodeLine{68     \}}
+\DoxyCodeLine{69     Type getFirst()}
+\DoxyCodeLine{70     \{}
+\DoxyCodeLine{71         \textcolor{keywordflow}{if} (!IsEmpty())}
+\DoxyCodeLine{72             \textcolor{keywordflow}{return} First-\/>get\_item();}
+\DoxyCodeLine{73         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{74             \textcolor{keywordflow}{return} NULL;}
+\DoxyCodeLine{75     \}}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77     Type getEnd()}
+\DoxyCodeLine{78     \{}
+\DoxyCodeLine{79         \textcolor{keywordflow}{if} (!IsEmpty())}
+\DoxyCodeLine{80             \textcolor{keywordflow}{return} End-\/>get\_item();}
+\DoxyCodeLine{81         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{82             \textcolor{keywordflow}{return} NULL;}
+\DoxyCodeLine{83     \}}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85     \textcolor{keywordtype}{bool} IsEmpty()}
+\DoxyCodeLine{86     \{}
+\DoxyCodeLine{87         \textcolor{keywordflow}{return} !count;}
+\DoxyCodeLine{88     \}}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90     \textcolor{keywordtype}{int} GetCount()}
+\DoxyCodeLine{91     \{}
+\DoxyCodeLine{92         \textcolor{keywordflow}{return} count;}
+\DoxyCodeLine{93     \}}
+\DoxyCodeLine{94     \textcolor{keywordtype}{bool} Find\_Remove(Type val,Type\& x)}
+\DoxyCodeLine{95     \{}
+\DoxyCodeLine{96         \mbox{\hyperlink{class_node}{Node<Type>}}* prev = NULL;}
+\DoxyCodeLine{97         \mbox{\hyperlink{class_node}{Node<Type>}}* ptr = First;}
+\DoxyCodeLine{98         \textcolor{keywordflow}{while} (ptr)}
+\DoxyCodeLine{99         \{}
+\DoxyCodeLine{100             \textcolor{keywordflow}{if} (*(ptr-\/>get\_item()) == val)}
+\DoxyCodeLine{101             \{}
+\DoxyCodeLine{102                 \textcolor{keywordflow}{if} (prev == NULL)}
+\DoxyCodeLine{103                 \{}
+\DoxyCodeLine{104                     x = ptr-\/>get\_item();}
+\DoxyCodeLine{105                     First = First-\/>get\_next();}
+\DoxyCodeLine{106                 \}}
+\DoxyCodeLine{107                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{108                 \{}
+\DoxyCodeLine{109                     x = ptr-\/>get\_item();}
+\DoxyCodeLine{110                     prev-\/>set\_next(ptr-\/>get\_next());}
+\DoxyCodeLine{111                 \}}
+\DoxyCodeLine{112                 count-\/-\/;}
+\DoxyCodeLine{113                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{114             \}}
+\DoxyCodeLine{115             prev = ptr;}
+\DoxyCodeLine{116             ptr = ptr-\/>get\_next();}
+\DoxyCodeLine{117         \}}
+\DoxyCodeLine{118         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{119     \}}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121     \textcolor{keywordtype}{bool} removeFirst(Type\& x)}
+\DoxyCodeLine{122     \{}
+\DoxyCodeLine{123         \textcolor{keywordflow}{if} (count == 0)}
+\DoxyCodeLine{124             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126         \mbox{\hyperlink{class_node}{Node<Type>}}* ptr;}
+\DoxyCodeLine{127         ptr = First;}
+\DoxyCodeLine{128         \textcolor{keywordflow}{if} (count == 1)}
+\DoxyCodeLine{129         \{}
+\DoxyCodeLine{130             First = NULL;}
+\DoxyCodeLine{131             End = NULL;}
+\DoxyCodeLine{132         \}}
+\DoxyCodeLine{133         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{134         \{}
+\DoxyCodeLine{135             First= First-\/>get\_next();}
+\DoxyCodeLine{136         \}}
+\DoxyCodeLine{137         x = ptr-\/>get\_item();}
+\DoxyCodeLine{138         count-\/-\/;}
+\DoxyCodeLine{139         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{140     \}}
+\DoxyCodeLine{141     \textcolor{keywordtype}{void} print()}
+\DoxyCodeLine{142     \{}
+\DoxyCodeLine{143         \mbox{\hyperlink{class_node}{Node<Type>}}* temp = First;}
+\DoxyCodeLine{144         \textcolor{keywordflow}{while} (temp)}
+\DoxyCodeLine{145         \{}
+\DoxyCodeLine{146             cout << (temp-\/>get\_item());}
+\DoxyCodeLine{147             temp = temp-\/>get\_next();}
+\DoxyCodeLine{148             \textcolor{keywordflow}{if} (temp)}
+\DoxyCodeLine{149                 cout << \textcolor{charliteral}{','};}
+\DoxyCodeLine{150         \}}
+\DoxyCodeLine{151     \}}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153 \};}
+
+\end{DoxyCode}

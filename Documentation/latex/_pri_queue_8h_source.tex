@@ -1,0 +1,126 @@
+\hypertarget{_pri_queue_8h_source}{}\doxysection{Pri\+Queue.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}PriNode.h"{}}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include<iostream>}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{template}<\textcolor{keyword}{class} Type>}
+\DoxyCodeLine{6 \textcolor{keyword}{class }\mbox{\hyperlink{class_pri_queue}{PriQueue}} }
+\DoxyCodeLine{7 \{}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{keyword}{private}:}
+\DoxyCodeLine{10     \mbox{\hyperlink{class_pri_node}{PriNode<Type>}}* front;}
+\DoxyCodeLine{11     \textcolor{keywordtype}{int} count;}
+\DoxyCodeLine{12     \mbox{\hyperlink{class_pri_node}{PriNode<Type>}}* rear;}
+\DoxyCodeLine{13 \textcolor{keyword}{public}:}
+\DoxyCodeLine{14     \mbox{\hyperlink{class_pri_queue}{PriQueue}}()}
+\DoxyCodeLine{15     \{}
+\DoxyCodeLine{16         front = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{17         rear = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{18         count = 0;}
+\DoxyCodeLine{19     \}}
+\DoxyCodeLine{20     \textcolor{keywordtype}{bool} EnQueue(Type item, \textcolor{keywordtype}{float} priority = 0)}
+\DoxyCodeLine{21     \{}
+\DoxyCodeLine{22         \mbox{\hyperlink{class_pri_node}{PriNode<Type>}}* temp;}
+\DoxyCodeLine{23         \mbox{\hyperlink{class_pri_node}{PriNode<Type>}}* cur = front;}
+\DoxyCodeLine{24         temp = \textcolor{keyword}{new} \mbox{\hyperlink{class_pri_node}{PriNode<Type>}};}
+\DoxyCodeLine{25         temp-\/>set\_item(item);}
+\DoxyCodeLine{26         temp-\/>set\_priority(priority);}
+\DoxyCodeLine{27         \textcolor{keywordflow}{if} (QueueEmpty())}
+\DoxyCodeLine{28         \{}
+\DoxyCodeLine{29             front = temp;}
+\DoxyCodeLine{30             rear = temp;}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         \}}
+\DoxyCodeLine{33         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (front-\/>get\_priority() < priority)}
+\DoxyCodeLine{34         \{}
+\DoxyCodeLine{35             temp-\/>set\_next(front);}
+\DoxyCodeLine{36             front = temp;}
+\DoxyCodeLine{37         \}}
+\DoxyCodeLine{38         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{39         \{}
+\DoxyCodeLine{40             \textcolor{keywordflow}{while} (cur-\/>get\_next() != NULL \&\& cur-\/>get\_next()-\/>get\_priority() >= priority)}
+\DoxyCodeLine{41                 cur = cur-\/>get\_next();}
+\DoxyCodeLine{42             \textcolor{keywordflow}{if} (!cur-\/>get\_next())}
+\DoxyCodeLine{43                 rear = temp;}
+\DoxyCodeLine{44             temp-\/>set\_next(cur-\/>get\_next());}
+\DoxyCodeLine{45             cur-\/>set\_next(temp);}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47         \}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49         count++;}
+\DoxyCodeLine{50         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \}}
+\DoxyCodeLine{53     \textcolor{keywordtype}{bool} DeQueue(Type\& x)}
+\DoxyCodeLine{54     \{}
+\DoxyCodeLine{55         \textcolor{keywordflow}{if} (count == 0)}
+\DoxyCodeLine{56             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{57         \mbox{\hyperlink{class_pri_node}{PriNode<Type>}}* delptr;}
+\DoxyCodeLine{58         delptr = front;}
+\DoxyCodeLine{59         \textcolor{keywordflow}{if} (count == 1)}
+\DoxyCodeLine{60         \{}
+\DoxyCodeLine{61             rear = NULL;}
+\DoxyCodeLine{62             front = NULL;}
+\DoxyCodeLine{63         \}}
+\DoxyCodeLine{64         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{65         \{}
+\DoxyCodeLine{66             front = front-\/>get\_next();}
+\DoxyCodeLine{67         \}}
+\DoxyCodeLine{68         delptr-\/>set\_next(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{69         x = delptr-\/>get\_item();}
+\DoxyCodeLine{70         count-\/-\/;}
+\DoxyCodeLine{71         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{72     \}}
+\DoxyCodeLine{73     \textcolor{keywordtype}{bool} QueueEmpty()}
+\DoxyCodeLine{74     \{}
+\DoxyCodeLine{75         \textcolor{keywordflow}{return} !count;}
+\DoxyCodeLine{76     \}}
+\DoxyCodeLine{77     \textcolor{keywordtype}{void} DistroyQueue()}
+\DoxyCodeLine{78     \{}
+\DoxyCodeLine{79         Type x;}
+\DoxyCodeLine{80         \textcolor{keywordtype}{int} c = count;}
+\DoxyCodeLine{81         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < c; i++)}
+\DoxyCodeLine{82             DeQueue(x);}
+\DoxyCodeLine{83     \}}
+\DoxyCodeLine{84     \mbox{\hyperlink{class_pri_node}{PriNode<Type>}}* GetFront()}
+\DoxyCodeLine{85     \{}
+\DoxyCodeLine{86         \textcolor{keywordflow}{return} front;}
+\DoxyCodeLine{87     \}}
+\DoxyCodeLine{88     \mbox{\hyperlink{class_pri_node}{PriNode<Type>}}* GetRear()}
+\DoxyCodeLine{89     \{}
+\DoxyCodeLine{90         \textcolor{keywordflow}{return} rear;}
+\DoxyCodeLine{91     \}}
+\DoxyCodeLine{92     \textcolor{keywordtype}{int} GetCount()}
+\DoxyCodeLine{93     \{}
+\DoxyCodeLine{94         \textcolor{keywordflow}{return} count;}
+\DoxyCodeLine{95     \}}
+\DoxyCodeLine{96     Type Peek()}
+\DoxyCodeLine{97     \{}
+\DoxyCodeLine{98         \textcolor{keywordflow}{if} (!QueueEmpty())}
+\DoxyCodeLine{99             \textcolor{keywordflow}{return} front-\/>get\_item();}
+\DoxyCodeLine{100         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{101             \textcolor{keywordflow}{return} NULL;}
+\DoxyCodeLine{102     \}}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104     \mbox{\hyperlink{class_pri_queue}{\string~PriQueue}}()}
+\DoxyCodeLine{105     \{}
+\DoxyCodeLine{106         DistroyQueue();}
+\DoxyCodeLine{107     \}}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109     \textcolor{keywordtype}{void} print()}
+\DoxyCodeLine{110     \{}
+\DoxyCodeLine{111         \mbox{\hyperlink{class_pri_node}{PriNode<Type>}}* temp = front;}
+\DoxyCodeLine{112         \textcolor{keywordflow}{while} (temp)}
+\DoxyCodeLine{113         \{}
+\DoxyCodeLine{114             cout << (temp-\/>get\_item());}
+\DoxyCodeLine{115             temp = temp-\/>get\_next();}
+\DoxyCodeLine{116             \textcolor{keywordflow}{if} (temp)}
+\DoxyCodeLine{117                 cout << \textcolor{charliteral}{','};}
+\DoxyCodeLine{118         \}}
+\DoxyCodeLine{119     \}}
+\DoxyCodeLine{120 \};}
+\DoxyCodeLine{121 }
+
+\end{DoxyCode}

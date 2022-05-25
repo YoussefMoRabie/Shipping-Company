@@ -1,0 +1,35 @@
+\hypertarget{_time_8h_source}{}\doxysection{Time.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}UI.h"{}}}
+\DoxyCodeLine{4 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keyword}{class }\mbox{\hyperlink{class_time}{Time}}}
+\DoxyCodeLine{7 \{}
+\DoxyCodeLine{8     \mbox{\hyperlink{class_u_i}{UI}} UI\_P;}
+\DoxyCodeLine{9     \textcolor{keywordtype}{int} hour;}
+\DoxyCodeLine{10     \textcolor{keywordtype}{int} day;}
+\DoxyCodeLine{11 \textcolor{keyword}{public}:}
+\DoxyCodeLine{12     \mbox{\hyperlink{class_time}{Time}}();}
+\DoxyCodeLine{13     \mbox{\hyperlink{class_time}{Time}}(\textcolor{keywordtype}{int} d , \textcolor{keywordtype}{int} h);}
+\DoxyCodeLine{14     \mbox{\hyperlink{class_time}{Time}}(\textcolor{keywordtype}{string} x);}
+\DoxyCodeLine{15     \mbox{\hyperlink{class_time}{Time}}(\textcolor{keywordtype}{int} h);}
+\DoxyCodeLine{16     \textcolor{keywordtype}{void} setTime(\textcolor{keywordtype}{int} h);}
+\DoxyCodeLine{17     \textcolor{keywordtype}{void} setTime(\textcolor{keywordtype}{string} x);}
+\DoxyCodeLine{18     \textcolor{keywordtype}{void} AdvanceTime(\textcolor{keywordtype}{int} value);}
+\DoxyCodeLine{19     \textcolor{keywordtype}{void} printTime();}
+\DoxyCodeLine{20     \textcolor{keywordtype}{int} getHour();}
+\DoxyCodeLine{21     \textcolor{keywordtype}{int} getDay();}
+\DoxyCodeLine{22     \textcolor{keywordtype}{int} Time\_In\_Hours();   \textcolor{comment}{//returns (24*day+hour) which is the total number of hours }}
+\DoxyCodeLine{23     \textcolor{keywordtype}{string} Time\_to\_print();}
+\DoxyCodeLine{24     \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} \mbox{\hyperlink{class_time}{Time}}\&);}
+\DoxyCodeLine{25     \textcolor{keywordtype}{bool} operator>=(\textcolor{keyword}{const} \mbox{\hyperlink{class_time}{Time}}\&);}
+\DoxyCodeLine{26     \textcolor{keywordtype}{int} operator-\/(\textcolor{keyword}{const} \mbox{\hyperlink{class_time}{Time}}\&);}
+\DoxyCodeLine{27     \mbox{\hyperlink{class_time}{Time}} operator +(\textcolor{keywordtype}{float} x);}
+\DoxyCodeLine{28     \mbox{\hyperlink{class_time}{\string~Time}}();}
+\DoxyCodeLine{29 \};}
+\DoxyCodeLine{30 }
+
+\end{DoxyCode}

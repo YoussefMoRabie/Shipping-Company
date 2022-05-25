@@ -1,0 +1,50 @@
+\hypertarget{_cargo_8h_source}{}\doxysection{Cargo.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include"{}Def.h"{}}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}Time.h"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{keyword}{class }\mbox{\hyperlink{class_cargo}{Cargo}}}
+\DoxyCodeLine{8 \{}
+\DoxyCodeLine{9 \textcolor{keyword}{private}:}
+\DoxyCodeLine{10     \mbox{\hyperlink{class_time}{Time}} Preparation\_Time; \textcolor{comment}{//Time(day:hour) at which the cargo is ready to be loaded}}
+\DoxyCodeLine{11     \mbox{\hyperlink{class_time}{Time}} WT;}
+\DoxyCodeLine{12     \mbox{\hyperlink{class_time}{Time}} DT;}
+\DoxyCodeLine{13     \textcolor{keywordtype}{float} Load\_Unload\_Time;}
+\DoxyCodeLine{14     CARGO\_TYPE Type;}
+\DoxyCodeLine{15     \textcolor{keywordtype}{float} Delivery\_Distance; \textcolor{comment}{//Km}}
+\DoxyCodeLine{16     \textcolor{keywordtype}{double} Cost;}
+\DoxyCodeLine{17     \textcolor{keywordtype}{int} ID;}
+\DoxyCodeLine{18     \textcolor{keywordtype}{int} Truck\_ID;}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{keyword}{public}:}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22     \mbox{\hyperlink{class_cargo}{Cargo}}(CARGO\_TYPE T, \textcolor{keyword}{const} \mbox{\hyperlink{class_time}{Time}}\& PT, \textcolor{keywordtype}{int} \textcolor{keywordtype}{id}, \textcolor{keywordtype}{float} DD, \textcolor{keywordtype}{float} LT, \textcolor{keywordtype}{double} C);}
+\DoxyCodeLine{23     \mbox{\hyperlink{class_cargo}{Cargo}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id}); \textcolor{comment}{//Fake cargo just for comparison with id}}
+\DoxyCodeLine{24     \textcolor{keywordtype}{float} GetDistance() \textcolor{keyword}{const};}
+\DoxyCodeLine{25     \textcolor{keywordtype}{double} GetCost() \textcolor{keyword}{const};}
+\DoxyCodeLine{26     \textcolor{keywordtype}{float} GetLU\_Time() \textcolor{keyword}{const};}
+\DoxyCodeLine{27     CARGO\_TYPE GetType() \textcolor{keyword}{const};}
+\DoxyCodeLine{28     \mbox{\hyperlink{class_time}{Time}}\& GetPrepTime();}
+\DoxyCodeLine{29     \textcolor{keywordtype}{void} PromoteToVip(\textcolor{keywordtype}{double} ExtraMoney);}
+\DoxyCodeLine{30     \textcolor{keywordtype}{bool} operator==(\mbox{\hyperlink{class_cargo}{Cargo}}* ptr);}
+\DoxyCodeLine{31     \textcolor{keywordtype}{int} GetID() \textcolor{keyword}{const};}
+\DoxyCodeLine{32     \textcolor{keywordtype}{void} Set\_Truck\_ID(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id});}
+\DoxyCodeLine{33     \textcolor{keywordtype}{int} Get\_Truck\_ID();}
+\DoxyCodeLine{34     \textcolor{keywordtype}{void} Set\_DT(\mbox{\hyperlink{class_time}{Time}} t);}
+\DoxyCodeLine{35     \textcolor{keywordtype}{void} Set\_WT(\textcolor{keywordtype}{int} t);}
+\DoxyCodeLine{36     \mbox{\hyperlink{class_time}{Time}}\& Get\_DT();}
+\DoxyCodeLine{37     \mbox{\hyperlink{class_time}{Time}}\& Get\_WT();}
+\DoxyCodeLine{38     \mbox{\hyperlink{class_time}{Time}}\& Get\_Preparation\_Time();}
+\DoxyCodeLine{39     \textcolor{keyword}{friend} ostream\& operator<<(ostream\& out, \textcolor{keyword}{const} \mbox{\hyperlink{class_cargo}{Cargo}}* c);}
+\DoxyCodeLine{40     }
+\DoxyCodeLine{41 \};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 }
+
+\end{DoxyCode}

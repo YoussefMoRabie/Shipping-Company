@@ -1,3 +1,9 @@
+/**
+ * @file Company.h
+ * @brief Manager of all operations that occur in the program
+ * @version 0.1
+ * @copyright Copyright secured by YMY Team(c) 2022
+ */
 #pragma once
 #include "Def.h"
 #include "Cargo.h"
@@ -42,12 +48,6 @@ class Company
 	int AutoPro;
 	int Num_of_events;
 
-
-
-
-
-
-
 	int nCap, sCap, vCap;
 	//Numbers of Trucks in each list
 
@@ -60,8 +60,11 @@ class Company
 
 	//-------------------------------------------------------
 	
-	//Number of cargos in each list
-
+	
+/**
+ * @brief Number of cargos in each list
+ * 
+ */
 	int VIP_Cargos_count;
 	int Normal_Cargos_count;
 	int Special_Cargos_count;
@@ -80,7 +83,10 @@ class Company
 	Truck* Loading_VIP;
 
 	//--------------------------------------------------------
-	// Utility functions
+	/**
+	 * @brief Utility functions
+	 * 
+	 */
 	void check_checkup_list();
 	void check_to_available(Truck*&);
 	void move_to_available(Truck*);
@@ -97,7 +103,10 @@ class Company
 	int Loading_count();
 
 public:
-
+/**
+ * @brief Construct a new Company object
+ * 
+ */
 	Company();
 	void Start_Simuulation();
 	void Working_Hours();
@@ -108,13 +117,33 @@ public:
 	SIM_MODE get_input_mode() ;
 	void execute_mode(SIM_MODE);
 	bool readFile(string);
-	bool write_output_file(); // prepairs the output file at the end of the simulation
+	/**
+	 * @brief prepairs the output file at the end of the simulation
+	 * 
+	 * @return true || false
+	 */
+	bool write_output_file();
+	/**
+	 * @brief Statistics are collected at the end and sent to me to put in the output file
+	 * @param int Delivered 
+	 * @param string text 
+	 */
 	void Statistics_File(int Delivered,string & text);
+	/**
+	 * @brief time of rest in waiting
+	 * 
+	 * @param Cargo* car 
+	 * @return int 
+	 */
 	int rest_in_waiting(Cargo* car);
 	Time& get_Sim_Time() ;
 	Time& get_Nearest_Event_Time();
 	Event* get_Nearest_Event();
 	void Advance_Sim_Time(int = 1);
+	/**
+	 * @brief Promote cargos that exceeds a certain waiting time
+	 * 
+	 */
 	void Auto_Promotion();
 	// Simulation Functions
 	void assign_cargo();
@@ -127,6 +156,11 @@ public:
 	void InteractivePrinting();
 	void StepByStepPrinting();
 	void SilentPrinting();
+	/**
+	 * @brief Simulation Manager take simulation mode and to the stable operation
+	 * 
+	 * @param SIM_MODE Mode 
+	 */
 	void Sim_Manager(SIM_MODE Mode);
 
 	//---------------------------------------
@@ -155,10 +189,18 @@ public:
 	bool All_Delivered();		//checks that all waiting and moving lists are empty
 
 	//------------------------------------------------------------
+	/**
+	 * @brief function print data on console
+	 * 
+	 */
 	void Output_Console();
 
 
 	//Destructor
+	/**
+	 * @brief Destroy the Company object
+	 * 
+	 */
 	~Company(){}
 
 

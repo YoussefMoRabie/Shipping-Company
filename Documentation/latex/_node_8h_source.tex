@@ -1,0 +1,38 @@
+\hypertarget{_node_8h_source}{}\doxysection{Node.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{keyword}{template}<\textcolor{keyword}{class} Type>}
+\DoxyCodeLine{3 \textcolor{keyword}{class }\mbox{\hyperlink{class_node}{Node}}}
+\DoxyCodeLine{4 \{}
+\DoxyCodeLine{5 \textcolor{keyword}{private}:}
+\DoxyCodeLine{6     Type item;}
+\DoxyCodeLine{7     \textcolor{keywordtype}{int} Priority;}
+\DoxyCodeLine{8     \mbox{\hyperlink{class_node}{Node<Type>}}* next;}
+\DoxyCodeLine{9 \textcolor{keyword}{public}:}
+\DoxyCodeLine{10     \mbox{\hyperlink{class_node}{Node}}() :next(\textcolor{keyword}{nullptr})}
+\DoxyCodeLine{11     \{}
+\DoxyCodeLine{12     \}}
+\DoxyCodeLine{13     \mbox{\hyperlink{class_node}{Node}}(\textcolor{keyword}{const} Type anitem)}
+\DoxyCodeLine{14     \{}
+\DoxyCodeLine{15         item = anitem;}
+\DoxyCodeLine{16         next = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{17     \}}
+\DoxyCodeLine{18     \mbox{\hyperlink{class_node}{Node}}(\textcolor{keyword}{const} Type anitem, \mbox{\hyperlink{class_node}{Node<Type>}}* nextptr)}
+\DoxyCodeLine{19     \{}
+\DoxyCodeLine{20         item = anitem;}
+\DoxyCodeLine{21         next = nextptr;}
+\DoxyCodeLine{22     \}}
+\DoxyCodeLine{23     \textcolor{keywordtype}{void} set\_item(\textcolor{keyword}{const} Type anitem) \{ item = anitem; \}}
+\DoxyCodeLine{24     \textcolor{keywordtype}{void} set\_next(\mbox{\hyperlink{class_node}{Node<Type>}}* nextptr) \{ next = nextptr; \}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26     Type get\_item()\textcolor{keyword}{const }}
+\DoxyCodeLine{27 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{28         \textcolor{keywordflow}{return} item;}
+\DoxyCodeLine{29     \}}
+\DoxyCodeLine{30     \mbox{\hyperlink{class_node}{Node<Type>}}* get\_next()\textcolor{keyword}{const }\{ \textcolor{keywordflow}{return} next; \}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \};}
+
+\end{DoxyCode}
