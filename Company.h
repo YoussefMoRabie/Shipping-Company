@@ -94,7 +94,7 @@ class Company
 	bool load_MaxW();
 	bool Need_Checkup(Truck*);
 	bool in_working(Time T);
-	int Loading_count();
+	void Loading_count(int&, int&);
 
 public:
 
@@ -105,7 +105,6 @@ public:
 	void Off_Hours();
 
 	// Reading data function
-	SIM_MODE get_input_mode() ;
 	void execute_mode(SIM_MODE);
 	bool readFile(string);
 	bool write_output_file(); // prepairs the output file at the end of the simulation
@@ -155,6 +154,7 @@ public:
 	bool All_Delivered();		//checks that all waiting and moving lists are empty
 
 	//------------------------------------------------------------
+	SIM_MODE get_sim_mode();
 	void Output_Console();
 
 
