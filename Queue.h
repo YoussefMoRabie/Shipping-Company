@@ -17,7 +17,7 @@ public:
 		rear = nullptr;
 		count = 0;
 	}
-	 bool EnQueue(Type item)
+	bool EnQueue(Type item)
 	{
 		Node<Type>* temp;
 		temp = new Node<Type>;

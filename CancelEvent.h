@@ -11,7 +11,9 @@ class CancelEvent :
 {
 public:
     CancelEvent(Company* p, const Time&, int);
-    //cancels a Normal cargo given its ID
+    /**
+     * @brief cancels a Normal cargo given its ID
+     */
     void Execute();      
 };
 

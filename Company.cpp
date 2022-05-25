@@ -1,9 +1,3 @@
-
-
-
-
-
-
 #include "Company.h"
 #include "Event.h"
 #include "PreparationEvent.h"

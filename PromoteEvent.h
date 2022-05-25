@@ -1,3 +1,10 @@
+/**
+ * @file PromoteEvent.h
+ * @brief Children Class of Event
+ * @version 0.1
+ * @copyright Copyright secured by YMY Team(c) 2022
+ */
+ */
 #pragma once
 #include "Event.h"
 class PromoteEvent :

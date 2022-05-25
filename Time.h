@@ -1,3 +1,9 @@
+/**
+ * @file Time.h
+ * @brief Class responsible for time
+ * @version 0.1
+ * @copyright Copyright secured by YMY Team(c) 2022
+ */
 #pragma once
 #include <string>
 #include "UI.h"

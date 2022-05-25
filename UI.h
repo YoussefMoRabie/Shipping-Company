@@ -1,3 +1,9 @@
+/**
+ * @file UI.h
+ * @brief Truck Class
+ * @version 0.1
+ * @copyright Copyright secured by YMY Team(c) 2022
+ */
 #pragma once
 #include "Def.h"
 #include <iostream>
@@ -9,7 +15,6 @@ class UI
 
 public:
 	UI();
-	SIM_MODE get_sim_mode();
 	void print(string);
 	int getIntger();
 	string getString();

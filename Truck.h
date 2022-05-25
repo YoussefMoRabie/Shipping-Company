@@ -1,3 +1,9 @@
+/**
+ * @file Truck.h
+ * @brief Truck Class
+ * @version 0.1
+ * @copyright Copyright secured by YMY Team(c) 2022
+ */
 #pragma once
 #include<string>
 #include"Def.h"
@@ -61,6 +67,13 @@ public:
 	void print();
 	void Set_moving_time(Time& Sim_Time);
 	Time get_moving_time();
-	friend ostream& operator<<(ostream& out, Truck* t);
+	
 };
-
+/**
+ * @brief overloading << operator
+ *
+ * @param ostream& out
+ * @param Truck* c
+ * @return ostream&
+ */
+ostream& operator<<(ostream& out, Truck* t);

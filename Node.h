@@ -1,3 +1,8 @@
+/**
+ * @file Node.h
+ * @version 0.1
+ * @copyright Copyright secured by YMY Team(c) 2022
+ */
 #pragma once
 template<class Type>
 class Node
