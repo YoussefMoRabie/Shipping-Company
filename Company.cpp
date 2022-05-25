@@ -879,12 +879,7 @@ void Company::Sim_Manager(SIM_MODE Mode)
 			Advance_Sim_Time();
 		}
 	}
-	if (Mode == SIM_MODE::STEP_BY_STEP)
-		Sleep(1000);
-	else if(Mode == SIM_MODE::INTERACTIVE)
-		cin.get();
-	if(Mode!= SIM_MODE::SILENT)
-	Output_Console();
+	
 	write_output_file();
 	ui_p->print("Simulation ends, Output file created\n");
 }
