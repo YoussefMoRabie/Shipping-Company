@@ -32,22 +32,22 @@ public:
 	Truck(int id, TRUCK_TYPE T, int TC, float MT, int j, float S);
 	TRUCK_TYPE GetType() const;
 	int GetCapacity() const;
-	void set_finish_point(const Time&);
+	void set_finish_point(const Time&);// set the time at which the checkup finishes
 	Time get_finish_point();
 	float GetMaintenanceTime() const;
-	float Get_nearest_dis();
+	float Get_nearest_dis();// gets the distance of the nearest cargo in container (top)
 	float GetSpeed() const;
 	float GetDeliveryInterval();
-	Time Get_nearest_stop();
-	void set_nearest_stop( Time,float);
-	int GetJTC();
-	int GetContainer_count();
-	void restore_JTC();
-	void DecrementJTC();
+	void set_nearest_stop(Time, float); //set the nearest destination time (delivery or return)
+	Time Get_nearest_stop(); 
+	int GetJTC(); //get the 'journeys till checkup' counter value
+	int GetContainer_count(); // gets the number of cargos in container
+	void restore_JTC(); // restore 'journeys till checkup' counter with the original "J"
+	void DecrementJTC(); //decrement the counter after each journey
 	int GetID() const;
 	void set_DInterval();
-	void load(Cargo*, float delivery_time);
-	Cargo* unload();
+	void load(Cargo*, float delivery_time); //load cargo into conatiner
+	Cargo* unload(); //unload cargo from the container
 	void count_down();
 	int get_move_counter();
 	void Set_AT(int h);
