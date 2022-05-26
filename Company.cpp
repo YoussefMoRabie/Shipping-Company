@@ -68,7 +68,7 @@ void Company::Off_Hours()
 bool Company::load_VIP()
 {
 	Truck* t_temp = Pick_VIP_Truck();
-	Cargo* c_temp;
+	Cargo* c_temp=NULL;
 	float T_L_T = 0;
 	float M_L_T = 0;
 	float DT = 0;
@@ -84,12 +84,13 @@ bool Company::load_VIP()
 					M_L_T = c_temp->GetLU_Time();
 				T_L_T += c_temp->GetLU_Time();
 				t_temp->inc_TDC();
+				float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
+				if (delivery_time > DT)
+					DT = delivery_time;
+				t_temp->load(c_temp, delivery_time);
 			}
 
-			float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
-			if (delivery_time > DT)
-				DT = delivery_time;
-			t_temp->load(c_temp, delivery_time);
+
 		}
 		T_L_T += M_L_T;
 		t_temp->Set_AT(ceil(T_L_T + DT + t_temp->Get_AT().Time_In_Hours()));
