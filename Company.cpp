@@ -561,7 +561,8 @@ Truck* Company::Pick_VIP_Truck() {
 		return t_temp;
 	}
 	
-	
+	return NULL;
+
 	
 }
 //Picks an available truck for a normal cargo
@@ -737,6 +738,8 @@ Truck* Company::Pick_Special_Truck() {
 				return nullptr;
 		}
 	}
+	return nullptr;
+
 }
 
 
@@ -888,6 +891,8 @@ bool Company::Upgrade_Normal_Cargo(int id, int extra_money)
 	{
 		temp->PromoteToVip(extra_money);
 		AddCargo(temp);
+		Normal_Cargos_count--;
+		VIP_Cargos_count++;
 		delete ptr;
 		return true;
 	}
@@ -900,7 +905,10 @@ bool Company::Cancel_Normal_Cargo(int id)
 {
 	Cargo* ptr = new Cargo(id);
 	if (W_N_C.Find_Remove(ptr, ptr))
+	{
+		Normal_Cargos_count--;
 		return true;
+	}
 	return false;
 }
 

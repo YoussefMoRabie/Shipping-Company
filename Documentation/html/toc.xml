@@ -1,0 +1,285 @@
+<toc label="Shipping Company" topic="index.html">
+  <topic label="README" href="db/dec/a01337.html">
+    <topic label="Project: Shipping-Company" href="db/dec/a01337.html#autotoc_md0">
+      <topic label="Course Name: Data Structures and Algorithms" href="db/dec/a01337.html#autotoc_md1"/>
+      <topic label="Course Code: CMP1040" href="db/dec/a01337.html#autotoc_md2">
+        <topic label="This is an educational project for Data Structures and Algorithms, written in C++ using Visual Studio IDE. It is a simulation of a space shipping company to deliver orders to users. So the company releases its trucks and assigns cargo to them every hour." href="db/dec/a01337.html#autotoc_md3"/>
+      </topic>
+    </topic>
+    <topic label="Features" href="db/dec/a01337.html#autotoc_md4"/>
+    <topic label="Team Members:" href="db/dec/a01337.html#autotoc_md5">
+      <topic label="Professor Supervisor: Dr. Ahmed Hamdy" href="db/dec/a01337.html#autotoc_md6"/>
+      <topic label="Teacher Assistants Supervisor:" href="db/dec/a01337.html#autotoc_md7"/>
+    </topic>
+  </topic>
+  <topic label="Data Types List" href="annotated.html">
+    <topic label="Data Types List" href="annotated.html">
+      <topic label="CancelEvent" href="da/dd6/a00896.html">
+        <topic label="Execute" href="da/dd6/a00896.html#a0253051555fd36dee29a48e30bb0c0e4"/>
+      </topic>
+      <topic label="Cargo" href="d9/db0/a00900.html">
+        <topic label="Cargo" href="d9/db0/a00900.html#a73f7c2ca36d134769ae1b55a66956158"/>
+        <topic label="Cargo" href="d9/db0/a00900.html#a4150382cf7510f9b92f11571bc064f9e"/>
+        <topic label="Get_DT" href="d9/db0/a00900.html#ae4643de0987cb791a41a6325a518b8b1"/>
+        <topic label="Get_Preparation_Time" href="d9/db0/a00900.html#a875adfcee460ca5cc92a8323dcbac19c"/>
+        <topic label="Get_Truck_ID" href="d9/db0/a00900.html#a2338a2810c6e2a3223b7ed283e0c8899"/>
+        <topic label="Get_WT" href="d9/db0/a00900.html#a7e02e6729011518e90f82035bb57904a"/>
+        <topic label="GetCost" href="d9/db0/a00900.html#a4daa9c941f54c4dc1b8ffe0e6d7891a0"/>
+        <topic label="GetDistance" href="d9/db0/a00900.html#a8531419e96d993a48e7070d1c72cd8ac"/>
+        <topic label="GetID" href="d9/db0/a00900.html#a66b85eda9d21e72ed1561bd85c64566a"/>
+        <topic label="GetLU_Time" href="d9/db0/a00900.html#a84ac18aad4c463db55463df0cf75d3d8"/>
+        <topic label="GetPrepTime" href="d9/db0/a00900.html#ab2e35ef290b9e720bc77c54d18672194"/>
+        <topic label="GetType" href="d9/db0/a00900.html#ac807915578b99d7cd140f7dddbd4fd02"/>
+        <topic label="operator==" href="d9/db0/a00900.html#ab82e5ff8a6e4aade82db44fd5918c589"/>
+        <topic label="PromoteToVip" href="d9/db0/a00900.html#af9b43be193e58cdf45ad85bb07b440f9"/>
+        <topic label="Set_DT" href="d9/db0/a00900.html#a1c0afd1a0958ffae8bc73e618c13e23b"/>
+        <topic label="Set_Truck_ID" href="d9/db0/a00900.html#a76e0b066afe17e0f065eb9463dcf1cc3"/>
+        <topic label="Set_WT" href="d9/db0/a00900.html#a90c1be6da545dc9c28dfddc0a3c70274"/>
+        <topic label="Delivery_Distance" href="d9/db0/a00900.html#ae293ab8c42450cc52c9c6e09224ba738"/>
+        <topic label="Preparation_Time" href="d9/db0/a00900.html#af9cc49ac79b847e8cbc993b36248f122"/>
+      </topic>
+      <topic label="Company" href="d8/d0a/a00904.html">
+        <topic label="Company" href="d8/d0a/a00904.html#a7c668f1b0bd48876e4f1f73f710fc3a3"/>
+        <topic label="~Company" href="d8/d0a/a00904.html#a319e396c4a76a8b998453c529e562f22"/>
+        <topic label="Auto_Promotion" href="d8/d0a/a00904.html#a9a3d3822faabe0fa5bf06843d4440d6d"/>
+        <topic label="check_checkup_list" href="d8/d0a/a00904.html#a6b687353cadc875fefb4e439f2f12a43"/>
+        <topic label="Output_Console" href="d8/d0a/a00904.html#a19a480d561f189bc24e60dceb4bd99a0"/>
+        <topic label="rest_in_waiting" href="d8/d0a/a00904.html#a4b2d4920acbd6989327ace2acb623a31"/>
+        <topic label="Sim_Manager" href="d8/d0a/a00904.html#a2e428a1f0153b22d848d9661377bbfd4"/>
+        <topic label="Statistics_File" href="d8/d0a/a00904.html#a2fb06584a8a89d52cd3b1b8c966c92a0"/>
+        <topic label="write_output_file" href="d8/d0a/a00904.html#a144e7371e885937d52e5195a8f59ba00"/>
+        <topic label="VIP_Cargos_count" href="d8/d0a/a00904.html#a6221321e35584240901e8fac83471aee"/>
+      </topic>
+      <topic label="Event" href="d0/d85/a00908.html">
+        <topic label="~Event" href="d0/d85/a00908.html#a90dfbef2e3db6dad592c79f51a3db5b5"/>
+        <topic label="Execute" href="d0/d85/a00908.html#ae4b2fca0ff85d3dfacd7eb193ba55478"/>
+        <topic label="getTime" href="d0/d85/a00908.html#aab2e4b6a139acb740edc3ac150a48f6b"/>
+      </topic>
+      <topic label="LinkedList" href="df/da5/a00912.html">
+      </topic>
+      <topic label="Node" href="d6/d66/a00916.html">
+      </topic>
+      <topic label="PreparationEvent" href="d6/d82/a00920.html">
+        <topic label="Execute" href="d6/d82/a00920.html#a0253051555fd36dee29a48e30bb0c0e4"/>
+      </topic>
+      <topic label="PriNode" href="de/d62/a00924.html">
+      </topic>
+      <topic label="PriQueue" href="dd/d38/a00928.html">
+      </topic>
+      <topic label="PromoteEvent" href="d8/dbb/a00932.html">
+      </topic>
+      <topic label="Queue" href="dc/d2b/a00936.html">
+      </topic>
+      <topic label="Stack" href="d7/db6/a00940.html">
+      </topic>
+      <topic label="Time" href="d9/dce/a00944.html">
+      </topic>
+      <topic label="Truck" href="d8/d18/a00948.html">
+        <topic label="Truck" href="d8/d18/a00948.html#a836dc1fbb2878839b364aed022c10d1e"/>
+        <topic label="DecrementJTC" href="d8/d18/a00948.html#a1c77ec3330affa3f90006133011b54b8"/>
+        <topic label="get_finish_point" href="d8/d18/a00948.html#a2d27254206fedb4a342f04f06697beff"/>
+        <topic label="Get_nearest_dis" href="d8/d18/a00948.html#a2c5604a88dc0509d012413e846de5a8e"/>
+        <topic label="Get_nearest_stop" href="d8/d18/a00948.html#aa91bcc9a6c6b7bdc0dbaeacfae942205"/>
+        <topic label="GetCapacity" href="d8/d18/a00948.html#a7ffb2b20cf450b0da00ee1f3006f2d2b"/>
+        <topic label="GetContainer_count" href="d8/d18/a00948.html#a78deb159ecd08ade0edbd83e38197a2e"/>
+        <topic label="GetDeliveryInterval" href="d8/d18/a00948.html#a23ce9bbaa85ea6342c086ee5d4180bb7"/>
+        <topic label="GetID" href="d8/d18/a00948.html#a66b85eda9d21e72ed1561bd85c64566a"/>
+        <topic label="GetJTC" href="d8/d18/a00948.html#a6ecfd6ecaf169cfc967dc312f3bc0908"/>
+        <topic label="GetMaintenanceTime" href="d8/d18/a00948.html#a9837a7f06ad2abc6fb50ac59d2dbc9dc"/>
+        <topic label="GetSpeed" href="d8/d18/a00948.html#afcd6fc149881feb47e3b8ff5f88388c3"/>
+        <topic label="GetType" href="d8/d18/a00948.html#a91ad5f91f595ba1bad625977d20b90c2"/>
+        <topic label="load" href="d8/d18/a00948.html#a0933d3c0f69b3098a53fc33fd93aac4f"/>
+        <topic label="restore_JTC" href="d8/d18/a00948.html#ab1e9dda98905eb6bf9e8147872917822"/>
+        <topic label="set_DInterval" href="d8/d18/a00948.html#ab67a3c49108521796de236910b8d5195"/>
+        <topic label="set_finish_point" href="d8/d18/a00948.html#ae38f0fc3d5a59fe911bcd2ecbdb363ed"/>
+        <topic label="set_nearest_stop" href="d8/d18/a00948.html#a07418e420a542cdf8280ba8ce221379b"/>
+        <topic label="unload" href="d8/d18/a00948.html#a40893f4ec3042930d2cdb5ccb6f70b3c"/>
+        <topic label="utilization" href="d8/d18/a00948.html#a00cb85951a0f6dc1fb36a742cab55f8b"/>
+        <topic label="AT" href="d8/d18/a00948.html#ae40e9b2b8245144f691c521e5a4fb034"/>
+        <topic label="Delivery_Distance" href="d8/d18/a00948.html#ae293ab8c42450cc52c9c6e09224ba738"/>
+        <topic label="Delivery_Interval" href="d8/d18/a00948.html#a1b3d7f923453bd29a7064d8a9a5a54b3"/>
+        <topic label="finish_point" href="d8/d18/a00948.html#a984bbefc16125900d943947cfa4e1643"/>
+        <topic label="J" href="d8/d18/a00948.html#a3840465af794532660048cc11397b72f"/>
+        <topic label="Journeys_Till_Check" href="d8/d18/a00948.html#a6b182f0aa0f21785a34c165f42795edc"/>
+        <topic label="Maintenance_Time" href="d8/d18/a00948.html#a4397ada6c1f224a8784ff68cfaab39f7"/>
+        <topic label="move_counter" href="d8/d18/a00948.html#ab5369f2ee5639934321f24fcd6299e67"/>
+        <topic label="N" href="d8/d18/a00948.html#a7722c8ecbb62d99aee7ce68b1752f337"/>
+        <topic label="Nearest_dis" href="d8/d18/a00948.html#aa270c3643592becaf29610ae507afaa7"/>
+        <topic label="Nearest_stop" href="d8/d18/a00948.html#a0f01fdba8f5f7429d74304ad66b1554b"/>
+        <topic label="TDC" href="d8/d18/a00948.html#af22e5d6e3af48635b8469cce1c98b1fd"/>
+        <topic label="Truck_Capacity" href="d8/d18/a00948.html#ab4ab9e50e516ec625124fdd03953f2f1"/>
+      </topic>
+      <topic label="UI" href="de/d49/a00952.html">
+        <topic label="getIntger" href="de/d49/a00952.html#a0c7272bd97c7b717838efcb5c6b2ebb0"/>
+        <topic label="getString" href="de/d49/a00952.html#af7827d71f6acc4e3d6b22b66a8c1f356"/>
+        <topic label="print" href="de/d49/a00952.html#a853ca2097c5c2da1a8eac6b1148e7ff6"/>
+      </topic>
+    </topic>
+    <topic label="Data Types" href="classes.html"/>
+    <topic label="Design Unit Hierarchy" href="hierarchy.html">
+      <topic label="Cargo" href="d9/db0/a00900.html"/>
+      <topic label="Company" href="d8/d0a/a00904.html"/>
+      <topic label="Event" href="d0/d85/a00908.html">
+        <topic label="CancelEvent" href="da/dd6/a00896.html"/>
+        <topic label="PreparationEvent" href="d6/d82/a00920.html"/>
+        <topic label="PromoteEvent" href="d8/dbb/a00932.html"/>
+      </topic>
+      <topic label="LinkedList&lt;Type&gt;" href="df/da5/a00912.html"/>
+      <topic label="LinkedList&lt;Cargo*&gt;" href="df/da5/a00912.html"/>
+      <topic label="Node&lt;Type&gt;" href="d6/d66/a00916.html"/>
+      <topic label="Node&lt;Cargo* &gt;" href="d6/d66/a00916.html"/>
+      <topic label="Node&lt;Event* &gt;" href="d6/d66/a00916.html"/>
+      <topic label="Node&lt;T&gt;" href="d6/d66/a00916.html"/>
+      <topic label="Node&lt;Truck* &gt;" href="d6/d66/a00916.html"/>
+      <topic label="PriNode&lt;Type&gt;" href="de/d62/a00924.html"/>
+      <topic label="PriNode&lt;Cargo* &gt;" href="de/d62/a00924.html"/>
+      <topic label="PriNode&lt;Truck* &gt;" href="de/d62/a00924.html"/>
+      <topic label="PriQueue&lt;Type&gt;" href="dd/d38/a00928.html"/>
+      <topic label="PriQueue&lt;Cargo*&gt;" href="dd/d38/a00928.html"/>
+      <topic label="PriQueue&lt;Truck*&gt;" href="dd/d38/a00928.html"/>
+      <topic label="Queue&lt;Type&gt;" href="dc/d2b/a00936.html"/>
+      <topic label="Queue&lt;Cargo*&gt;" href="dc/d2b/a00936.html"/>
+      <topic label="Queue&lt;Event*&gt;" href="dc/d2b/a00936.html"/>
+      <topic label="Queue&lt;Truck*&gt;" href="dc/d2b/a00936.html"/>
+      <topic label="Stack&lt;T&gt;" href="d7/db6/a00940.html"/>
+      <topic label="Time" href="d9/dce/a00944.html"/>
+      <topic label="Truck" href="d8/d18/a00948.html"/>
+      <topic label="UI" href="de/d49/a00952.html"/>
+    </topic>
+  </topic>
+  <topic label="Files" href="files.html">
+    <topic label="File List" href="files.html">
+      <topic label="CancelEvent.h" href="dd/dad/a00005.html">
+        <topic label="CancelEvent" href="da/dd6/a00896.html">
+          <topic label="Execute" href="da/dd6/a00896.html#a0253051555fd36dee29a48e30bb0c0e4"/>
+        </topic>
+      </topic>
+      <topic label="Cargo.h" href="da/d45/a00011.html">
+        <topic label="Cargo" href="d9/db0/a00900.html">
+          <topic label="Cargo" href="d9/db0/a00900.html#a73f7c2ca36d134769ae1b55a66956158"/>
+          <topic label="Cargo" href="d9/db0/a00900.html#a4150382cf7510f9b92f11571bc064f9e"/>
+          <topic label="Get_DT" href="d9/db0/a00900.html#ae4643de0987cb791a41a6325a518b8b1"/>
+          <topic label="Get_Preparation_Time" href="d9/db0/a00900.html#a875adfcee460ca5cc92a8323dcbac19c"/>
+          <topic label="Get_Truck_ID" href="d9/db0/a00900.html#a2338a2810c6e2a3223b7ed283e0c8899"/>
+          <topic label="Get_WT" href="d9/db0/a00900.html#a7e02e6729011518e90f82035bb57904a"/>
+          <topic label="GetCost" href="d9/db0/a00900.html#a4daa9c941f54c4dc1b8ffe0e6d7891a0"/>
+          <topic label="GetDistance" href="d9/db0/a00900.html#a8531419e96d993a48e7070d1c72cd8ac"/>
+          <topic label="GetID" href="d9/db0/a00900.html#a66b85eda9d21e72ed1561bd85c64566a"/>
+          <topic label="GetLU_Time" href="d9/db0/a00900.html#a84ac18aad4c463db55463df0cf75d3d8"/>
+          <topic label="GetPrepTime" href="d9/db0/a00900.html#ab2e35ef290b9e720bc77c54d18672194"/>
+          <topic label="GetType" href="d9/db0/a00900.html#ac807915578b99d7cd140f7dddbd4fd02"/>
+          <topic label="operator==" href="d9/db0/a00900.html#ab82e5ff8a6e4aade82db44fd5918c589"/>
+          <topic label="PromoteToVip" href="d9/db0/a00900.html#af9b43be193e58cdf45ad85bb07b440f9"/>
+          <topic label="Set_DT" href="d9/db0/a00900.html#a1c0afd1a0958ffae8bc73e618c13e23b"/>
+          <topic label="Set_Truck_ID" href="d9/db0/a00900.html#a76e0b066afe17e0f065eb9463dcf1cc3"/>
+          <topic label="Set_WT" href="d9/db0/a00900.html#a90c1be6da545dc9c28dfddc0a3c70274"/>
+          <topic label="Delivery_Distance" href="d9/db0/a00900.html#ae293ab8c42450cc52c9c6e09224ba738"/>
+          <topic label="Preparation_Time" href="d9/db0/a00900.html#af9cc49ac79b847e8cbc993b36248f122"/>
+        </topic>
+        <topic label="operator&lt;&lt;" href="da/d45/a00011.html#a3399da850044cf2cfe7ec4363c67d1f3"/>
+      </topic>
+      <topic label="Company.h" href="d4/d51/a00017.html">
+        <topic label="Company" href="d8/d0a/a00904.html">
+          <topic label="Company" href="d8/d0a/a00904.html#a7c668f1b0bd48876e4f1f73f710fc3a3"/>
+          <topic label="~Company" href="d8/d0a/a00904.html#a319e396c4a76a8b998453c529e562f22"/>
+          <topic label="Auto_Promotion" href="d8/d0a/a00904.html#a9a3d3822faabe0fa5bf06843d4440d6d"/>
+          <topic label="check_checkup_list" href="d8/d0a/a00904.html#a6b687353cadc875fefb4e439f2f12a43"/>
+          <topic label="Output_Console" href="d8/d0a/a00904.html#a19a480d561f189bc24e60dceb4bd99a0"/>
+          <topic label="rest_in_waiting" href="d8/d0a/a00904.html#a4b2d4920acbd6989327ace2acb623a31"/>
+          <topic label="Sim_Manager" href="d8/d0a/a00904.html#a2e428a1f0153b22d848d9661377bbfd4"/>
+          <topic label="Statistics_File" href="d8/d0a/a00904.html#a2fb06584a8a89d52cd3b1b8c966c92a0"/>
+          <topic label="write_output_file" href="d8/d0a/a00904.html#a144e7371e885937d52e5195a8f59ba00"/>
+          <topic label="VIP_Cargos_count" href="d8/d0a/a00904.html#a6221321e35584240901e8fac83471aee"/>
+        </topic>
+      </topic>
+      <topic label="Def.h" href="db/db2/a00020.html">
+      </topic>
+      <topic label="Event.h" href="d3/d52/a00023.html">
+        <topic label="Event" href="d0/d85/a00908.html">
+          <topic label="~Event" href="d0/d85/a00908.html#a90dfbef2e3db6dad592c79f51a3db5b5"/>
+          <topic label="Execute" href="d0/d85/a00908.html#ae4b2fca0ff85d3dfacd7eb193ba55478"/>
+          <topic label="getTime" href="d0/d85/a00908.html#aab2e4b6a139acb740edc3ac150a48f6b"/>
+        </topic>
+      </topic>
+      <topic label="LinkedList.h" href="d6/d5b/a00026.html">
+        <topic label="LinkedList&lt;Type&gt;" href="df/da5/a00912.html">
+        </topic>
+      </topic>
+      <topic label="Main.cpp" href="d5/d16/a00029.html">
+      </topic>
+      <topic label="Node.h" href="dc/d87/a00032.html">
+        <topic label="Node&lt;Type&gt;" href="d6/d66/a00916.html">
+        </topic>
+      </topic>
+      <topic label="PreparationEvent.h" href="d8/d41/a00038.html">
+        <topic label="PreparationEvent" href="d6/d82/a00920.html">
+          <topic label="Execute" href="d6/d82/a00920.html#a0253051555fd36dee29a48e30bb0c0e4"/>
+        </topic>
+      </topic>
+      <topic label="PriNode.h" href="dd/d32/a00041_source.html"/>
+      <topic label="PriQueue.h" href="d5/df9/a00044.html">
+        <topic label="PriQueue&lt;Type&gt;" href="dd/d38/a00928.html">
+        </topic>
+      </topic>
+      <topic label="PromoteEvent.h" href="d5/de0/a00050.html">
+        <topic label="PromoteEvent" href="d8/dbb/a00932.html">
+        </topic>
+      </topic>
+      <topic label="Queue.h" href="dc/dee/a00053_source.html"/>
+      <topic label="Stack.h" href="d3/d8b/a00059_source.html"/>
+      <topic label="Time.h" href="de/de1/a00065.html">
+        <topic label="Time" href="d9/dce/a00944.html">
+        </topic>
+      </topic>
+      <topic label="Truck.h" href="d0/d89/a00071.html">
+        <topic label="Truck" href="d8/d18/a00948.html">
+          <topic label="Truck" href="d8/d18/a00948.html#a836dc1fbb2878839b364aed022c10d1e"/>
+          <topic label="DecrementJTC" href="d8/d18/a00948.html#a1c77ec3330affa3f90006133011b54b8"/>
+          <topic label="get_finish_point" href="d8/d18/a00948.html#a2d27254206fedb4a342f04f06697beff"/>
+          <topic label="Get_nearest_dis" href="d8/d18/a00948.html#a2c5604a88dc0509d012413e846de5a8e"/>
+          <topic label="Get_nearest_stop" href="d8/d18/a00948.html#aa91bcc9a6c6b7bdc0dbaeacfae942205"/>
+          <topic label="GetCapacity" href="d8/d18/a00948.html#a7ffb2b20cf450b0da00ee1f3006f2d2b"/>
+          <topic label="GetContainer_count" href="d8/d18/a00948.html#a78deb159ecd08ade0edbd83e38197a2e"/>
+          <topic label="GetDeliveryInterval" href="d8/d18/a00948.html#a23ce9bbaa85ea6342c086ee5d4180bb7"/>
+          <topic label="GetID" href="d8/d18/a00948.html#a66b85eda9d21e72ed1561bd85c64566a"/>
+          <topic label="GetJTC" href="d8/d18/a00948.html#a6ecfd6ecaf169cfc967dc312f3bc0908"/>
+          <topic label="GetMaintenanceTime" href="d8/d18/a00948.html#a9837a7f06ad2abc6fb50ac59d2dbc9dc"/>
+          <topic label="GetSpeed" href="d8/d18/a00948.html#afcd6fc149881feb47e3b8ff5f88388c3"/>
+          <topic label="GetType" href="d8/d18/a00948.html#a91ad5f91f595ba1bad625977d20b90c2"/>
+          <topic label="load" href="d8/d18/a00948.html#a0933d3c0f69b3098a53fc33fd93aac4f"/>
+          <topic label="restore_JTC" href="d8/d18/a00948.html#ab1e9dda98905eb6bf9e8147872917822"/>
+          <topic label="set_DInterval" href="d8/d18/a00948.html#ab67a3c49108521796de236910b8d5195"/>
+          <topic label="set_finish_point" href="d8/d18/a00948.html#ae38f0fc3d5a59fe911bcd2ecbdb363ed"/>
+          <topic label="set_nearest_stop" href="d8/d18/a00948.html#a07418e420a542cdf8280ba8ce221379b"/>
+          <topic label="unload" href="d8/d18/a00948.html#a40893f4ec3042930d2cdb5ccb6f70b3c"/>
+          <topic label="utilization" href="d8/d18/a00948.html#a00cb85951a0f6dc1fb36a742cab55f8b"/>
+          <topic label="AT" href="d8/d18/a00948.html#ae40e9b2b8245144f691c521e5a4fb034"/>
+          <topic label="Delivery_Distance" href="d8/d18/a00948.html#ae293ab8c42450cc52c9c6e09224ba738"/>
+          <topic label="Delivery_Interval" href="d8/d18/a00948.html#a1b3d7f923453bd29a7064d8a9a5a54b3"/>
+          <topic label="finish_point" href="d8/d18/a00948.html#a984bbefc16125900d943947cfa4e1643"/>
+          <topic label="J" href="d8/d18/a00948.html#a3840465af794532660048cc11397b72f"/>
+          <topic label="Journeys_Till_Check" href="d8/d18/a00948.html#a6b182f0aa0f21785a34c165f42795edc"/>
+          <topic label="Maintenance_Time" href="d8/d18/a00948.html#a4397ada6c1f224a8784ff68cfaab39f7"/>
+          <topic label="move_counter" href="d8/d18/a00948.html#ab5369f2ee5639934321f24fcd6299e67"/>
+          <topic label="N" href="d8/d18/a00948.html#a7722c8ecbb62d99aee7ce68b1752f337"/>
+          <topic label="Nearest_dis" href="d8/d18/a00948.html#aa270c3643592becaf29610ae507afaa7"/>
+          <topic label="Nearest_stop" href="d8/d18/a00948.html#a0f01fdba8f5f7429d74304ad66b1554b"/>
+          <topic label="TDC" href="d8/d18/a00948.html#af22e5d6e3af48635b8469cce1c98b1fd"/>
+          <topic label="Truck_Capacity" href="d8/d18/a00948.html#ab4ab9e50e516ec625124fdd03953f2f1"/>
+        </topic>
+        <topic label="operator&lt;&lt;" href="d0/d89/a00071.html#abf7c248ab047463f6e7704ecdfc35ad6"/>
+      </topic>
+      <topic label="UI.h" href="d1/d09/a00077.html">
+        <topic label="UI" href="de/d49/a00952.html">
+          <topic label="getIntger" href="de/d49/a00952.html#a0c7272bd97c7b717838efcb5c6b2ebb0"/>
+          <topic label="getString" href="de/d49/a00952.html#af7827d71f6acc4e3d6b22b66a8c1f356"/>
+          <topic label="print" href="de/d49/a00952.html#a853ca2097c5c2da1a8eac6b1148e7ff6"/>
+        </topic>
+      </topic>
+    </topic>
+    <topic label="Globals" href="globals.html">
+      <topic label="All" href="globals.html"/>
+      <topic label="Functions/Subroutines" href="globals_func.html"/>
+    </topic>
+  </topic>
+</toc>
