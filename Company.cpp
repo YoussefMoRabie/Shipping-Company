@@ -950,7 +950,6 @@ bool Company::Upgrade_Normal_Cargo(int id, int extra_money)
 		temp->PromoteToVip(extra_money);
 		AddCargo(temp);
 		Normal_Cargos_count--;
-		total_count_normal--;
 		VIP_Cargos_count++;
 		delete ptr;
 		return true;
@@ -1002,7 +1001,7 @@ void Company::Auto_Promotion()
 	{
 		if (Upgrade_Normal_Cargo(W_N_C.getFirst()->GetID()))
 		{
-			total_count_normal++;
+
 			auto_promoted_count++;
 		}
 	}
