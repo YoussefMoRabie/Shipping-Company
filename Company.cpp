@@ -1520,7 +1520,7 @@ bool Company::write_output_file()
 	ofstream outFile("output.txt");
 	if (!(outFile.is_open()))return false;
 	if (!Delivered)
-		Text = "THERE ARE NO COMPLETED MISSIONS !!!!\n";
+		Text = "THERE ARE NO DELIVERED CARGOS !!!!\n";
 	else
 		Statistics_File(Delivered, Text);
 	outFile << Text;
@@ -1597,10 +1597,7 @@ bool Company::Delivery_failure()
 {
 	 srand(time(0));
 	 int Prob = rand() % 100 + 1;
-	 if (Prob > 0
-		 
-		 
-		 )
+	 if (Prob > 5)
 		 return false;
 	 if(Moving_truck.GetCount()==0)
 		 return false;
