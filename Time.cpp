@@ -84,7 +84,7 @@ void Time::AdvanceTime(int value)
 
 void Time::printTime()
 {
-	UI_P.print(to_string(day) + ":" + to_string(hour));
+	UI_P->print(to_string(day) + ":" + to_string(hour));
 }
 Time Time::operator+(float value) {
 

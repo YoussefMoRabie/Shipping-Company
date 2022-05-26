@@ -11,7 +11,7 @@ using namespace std;
 
 class Time
 {
-	UI UI_P;
+	UI * UI_P;
 	int hour;
 	int day;
 public:

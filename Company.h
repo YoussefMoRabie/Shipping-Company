@@ -206,8 +206,10 @@ public:
 	 * 
 	 */
 	void Output_Console();
-
-
+	/**
+	 * Bonus Func.
+	 */
+	bool Delivery_failure();
 	//Destructor
 	/**
 	 * @brief Destroy the Company object

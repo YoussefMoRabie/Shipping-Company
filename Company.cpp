@@ -336,7 +336,7 @@ void Company::Truck_Controller() //controll the transition of trucks between lis
 				move_to_available(t_temp);
 		}
 
-
+	}
 		while (!Check_up_VIP.QueueEmpty() && Sim_Time == Check_up_VIP.Peek()->get_finish_point())// checks if it finished checkup
 		{
 			Check_up_VIP.DeQueue(t_temp);
@@ -374,7 +374,7 @@ void Company::Truck_Controller() //controll the transition of trucks between lis
 		}
 
 
-	}
+	
 }
 
 //Picks an available truck for a vip cargo
@@ -1381,6 +1381,7 @@ void Company::Sim_Manager(SIM_MODE Mode)
 		}
 		if (Mode == SIM_MODE::SILENT || Mode == SIM_MODE::STEP_BY_STEP || cin.get() && Mode == SIM_MODE::INTERACTIVE)
 		{
+			
 			if (Mode == SIM_MODE::STEP_BY_STEP)
 				Sleep(1000);
 			if (in_working(Sim_Time))
@@ -1392,9 +1393,16 @@ void Company::Sim_Manager(SIM_MODE Mode)
 				Off_Hours();
 			}
 			if (Mode != SIM_MODE::SILENT)
+			{
 				Output_Console();
+
+			}
 			Advance_Sim_Time();
 		} 
+		if (Mode != SIM_MODE::SILENT)
+		{
+			Delivery_failure();
+		}
 	}
 	
 	write_output_file();
@@ -1492,6 +1500,29 @@ void Company::Statistics_File(int Delivered, string& text)
 
 	text = str.str();
 }
+bool Company::Delivery_failure()
+{
+	 srand(time(0));
+	 int Prob = rand() % 100 + 1;
+	 if (Prob > 90)
+		 return false;
+	 if(Moving_truck.GetCount()==0)
+		 return false;
+	 Truck* t_temp;
+	 Cargo* c_temp;
+	 Moving_truck.DeQueue(t_temp);
+	 int count = t_temp->GetContainer_count();
+	 for (int i = 0; i < count; i++)
+	 {
+		 c_temp = t_temp->unload();
+		 AddCargo(c_temp);
+	 }
+	 move_to_checkup(t_temp);
+	 ui_p->print("Truck with ID("+to_string(t_temp->GetID()) + ") will fail at time ("+Sim_Time.Time_to_print() + ") \n");
+	 return true;
+	 
+}
+
 
 void Company::print_W_V_C()
 {
