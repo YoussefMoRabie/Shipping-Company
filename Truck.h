@@ -45,6 +45,8 @@ public:
 	float Get_nearest_dis();// gets the distance of the nearest cargo in container (top)
 	float GetSpeed() const;
 	float GetDeliveryInterval();
+	TRUCK_SHIFT getshift();
+	void setSpeed(float);
 	void set_nearest_stop(Time, float); //set the nearest destination time (delivery or return)
 	Time Get_nearest_stop(); 
 	int GetJTC(); //get the 'journeys till checkup' counter value

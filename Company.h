@@ -100,11 +100,13 @@ class Company
 	void check_to_available(Truck*&); //moves a truck from checkup to available
 	void move_to_available(Truck*); //moves a truck from moving to available
 	void move_to_checkup(Truck*); //moves a truck from moving to checkup
-
+	void  to_urgentCheckup(Truck*);
+	Truck* out_of_urgentCheckup(TRUCK_TYPE t);
 	Truck* Pick_VIP_Truck(); //picks the appropriate truck from loading VIP cargos
 	Truck* Pick_Normal_Truck(); //picks the appropriate truck from loading Normal cargos
 	Truck* Pick_Special_Truck();//picks the appropriate truck from loading Special cargos
 	bool load_VIP();
+	bool need_urgent_checkup(Truck*);
 	bool load_Normal();
 	bool load_Special();
 	bool load_MaxW();

@@ -24,6 +24,9 @@ int Truck::GetCapacity() const
 {
 	return Truck_Capacity;
 }
+void Truck::setSpeed(float x) {
+	Speed = x;
+}
 void Truck::set_DInterval() {
 	float temp = 2* ceil( Delivery_Distance/ GetSpeed()) + GetContainer_count() * container.Peek()->GetLU_Time();
 
@@ -37,6 +40,9 @@ int Truck::GetContainer_count() {
 }
 void Truck::restore_JTC() {
 	Journeys_Till_Check = J;
+}
+TRUCK_SHIFT Truck::getshift() {
+	return shift;
 }
 void Truck::DecrementJTC() {
 	Journeys_Till_Check--;

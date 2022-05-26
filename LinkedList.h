@@ -66,7 +66,10 @@ public:
 		temp = new Node<Type>;
 		temp->set_item(item);
 		if (IsEmpty())
+		{
 			First = temp;
+			
+		}
 		else
 			End->set_next(temp);
 		End = temp;
@@ -113,7 +116,11 @@ public:
 				else
 				{
 					x = ptr->get_item();
+					if (ptr->get_next() == nullptr) {
+						End = prev;
+					}
 					prev->set_next(ptr->get_next());
+					
 				}
 				count--;
 				return true;
