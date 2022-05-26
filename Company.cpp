@@ -62,13 +62,29 @@ void Company::Working_Hours()
 void Company::Off_Hours()
 {
 	Truck_Controller();
+	
 	Deliver_cargos();
+
+	if (!Loading_VIP)
+	{
+		load_VIP();
+	}
+	if (!Loading_Special)
+	{
+
+		load_Special();
+	}
+	if (!Loading_Normal)
+	{
+		load_Normal();
+	}
+	load_MaxW();
 }
 
 bool Company::load_VIP()
 {
 	Truck* t_temp = Pick_VIP_Truck();
-	Cargo* c_temp=NULL;
+	Cargo* c_temp = NULL;
 	float T_L_T = 0;
 	float M_L_T = 0;
 	float DT = 0;
@@ -76,8 +92,8 @@ bool Company::load_VIP()
 	{
 		for (int i = 0; i < t_temp->GetCapacity(); i++)
 		{
-			W_V_C.DeQueue(c_temp);
-			if (c_temp)
+
+			if (W_V_C.DeQueue(c_temp))
 			{
 				c_temp->Set_Truck_ID(t_temp->GetID());
 				if (c_temp->GetLU_Time() > M_L_T)
@@ -140,7 +156,7 @@ bool Company::load_Special()
 bool Company::load_Normal()
 {
 	Truck* t_temp = Pick_Normal_Truck();
-	Cargo* c_temp;
+	Cargo* c_temp = nullptr;
 	float T_L_T = 0;
 	float M_L_T = 0;
 	float DT = 0;
@@ -156,15 +172,17 @@ bool Company::load_Normal()
 				if (c_temp->GetLU_Time() > M_L_T)
 					M_L_T = c_temp->GetLU_Time();
 				T_L_T += c_temp->GetLU_Time();
+
+				float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
+				if (delivery_time > DT)
+					DT = delivery_time;
+				t_temp->load(c_temp, delivery_time);
+				t_temp->inc_TDC();
 			}
 
-			float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
-			if (delivery_time > DT)
-				DT = delivery_time;
-			t_temp->load(c_temp, delivery_time);
-			t_temp->inc_TDC();
 
 		}
+
 		T_L_T += M_L_T;
 		t_temp->Set_AT(ceil(T_L_T + DT + t_temp->Get_AT().Time_In_Hours()));
 		Loading_Normal = t_temp;
@@ -177,7 +195,7 @@ bool Company::load_Normal()
 
 bool Company::load_MaxW()
 {
-	Truck* t_temp;
+	Truck* t_temp=nullptr;
 	Cargo* c_temp;
 	int wait_time;
 
@@ -189,7 +207,12 @@ bool Company::load_MaxW()
 		{
 			if (!Loading_Special)
 			{
-				if (empty_Special.DeQueue(t_temp))
+				if (in_working(Sim_Time))
+					empty_Special.DeQueue(t_temp);
+				else
+					empty_Special_night.DeQueue(t_temp);
+
+				if (t_temp)
 				{
 					W_S_C.DeQueue(c_temp);
 					float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
@@ -215,7 +238,13 @@ bool Company::load_MaxW()
 		{
 			if (!Loading_Normal)
 			{
-				if (empty_Normal.DeQueue(t_temp))
+
+				if(in_working(Sim_Time))
+					empty_Normal.DeQueue(t_temp);
+				else
+				empty_Normal_night.DeQueue(t_temp);
+
+				if (t_temp)
 				{
 					W_N_C.removeFirst(c_temp);
 					float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
@@ -232,7 +261,12 @@ bool Company::load_MaxW()
 			}
 			if (!Loading_VIP)
 			{
-				if (empty_VIP.DeQueue(t_temp))
+				if (in_working(Sim_Time))
+					empty_VIP.DeQueue(t_temp);
+				else
+					empty_VIP_night.DeQueue(t_temp);
+
+				if (t_temp)
 				{
 					W_N_C.removeFirst(c_temp);
 					float delivery_time = c_temp->GetDistance() / t_temp->GetSpeed();
@@ -271,11 +305,12 @@ void Company::to_urgentCheckup(Truck* t) {
 			if (t->GetType() == TRUCK_TYPE::SPECIAL)
 				urgent_Check_up_Special.EnQueue(t);
 		}
+
 	}
 }
 Truck* Company::out_of_urgentCheckup(TRUCK_TYPE t) {
 	Truck* temp;
-	if (t == TRUCK_TYPE::NORMAL) {
+	if (t == TRUCK_TYPE::NORMAL ) {
 		if (Sim_Time == urgent_Check_up_Normal.Peek()->get_finish_point()) {
 			urgent_Check_up_Normal.DeQueue(temp);
 			return temp;
@@ -285,9 +320,10 @@ Truck* Company::out_of_urgentCheckup(TRUCK_TYPE t) {
 			temp->setSpeed(temp->GetSpeed() / 2);
 			return temp;
 		}
-		}
+	}
 	
-	if (t == TRUCK_TYPE::VIP) {
+
+	if (t == TRUCK_TYPE::VIP  ) {
 		if (Sim_Time == urgent_Check_up_VIP.Peek()->get_finish_point()) {
 			urgent_Check_up_VIP.DeQueue(temp);
 			return temp;
@@ -298,8 +334,9 @@ Truck* Company::out_of_urgentCheckup(TRUCK_TYPE t) {
 			return temp;
 		}
 	}
-		
-	if (t == TRUCK_TYPE::SPECIAL) {
+	
+
+	if (t == TRUCK_TYPE::SPECIAL ) {
 		if (Sim_Time == urgent_Check_up_Special.Peek()->get_finish_point()) {
 			urgent_Check_up_Special.DeQueue(temp);
 			return temp;
@@ -310,7 +347,9 @@ Truck* Company::out_of_urgentCheckup(TRUCK_TYPE t) {
 			return temp;
 		}
 	}
-	}
+	
+	return nullptr;
+}
 
 
 void Company::Truck_Controller() //controll the transition of trucks between lists
@@ -386,23 +425,23 @@ Truck* Company::Pick_VIP_Truck() {
 		if (in_working(Sim_Time)) {
 			t_temp = empty_VIP.Peek();
 			t_temp_night = empty_VIP_night.Peek();
-			if (t_temp&&t_temp_night)
+			if (t_temp && t_temp_night)
 			{
-					if (empty_VIP.GetFront()->get_priority() > empty_VIP_night.GetFront()->get_priority()) {
-						if (t_temp->GetCapacity() <= W_V_C.GetCount())
-						{
-							empty_VIP.DeQueue(t_temp);
-							return t_temp;
-						}
+				if (empty_VIP.GetFront()->get_priority() > empty_VIP_night.GetFront()->get_priority()) {
+					if (t_temp->GetCapacity() <= W_V_C.GetCount())
+					{
+						empty_VIP.DeQueue(t_temp);
+						return t_temp;
 					}
-					else {
-						if (t_temp_night->GetCapacity() <= W_V_C.GetCount())
-						{
-							empty_VIP_night.DeQueue(t_temp_night);
-							return t_temp_night;
-						}
+				}
+				else {
+					if (t_temp_night->GetCapacity() <= W_V_C.GetCount())
+					{
+						empty_VIP_night.DeQueue(t_temp_night);
+						return t_temp_night;
 					}
-					return nullptr;
+				}
+				return nullptr;
 			}
 			else {
 				if (t_temp) {
@@ -424,7 +463,7 @@ Truck* Company::Pick_VIP_Truck() {
 				}
 			}
 		}
-	
+
 		t_temp = empty_VIP_night.Peek();
 		if (t_temp && W_V_C.GetCount() >= t_temp->GetCapacity())
 		{
@@ -438,7 +477,7 @@ Truck* Company::Pick_VIP_Truck() {
 				return nullptr;
 		}
 
-		
+
 		if (in_working(Sim_Time)) {
 			t_temp = empty_Normal.Peek();
 			t_temp_night = empty_Normal_night.Peek();
@@ -549,22 +588,22 @@ Truck* Company::Pick_VIP_Truck() {
 				return nullptr;
 		}
 	}
-	if (!urgent_Check_up_VIP.QueueEmpty()) {
+	if (!urgent_Check_up_VIP.QueueEmpty()&&urgent_Check_up_VIP.Peek()->GetCapacity()<=W_V_C.GetCount()) {
 		t_temp = out_of_urgentCheckup(TRUCK_TYPE::VIP);
 		return t_temp;
 	}
-	if (!urgent_Check_up_Normal.QueueEmpty()) {
-		t_temp=out_of_urgentCheckup(TRUCK_TYPE::NORMAL);
+	if (!urgent_Check_up_Normal.QueueEmpty() && urgent_Check_up_Normal.Peek()->GetCapacity() <= W_V_C.GetCount()) {
+		t_temp = out_of_urgentCheckup(TRUCK_TYPE::NORMAL);
 		return t_temp;
 	}
-	if (!urgent_Check_up_Special.QueueEmpty()) {
+	if (!urgent_Check_up_Special.QueueEmpty() && urgent_Check_up_Special.Peek()->GetCapacity() <= W_V_C.GetCount()) {
 		t_temp = out_of_urgentCheckup(TRUCK_TYPE::SPECIAL);
 		return t_temp;
 	}
-	
+
 	return NULL;
 
-	
+
 }
 //Picks an available truck for a normal cargo
 Truck* Company::Pick_Normal_Truck() {
@@ -623,6 +662,9 @@ Truck* Company::Pick_Normal_Truck() {
 		}
 		else if (t_temp)
 			return nullptr;
+
+
+
 		//morning trucks
 		if (in_working(Sim_Time)) {
 			t_temp = empty_VIP.Peek();
@@ -674,6 +716,19 @@ Truck* Company::Pick_Normal_Truck() {
 
 		}
 	}
+
+	if (!urgent_Check_up_Normal.QueueEmpty() && urgent_Check_up_Normal.Peek()->GetCapacity() <= W_N_C.GetCount()) {
+		t_temp = out_of_urgentCheckup(TRUCK_TYPE::NORMAL);
+		return t_temp;
+	}
+
+	if (!urgent_Check_up_VIP.QueueEmpty() && urgent_Check_up_VIP.Peek()->GetCapacity() <= W_N_C.GetCount()) {
+		t_temp = out_of_urgentCheckup(TRUCK_TYPE::VIP);
+		return t_temp;
+	}
+	
+
+	return nullptr;
 }
 
 
@@ -741,6 +796,10 @@ Truck* Company::Pick_Special_Truck() {
 	}
 	return nullptr;
 
+	if (!urgent_Check_up_Special.QueueEmpty() && urgent_Check_up_Special.Peek()->GetCapacity() <= W_S_C.GetCount()) {
+		t_temp = out_of_urgentCheckup(TRUCK_TYPE::SPECIAL);
+		return t_temp;
+	}
 }
 
 
@@ -771,6 +830,7 @@ void Company::Move_Trucks()
 			Move_Truck(Loading_Normal);
 		}
 	}
+
 }
 void Company::Deliver_cargos() {
 	Truck* temp;
@@ -859,7 +919,7 @@ void Company::move_to_available(Truck* t) {
 		}
 	}
 	else {
-	
+
 		if (t->GetType() == TRUCK_TYPE::VIP) {
 			empty_VIP_night.EnQueue(t, t->GetSpeed() * t->GetCapacity());
 		}
@@ -871,10 +931,10 @@ void Company::move_to_available(Truck* t) {
 					empty_Special_night.EnQueue(t, t->GetSpeed() * t->GetCapacity());
 			}
 		}
-	
-	
-	
-	
+
+
+
+
 	}
 }
 
@@ -975,13 +1035,13 @@ bool Company::readFile(string filename)
 		case'N':
 		{
 			Truck* T = new Truck(truck_id, TRUCK_TYPE::NORMAL, cap, nCheck, Num_of_journeys, Speed, TRUCK_SHIFT::NIGHT);
-			empty_Normal_night.EnQueue(T,Speed*cap);
+			empty_Normal_night.EnQueue(T, Speed * cap);
 			break;
 		}
 		default:
 		{
 			Truck* T = new Truck(truck_id, TRUCK_TYPE::NORMAL, cap, nCheck, Num_of_journeys, Speed, TRUCK_SHIFT::MORNING);
-			empty_Normal.EnQueue(T,Speed*cap);
+			empty_Normal.EnQueue(T, Speed * cap);
 		}
 		}
 		truck_id++;
@@ -1250,10 +1310,10 @@ void Company::Output_Console()
 	PriQueue<Truck*> allempty_normal;
 	PriQueue<Truck*> allempty_Vip;
 	PriQueue<Truck*> allempty_Special;
-	Truck* Morn, *night,*ttemp;
-	int E_C = empty_Normal.GetCount() + empty_Special.GetCount() + empty_VIP.GetCount()+ empty_Normal_night.GetCount() + empty_Special_night.GetCount() + empty_VIP_night.GetCount();
+	Truck* Morn, * night, * ttemp;
+	int E_C = empty_Normal.GetCount() + empty_Special.GetCount() + empty_VIP.GetCount() + empty_Normal_night.GetCount() + empty_Special_night.GetCount() + empty_VIP_night.GetCount();
 	while (!empty_Normal.QueueEmpty() || !empty_Normal_night.QueueEmpty()) {
-		
+
 		if (empty_Normal.DeQueue(Morn))
 			allempty_normal.EnQueue(Morn, Morn->GetCapacity() * Morn->GetSpeed());
 		if (empty_Normal_night.DeQueue(night))
@@ -1261,7 +1321,7 @@ void Company::Output_Console()
 	}
 
 	while (!empty_VIP.QueueEmpty() || !empty_VIP_night.QueueEmpty()) {
-		
+
 		if (empty_VIP.DeQueue(Morn))
 			allempty_Vip.EnQueue(Morn, Morn->GetCapacity() * Morn->GetSpeed());
 		if (empty_VIP_night.DeQueue(night))
@@ -1269,7 +1329,7 @@ void Company::Output_Console()
 	}
 
 	while (!empty_Special.QueueEmpty() || !empty_Special_night.QueueEmpty()) {
-		
+
 		if (empty_Special.DeQueue(Morn))
 			allempty_Special.EnQueue(Morn, Morn->GetCapacity() * Morn->GetSpeed());
 		if (empty_Special_night.DeQueue(night))
@@ -1289,11 +1349,11 @@ void Company::Output_Console()
 
 	while (!allempty_normal.QueueEmpty()) {
 		allempty_normal.DeQueue(ttemp);
-		
-		if (ttemp->getshift()== TRUCK_SHIFT::MORNING)
+
+		if (ttemp->getshift() == TRUCK_SHIFT::MORNING)
 			empty_Normal.EnQueue(ttemp, ttemp->GetCapacity() * ttemp->GetSpeed());
 		else
-		empty_Normal_night.EnQueue(ttemp, ttemp->GetCapacity() * ttemp->GetSpeed());
+			empty_Normal_night.EnQueue(ttemp, ttemp->GetCapacity() * ttemp->GetSpeed());
 	}
 
 	while (!allempty_Special.QueueEmpty()) {
@@ -1321,15 +1381,27 @@ void Company::Output_Console()
 
 	//---------------------------------------------------------------------------------------------------------//
 
-	int C_T = Check_up_VIP.GetCount() + Check_up_Special.GetCount() + Check_up_Normal.GetCount();
+	int C_T = Check_up_VIP.GetCount() + Check_up_Special.GetCount() + Check_up_Normal.GetCount()+urgent_Check_up_Normal.GetCount()+urgent_Check_up_Special.GetCount()+urgent_Check_up_VIP.GetCount();
 	ui_p->print(to_string(C_T) + " In-Checkup Trucks: [");
 	// First --> print the ID of the Normal trucks
+	urgent_Check_up_Normal.print();
+
+	if (Check_up_Normal.GetCount()>0)
+	ui_p->print(",");
+
 	Check_up_Normal.print();
+
 	ui_p->print("] (");
 	// Second --> print the ID of the Special trucks
+	urgent_Check_up_Special.print();
+	if (Check_up_Special.GetCount() > 0)
+		ui_p->print(",");
 	Check_up_Special.print();
 	ui_p->print(") {");
 	// Third --> print the ID of the VIP trucks
+	urgent_Check_up_Special.print();
+	if (Check_up_VIP.GetCount() > 0)
+		ui_p->print(",");
 	Check_up_VIP.print();
 	ui_p->print("}\n");
 	ui_p->print("----------------------------------------------------------------------------\n");
@@ -1404,7 +1476,7 @@ void Company::Sim_Manager(SIM_MODE Mode)
 			Delivery_failure();
 		}
 	}
-	
+
 	write_output_file();
 	ui_p->print("Simulation ends, Output file created\n");
 }
