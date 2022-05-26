@@ -5,7 +5,6 @@
  * @copyright Copyright secured by YMY Team(c) 2022 * 
  */
 #pragma once
-
 enum class SIM_MODE
 {
 	INTERACTIVE,

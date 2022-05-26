@@ -80,10 +80,10 @@ class Company
 	int Moving_Cargos_count;
 	int Delivered_Cargos_count;
 	int Total_Cargos_count;
-	int Num_Promoted_cargos;
 
 	//--------------------------------------------------------
 	float auto_promoted_count;
+	int total_count_normal;
 	int cancelled;
 	
 	//--------------------------------------------------------
@@ -127,7 +127,7 @@ public:
 
 	// Reading data function
 	void execute_mode(SIM_MODE);
-	bool readFile(string);
+	void readFile();
 	/**
 	 * @brief prepairs the output file at the end of the simulation
 	 * 

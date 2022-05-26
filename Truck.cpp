@@ -179,7 +179,9 @@ void Truck::print()
 {
 	ui_p->print(to_string(ID));
 	if (container.QueueEmpty())
+	{
 		return;
+	}
 
 	if (container.Peek()->GetType() == CARGO_TYPE::VIP)
 	{
