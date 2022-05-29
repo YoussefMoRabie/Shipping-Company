@@ -19,8 +19,8 @@ A project by Cairo engineering students for programming for first graders, which
 
 * The simulation consists of:
     * Status of the shipping company at every hour.
-    * Showing the numbers and IDs of the trucks in different states: (In Execution, In Checkup, In Avaliable) state
-    * Showing the numbers of the cargos in different states: (In Execution, In Completed, In Avaliable) state
+    * Showing the numbers and IDs of the trucks in different states: (Moving, In Checkup, Avaliable) state
+    * Showing the numbers of the cargos in different states: (Moving, Delivered, Waiting) state
 
 # Team Members:
  - Yousef Mohamed El-Said Rabia
@@ -30,4 +30,4 @@ A project by Cairo engineering students for programming for first graders, which
 ## Professor Supervisor: Dr. Ahmed Hamdy
 ## Teacher Assistants Supervisor:
  - Eng. Eman Hossam
- - Eng. Marwa
+ - Eng. Marwa Mahmoud
